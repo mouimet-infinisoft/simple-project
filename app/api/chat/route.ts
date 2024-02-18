@@ -1,27 +1,56 @@
-type ChatMessage = {
-  id: number;
-  text: string;
-};
+import { createClient } from '@/utils/supabase/server';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
-const messages: ChatMessage[] = []; // In-memory store for chat messages
+// Initialize Supabase client
+const supabase = createClient();
 
-export async function POST(req: Request) {
-  const data = await req.json();
-  const newMessage: ChatMessage = {
-    id: messages.length + 1,
-    text: data.text,
-  };
+export async function GET(request: NextRequest) {
+  // Extract the user session from the request to identify the user
+  const { data:{user}, error: userError } = await supabase.auth.getUser();
 
-  messages.push(newMessage);
+  if (!user || userError) {
+    return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
+  }
 
-  return new Response(JSON.stringify(newMessage), {
+  // Fetch messages for the authenticated user
+  const { data: messages, error } = await supabase
+    .from('messages')
+    .select('*')
+    .eq('userId', user.id) // Filter messages by the authenticated user's ID
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    return new NextResponse(JSON.stringify({ error: error.message }), { status: 400 });
+  }
+
+  return new NextResponse(JSON.stringify(messages), {
+    status: 200,
     headers: { 'Content-Type': 'application/json' },
   });
 }
 
-export async function GET() {
-  // Return all messages
-  return new Response(JSON.stringify(messages), {
+export async function POST(request: NextRequest) {
+  const { data:{user}, error: userError } = await supabase.auth.getUser();
+
+  if (!user || userError) {
+    return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
+  }
+
+  const data = await request.json();
+  const { text } = data;
+
+  // Insert the new message with the authenticated user's ID
+  const { data: newMessage, error } = await supabase
+    .from('messages')
+    .insert([{ userId: user.id, text }])
+    .single();
+
+  if (error) {
+    return new NextResponse(JSON.stringify({ error: error.message }), { status: 400 });
+  }
+
+  return new NextResponse(JSON.stringify(newMessage), {
     headers: { 'Content-Type': 'application/json' },
   });
 }
