@@ -5,10 +5,6 @@ type ChatMessage = {
 
 const messages: ChatMessage[] = []; // In-memory store for chat messages
 
-export const config = {
-  runtime: 'edge',
-};
-
 export async function POST(req: Request) {
   const data = await req.json();
   const newMessage: ChatMessage = {
