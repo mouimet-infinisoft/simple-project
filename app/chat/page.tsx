@@ -5,7 +5,7 @@ type ChatMessage = {
   text: string;
 };
 
-export default function ChatPage() {
+export default function () {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
 
