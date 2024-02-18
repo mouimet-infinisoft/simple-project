@@ -1,8 +1,7 @@
 // Filename: pages/api/sse.ts
-import { NextApiRequest, NextApiResponse } from 'next';
 
 // This is the handler function for your SSE route
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: any, res: any) {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
