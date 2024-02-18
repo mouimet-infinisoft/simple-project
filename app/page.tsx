@@ -1,6 +1,6 @@
 import Pricing from '@/components/ui/Pricing/Pricing';
-import RealTimeDataComponent from '@/utils/sse/RealTimeDataComponent';
 import { createClient } from '@/utils/supabase/server';
+import RealTimeDataComponent from './sse/RealTimeDataComponent';
 
 export default async function PricingPage() {
   const supabase = createClient();
