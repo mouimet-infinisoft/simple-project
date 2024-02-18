@@ -2,15 +2,19 @@ import { createClient } from '@/utils/supabase/server';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-// Initialize Supabase client
-const supabase = createClient();
-
 export async function GET(request: NextRequest) {
+  // Initialize Supabase client
+  const supabase = createClient();
   // Extract the user session from the request to identify the user
-  const { data:{user}, error: userError } = await supabase.auth.getUser();
+  const {
+    data: { user },
+    error: userError
+  } = await supabase.auth.getUser();
 
   if (!user || userError) {
-    return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
+    return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
+      status: 401
+    });
   }
 
   // Fetch messages for the authenticated user
@@ -21,20 +25,29 @@ export async function GET(request: NextRequest) {
     .order('created_at', { ascending: false });
 
   if (error) {
-    return new NextResponse(JSON.stringify({ error: error.message }), { status: 400 });
+    return new NextResponse(JSON.stringify({ error: error.message }), {
+      status: 400
+    });
   }
 
   return new NextResponse(JSON.stringify(messages), {
     status: 200,
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' }
   });
 }
 
 export async function POST(request: NextRequest) {
-  const { data:{user}, error: userError } = await supabase.auth.getUser();
+  // Initialize Supabase client
+  const supabase = createClient();
+  const {
+    data: { user },
+    error: userError
+  } = await supabase.auth.getUser();
 
   if (!user || userError) {
-    return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
+    return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
+      status: 401
+    });
   }
 
   const data = await request.json();
@@ -47,10 +60,12 @@ export async function POST(request: NextRequest) {
     .single();
 
   if (error) {
-    return new NextResponse(JSON.stringify({ error: error.message }), { status: 400 });
+    return new NextResponse(JSON.stringify({ error: error.message }), {
+      status: 400
+    });
   }
 
   return new NextResponse(JSON.stringify(newMessage), {
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' }
   });
 }
