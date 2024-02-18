@@ -2,7 +2,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 // This is the handler function for your SSE route
-const sseHandler = (req: NextApiRequest, res: NextApiResponse) => {
+export async function GET(req: NextApiRequest, res: NextApiResponse) {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
@@ -11,7 +11,7 @@ const sseHandler = (req: NextApiRequest, res: NextApiResponse) => {
     res.write(`data: ${JSON.stringify(data)}\n\n`);
   };
 
-  sendEvent({ message: "Connection established" });
+  sendEvent({ message: 'Connection established' });
 
   const intervalId = setInterval(() => {
     sendEvent({ time: new Date().toISOString() });
@@ -21,6 +21,4 @@ const sseHandler = (req: NextApiRequest, res: NextApiResponse) => {
     clearInterval(intervalId);
     res.end();
   });
-};
-
-export default sseHandler;
+}
