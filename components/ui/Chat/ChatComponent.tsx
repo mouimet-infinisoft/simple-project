@@ -1,6 +1,7 @@
 // components/ChatComponent.tsx
 import React, { useState, useEffect } from 'react';
 import { useChat } from 'app/hooks/useChat'
+import DiscussionComponent from './DiscussionComponent';
 
 const ChatComponent = () => {
   const { messages, sendMessage, fetchMessages } = useChat();
@@ -18,21 +19,20 @@ const ChatComponent = () => {
   };
 
   return (
-    <div>
-      <h1>Chat</h1>
-      <ul>
-        {messages.map((msg) => (
-          <li key={msg?.id}>{msg?.text}</li>
-        ))}
-      </ul>
-      <form onSubmit={handleSendMessage}>
+    <div className="max-w-md mx-auto my-4">
+      <h1 className="text-2xl font-bold text-center mb-4">Chat</h1>
+      <DiscussionComponent messages={messages} />
+      <form onSubmit={handleSendMessage} className="flex gap-2 mt-4">
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type your message here..."
+          className="flex-1 p-2 border rounded shadow-sm"
         />
-        <button type="submit">Send</button>
+        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Send
+        </button>
       </form>
     </div>
   );
