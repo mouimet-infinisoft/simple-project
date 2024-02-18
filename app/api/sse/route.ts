@@ -1,7 +1,8 @@
 // Filename: pages/api/sse.ts
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 // This is the handler function for your SSE route
-export async function GET(req: any, res: any) {
+export default function (req: VercelRequest, res: VercelResponse) {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
