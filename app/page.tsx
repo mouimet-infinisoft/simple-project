@@ -1,4 +1,5 @@
 import Pricing from '@/components/ui/Pricing/Pricing';
+import RealTimeDataComponent from '@/utils/sse/RealTimeDataComponent';
 import { createClient } from '@/utils/supabase/server';
 
 export default async function PricingPage() {
@@ -27,10 +28,13 @@ export default async function PricingPage() {
     .order('unit_amount', { referencedTable: 'prices' });
 
   return (
+    <>
     <Pricing
       user={user}
       products={products ?? []}
       subscription={subscription}
     />
+    <RealTimeDataComponent />
+    </>
   );
 }
