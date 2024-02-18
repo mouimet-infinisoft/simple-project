@@ -18,8 +18,8 @@ export function POST(req: NextRequest, res: VercelResponse) {
     sendEvent({ time: new Date().toISOString() });
   }, 1000);
 
-  req.on('close', () => {
-    clearInterval(intervalId);
-    res.end();
-  });
+  // req.on('close', () => {
+  //   clearInterval(intervalId);
+  //   res.end();
+  // });
 }
