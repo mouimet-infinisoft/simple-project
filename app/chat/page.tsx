@@ -40,7 +40,7 @@ export default function () {
       <h1>Simple Chat</h1>
       <ul>
         {messages.map((msg) => (
-          <li key={msg.id}>{msg.text}</li>
+          <li key={msg?.id}>{msg?.text}</li>
         ))}
       </ul>
       <form onSubmit={sendMessage}>
