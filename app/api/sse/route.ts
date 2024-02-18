@@ -1,8 +1,9 @@
 // Filename: pages/api/sse.ts
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { NextRequest } from 'next/server';
 
 // This is the handler function for your SSE route
-export function POST(req: VercelRequest, res: VercelResponse) {
+export function POST(req: NextRequest, res: VercelResponse) {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
