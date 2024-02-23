@@ -1,7 +1,9 @@
 import { LogLevel } from '@brainstack/log';
 import { AiBase } from './implementation';
 import { openai } from '../client';
-import { CompletionCreateParamsNonStreaming } from 'openai/resources';
+import {
+  ChatCompletionCreateParamsNonStreaming,
+} from 'openai/resources';
 
 export class OpenAIIntegration extends AiBase {
   constructor(logLevel: LogLevel = LogLevel.VERBOSE) {
@@ -12,15 +14,15 @@ export class OpenAIIntegration extends AiBase {
     super.ask(prompt); // Call to base class ask, if needed for common pre-processing
 
     try {
-      const completionParams: CompletionCreateParamsNonStreaming = {
+      const completionParams: ChatCompletionCreateParamsNonStreaming = {
         model: 'gpt-3.5-turbo', // or "gpt-3.5-turbo" as per your requirement
-        prompt,
         max_tokens: 512,
-        temperature: 0.7
+        temperature: 0.7,
+        messages: [{ role: 'user', content: prompt }]
       };
 
-      const completion = await openai.completions.create(completionParams);
-      const answer = completion.choices[0]?.text ?? 'No response';
+      const completion = await openai.chat.completions.create(completionParams);
+      const answer = completion.choices[0]?.message?.content ?? 'No response';
       this._log.verbose(`OpenAI response: ${answer}`);
       return answer;
     } catch (error) {
