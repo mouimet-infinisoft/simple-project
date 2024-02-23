@@ -1,3 +1,4 @@
+import { OpenAIIntegration } from '@/utils/openai/integrations/openai';
 import { createClient } from '@/utils/supabase/server';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
@@ -61,6 +62,20 @@ export async function POST(request: NextRequest) {
 
   if (error) {
     return new NextResponse(JSON.stringify({ error: error.message }), {
+      status: 400
+    });
+  }
+
+  const ai = new OpenAIIntegration(5);
+  const answer = await ai.ask(text);
+
+  const { data: newAiMessage, error: errorAi } = await supabase
+    .from('messages')
+    .insert([{ userId: 'ibrain', text: `iBrain: ${answer}` }])
+    .single();
+
+  if (errorAi) {
+    return new NextResponse(JSON.stringify({ error: errorAi.message }), {
       status: 400
     });
   }
