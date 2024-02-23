@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     .from('messages')
     .select('*')
     .eq('userId', user.id) // Filter messages by the authenticated user's ID
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: true });
 
   if (error) {
     return new NextResponse(JSON.stringify({ error: error.message }), {
