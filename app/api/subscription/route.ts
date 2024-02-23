@@ -17,7 +17,7 @@ async function validateSubscription(email: string): Promise<boolean> {
     // Retrieve active subscriptions for the customer
     const subscriptions = await stripe.subscriptions.list({
       customer: customerId,
-      status: 'active'
+    //   status: 'active'
     });
 
     if (subscriptions.data.length === 0) {
