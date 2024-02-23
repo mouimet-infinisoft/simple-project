@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
   const { data: messages, error } = await supabase
     .from('messages')
     .select('*')
-    // .eq('userId', user.id) // Filter messages by the authenticated user's ID
+    .eq('userId', user.id) // Filter messages by the authenticated user's ID
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
 
   const { data: newAiMessage, error: errorAi } = await supabase
     .from('messages')
-    .insert([{ userId: 'ibrain', text: `iBrain: ${answer}` }])
+    .insert([{ userId: user.id, text: `iBrain: ${answer}` }])
     .single();
 
   if (errorAi) {
