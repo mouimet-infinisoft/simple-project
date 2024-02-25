@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { stripe } from '@/utils/stripe/config';
 import { OpenAIIntegration } from '@/utils/openai/integrations/openai';
+import {OpenAI} from 'openai';
 
 // Function to validate subscription status in Stripe
 async function validateSubscription(email: string): Promise<boolean> {
@@ -35,7 +36,7 @@ async function validateSubscription(email: string): Promise<boolean> {
 }
 
 export async function POST(req: NextRequest) {
-  const { email, message } = await req.json();
+  const { email, message, userKey="" } = await req.json();
 
   try {
     const isValidSubscription = await validateSubscription(email);
@@ -43,7 +44,7 @@ export async function POST(req: NextRequest) {
       ? 'Subscription is valid'
       : 'Subscription is invalid';
 
-    const d = new OpenAIIntegration(5);
+    const d = userKey ?  new OpenAIIntegration(5, new OpenAI({apiKey:userKey})) : new OpenAIIntegration(5);
     const a = await d.ask(message);
 
     return new Response(JSON.stringify({ message: a }), {
