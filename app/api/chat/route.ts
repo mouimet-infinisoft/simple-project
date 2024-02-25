@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
   const { data: userData, error: userDataError } = await supabase
     .from('users')
     .select('*')
-    .eq('userId', user.id) // Filter messages by the authenticated user's ID
+    .eq('id', user.id) // Filter messages by the authenticated user's ID
     .single();
 
   if (userDataError) {
