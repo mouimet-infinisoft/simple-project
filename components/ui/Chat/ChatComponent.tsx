@@ -1,41 +1,32 @@
+// ChatComponent.tsx
 import React, { useState, useEffect } from 'react';
 import { useChat } from 'app/hooks/useChat';
 import DiscussionComponent from './DiscussionComponent';
-import useSpeech2text from '@/app/hooks/useSpeech2text';
+import useSpeech2text from '@/app/hooks/useSpeech2text'; // Adjust the import path as necessary
 
 const ChatComponent = () => {
   const { messages, sendMessage, fetchMessages } = useChat();
   const [message, setMessage] = useState('');
 
-  // Define the onTrigger function that will update the message state
   const handleRecognizedSpeech = (recognizedSpeech: string) => {
-    setMessage(recognizedSpeech);
+    if (recognizedSpeech.includes('?')) {
+      sendMessage(recognizedSpeech);
+    } else {
+      setMessage(recognizedSpeech);
+    }
   };
 
-  // Initialize speech-to-text hook with the onTrigger function
-  const {
-    userSpeech,
-    startListening,
-    stopListening,
-    isRecognizing,
-  } = useSpeech2text(handleRecognizedSpeech); // This now correctly passes the required onTrigger function
+  const { isRecognizing, startListening, stopListening } = useSpeech2text(handleRecognizedSpeech);
 
   useEffect(() => {
     fetchMessages();
   }, [fetchMessages]);
-
-  // This useEffect becomes redundant if handleRecognizedSpeech directly sets the message,
-  // so you might consider removing it if you don't need to perform additional operations
-  // when userSpeech updates.
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim()) return;
     await sendMessage(message);
     setMessage('');
-    if (isRecognizing) {
-      stopListening(); // Stop listening after sending the message
-    }
   };
 
   return (
@@ -52,8 +43,8 @@ const ChatComponent = () => {
         />
         <button
           type="button"
-          onClick={isRecognizing ? stopListening : startListening}
-          className={`px-4 py-2 rounded ${isRecognizing ? 'bg-red-500 hover:bg-red-700' : 'bg-green-500 hover:bg-green-700'} text-white font-bold`}
+          onClick={startListening}
+          className={`px-4 py-2 rounded ${isRecognizing ? 'bg-red-500' : 'bg-green-500'} hover:bg-green-700 text-white font-bold`}
         >
           {isRecognizing ? 'Stop' : 'Speak'}
         </button>
