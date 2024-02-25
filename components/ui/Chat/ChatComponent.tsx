@@ -12,11 +12,13 @@ const ChatComponent = () => {
     if (recognizedSpeech.includes('?')) {
       sendMessage(recognizedSpeech);
     } else {
-      setMessage(recognizedSpeech);
+      setMessage((prev) => prev + ' ' + recognizedSpeech);
     }
   };
 
-  const { isRecognizing, startListening, stopListening } = useSpeech2text(handleRecognizedSpeech);
+  const { isRecognizing, startListening, stopListening } = useSpeech2text(
+    handleRecognizedSpeech
+  );
 
   useEffect(() => {
     fetchMessages();
@@ -44,9 +46,18 @@ const ChatComponent = () => {
         <button
           type="button"
           onClick={startListening}
-          className={`px-4 py-2 rounded ${isRecognizing ? 'bg-red-500' : 'bg-green-500'} hover:bg-green-700 text-white font-bold`}
+          hidden={isRecognizing}
+          className={`px-4 py-2 rounded bg-green-500 hover:bg-green-700 text-white font-bold`}
         >
-          {isRecognizing ? 'Stop' : 'Speak'}
+          Speak
+        </button>
+        <button
+          type="button"
+          onClick={stopListening}
+          hidden={!isRecognizing}
+          className={`px-4 py-2 rounded bg-red-500  hover:bg-green-700 text-white font-bold`}
+        >
+          Stop
         </button>
         <button
           type="submit"
