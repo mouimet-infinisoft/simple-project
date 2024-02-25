@@ -39,7 +39,7 @@ async function prepareContext(
     })
     .join('\n'); // Join messages with a newline character for separation
 
-  return "Consider following context:\n" + llmContext;
+  return 'Consider following context:\n' + llmContext;
 }
 
 export async function GET(request: NextRequest) {
@@ -119,11 +119,14 @@ export async function POST(request: NextRequest) {
   }
 
   const context = await prepareContext(user.id, supabase);
-
+  console.log(`Context: `, context);
+  
   const ai = userData?.openai_apikey
     ? new OpenAIIntegration(5, new OpenAI({ apiKey: userData.openai_apikey }))
     : new OpenAIIntegration(5);
-  const answer = await ai.ask(context + "Consider following new message:\n" + text);
+  const answer = await ai.ask(
+    context + 'Consider following new message:\n' + text
+  );
 
   const { data: newAiMessage, error: errorAi } = await supabase
     .from('messages')
