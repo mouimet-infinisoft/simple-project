@@ -103,24 +103,6 @@ const upsertCustomerToSupabase = async (uuid: string, customerId: string) => {
   return customerId;
 };
 
-const subscribeInsertMessage = () => {
-  const channels = supabaseAdmin
-    .channel('custom-filter-channel')
-    .on(
-      'postgres_changes',
-      {
-        event: 'INSERT',
-        schema: 'public',
-        table: 'messages',
-        filter: 'role=ibrain'
-      },
-      (payload) => {
-        console.log('Change received!', payload);
-      }
-    )
-    .subscribe();
-};
-
 const createCustomerInStripe = async (uuid: string, email: string) => {
   const customerData = { metadata: { supabaseUUID: uuid }, email: email };
   const newCustomer = await stripe.customers.create(customerData);
@@ -306,6 +288,5 @@ export {
   deleteProductRecord,
   deletePriceRecord,
   createOrRetrieveCustomer,
-  manageSubscriptionStatusChange,
-  subscribeInsertMessage
+  manageSubscriptionStatusChange
 };

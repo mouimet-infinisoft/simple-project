@@ -1,16 +1,36 @@
 // app/chat/page.tsx
-"use client";
-import React from 'react';
+'use client';
+import React, { useEffect } from 'react';
 import ChatComponent from 'components/ui/Chat';
-import { subscribeInsertMessage } from '@/utils/supabase/admin';
+import { createClient } from '@/utils/supabase/client';
 
-subscribeInsertMessage()
+const subscribeInsertMessage = () => {
+  const supabase = createClient();
+
+  const channels = supabase
+    .channel('custom-filter-channel')
+    .on(
+      'postgres_changes',
+      {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'messages',
+        filter: 'role=ibrain'
+      },
+      (payload) => {
+        console.log('Change received!', payload);
+      }
+    )
+    .subscribe();
+};
 
 export default function ChatPage() {
+  useEffect(() => {
+    subscribeInsertMessage();
+  }, []);
   return (
     <div>
       <ChatComponent />
     </div>
   );
 }
-
