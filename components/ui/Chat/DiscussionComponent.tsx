@@ -4,7 +4,7 @@ import { ChatMessage } from 'types/ChatMessage'; // Adjust the import path as ne
 
 const DiscussionComponent = ({ messages }: { messages: ChatMessage[] }) => {
   // Ref for the messages container
-  const containerRef = useRef<HTMLUListElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Scroll the container to the bottom
@@ -16,11 +16,11 @@ const DiscussionComponent = ({ messages }: { messages: ChatMessage[] }) => {
   }, [messages]); // Run every time the messages array changes
 
   return (
-    <ul ref={containerRef} className="space-y-2 max-h-96 overflow-auto p-3">
+    <div ref={containerRef} className="space-y-2 max-h-96 overflow-auto p-3">
       {messages.map((msg) => (
-        <MessageComponent key={msg.id} {...msg}/>
+        <MessageComponent key={msg.id} {...msg} />
       ))}
-    </ul>
+    </div>
   );
 };
 
