@@ -49,7 +49,9 @@ const speak = (text: string) => {
       }
 
       utterance.onend = () => {
-        window.dispatchEvent(isSilentEvent);
+        if (index === sentences.length - 1) {
+          window.dispatchEvent(isSilentEvent);
+        }
       };
 
       window.speechSynthesis.speak(utterance);
