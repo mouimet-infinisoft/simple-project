@@ -38,8 +38,11 @@ const subscribeInsertMessage = async () => {
         table: 'messages',
         filter: `user_id=eq.${user?.id}`
       },
-      (payload) => {
-        console.log('Change received!', payload);
+      (payload: any) => {
+        if (String(payload?.new?.role).includes('ibrain')) {
+          console.log('Change received!', payload);
+          speak(String(payload?.new?.text));
+        }
       }
     )
     .subscribe();
