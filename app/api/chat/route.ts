@@ -1,8 +1,46 @@
+import { ChatMessage } from '@/types/ChatMessage';
 import { OpenAIIntegration } from '@/utils/openai/integrations/openai';
 import { createClient } from '@/utils/supabase/server';
+import { SupabaseClient } from '@supabase/supabase-js';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
+
+// Assuming `supabase` is an instance of `SupabaseClient` and is initialized elsewhere
+async function prepareContext(
+  userId: string,
+  supabase: SupabaseClient
+): Promise<string> {
+  // Fetch the last 6 messages for the given user ID, initially in descending order
+  const { data: messages, error } = await supabase
+    .from('messages') // Use the ChatMessage type for the query
+    .select('*')
+    .eq('user_id', userId) // Filter messages by the given user ID
+    .order('created_at', { ascending: false }) // Get the most recent messages first
+    .limit(6);
+
+  // Check for errors
+  if (error) {
+    console.error('Error fetching messages:', error);
+    return ''; // Return an empty string or handle the error appropriately
+  }
+
+  // Ensure messages is not null or undefined before proceeding
+  if (!messages) return '';
+
+  // Reverse the messages to have them in chronological order
+  const chronologicalMessages = messages.slice().reverse();
+
+  // Create a context string for the LLM using the role as the sender
+  const llmContext = chronologicalMessages
+    .map((message: ChatMessage) => {
+      // Use `role` as the identifier for the sender in the formatted message
+      return `${message.role}: ${message.text}`;
+    })
+    .join('\n'); // Join messages with a newline character for separation
+
+  return "Consider following context:\n" + llmContext;
+}
 
 export async function GET(request: NextRequest) {
   // Initialize Supabase client
@@ -80,13 +118,12 @@ export async function POST(request: NextRequest) {
     });
   }
 
+  const context = await prepareContext(user.id, supabase);
+
   const ai = userData?.openai_apikey
-    ? new OpenAIIntegration(
-        5,
-        new OpenAI({ apiKey: userData.openai_apikey })
-      )
+    ? new OpenAIIntegration(5, new OpenAI({ apiKey: userData.openai_apikey }))
     : new OpenAIIntegration(5);
-  const answer = await ai.ask(text);
+  const answer = await ai.ask(context + "Consider following new message:\n" + text);
 
   const { data: newAiMessage, error: errorAi } = await supabase
     .from('messages')
