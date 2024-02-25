@@ -49,7 +49,10 @@ export default async function Account() {
         <NameForm userName={userDetails?.full_name ?? ''} />
         <EmailForm userEmail={user.email} />
         <OpenAIForm
-          userSettings={{ apiKey: 'api', assistantId: 'assistant' }}
+          userSettings={{
+            apiKey: userDetails?.openai_apikey ?? '',
+            assistantId: userDetails?.assistant_id ?? ''
+          }}
         />
       </div>
     </section>

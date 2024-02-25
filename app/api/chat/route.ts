@@ -2,6 +2,7 @@ import { OpenAIIntegration } from '@/utils/openai/integrations/openai';
 import { createClient } from '@/utils/supabase/server';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+import OpenAI from 'openai';
 
 export async function GET(request: NextRequest) {
   // Initialize Supabase client
@@ -66,7 +67,25 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const ai = new OpenAIIntegration(5);
+  // Fetch api key
+  const { data: userData, error: userDataError } = await supabase
+    .from('users')
+    .select('*')
+    .eq('userId', user.id) // Filter messages by the authenticated user's ID
+    .single();
+
+  if (userDataError) {
+    return new NextResponse(JSON.stringify({ error: userDataError.message }), {
+      status: 400
+    });
+  }
+
+  const ai = userData?.openai_apikey
+    ? new OpenAIIntegration(
+        5,
+        new OpenAI({ apiKey: userData.openai_apikey })
+      )
+    : new OpenAIIntegration(5);
   const answer = await ai.ask(text);
 
   const { data: newAiMessage, error: errorAi } = await supabase
