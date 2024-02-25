@@ -50,7 +50,7 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
     return () => {
       window.removeEventListener('isTalking', stopListening);
       window.removeEventListener('isSilent', startListening);
-      stopListening();
+      // stopListening();
     };
   }, [startListening, stopListening]);
 
