@@ -29,7 +29,7 @@ const unSubscribeInsertMessage = () => {
 };
 
 const speak = (text: string) => {
-  const { plainText } = splitCodeFromText(text);
+  const { plainText } = splitCodeFromText(text.replace('ibrain:', ''));
   const sentences = plainText.split(/(?<=[.!?])/);
 
   sentences.forEach((sentence) => {
