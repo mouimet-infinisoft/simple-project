@@ -1,5 +1,6 @@
-// app/chat/page.tsx
 'use client';
+
+// app/chat/page.tsx
 import React, { useEffect } from 'react';
 import ChatComponent from 'components/ui/Chat';
 import { createClient } from '@/utils/supabase/client';
@@ -13,7 +14,7 @@ const subscribeInsertMessage = () => {
       'postgres_changes',
       { event: 'INSERT', schema: 'public', table: 'messages' },
       (payload) => {
-        if (String(payload?.new?.role).includes('ibrain')){
+        if (String(payload?.new?.role).includes('ibrain')) {
           console.log('Change received!', payload);
           speak(String(payload?.new?.text));
         }
@@ -25,13 +26,12 @@ const subscribeInsertMessage = () => {
 const unSubscribeInsertMessage = () => {
   const supabase = createClient();
 
-  supabase.removeAllChannels()
+  supabase.removeAllChannels();
 };
 
 // Define custom events for starting and stopping speech recognition
-const speechStartEvent = new Event('speechStart');
-const speechEndEvent = new Event('speechEnd');
-
+const isSpeakingEvent = new Event('isTalking');
+const isSilentEvent = new Event('isSilent');
 
 const speak = (text: string) => {
   const { plainText } = splitCodeFromText(text.replace('ibrain:', ''));
@@ -44,14 +44,22 @@ const speak = (text: string) => {
       utterance.lang = 'en';
       utterance.voice = window.speechSynthesis.getVoices()[87];
 
-      if (index === 0) utterance.onstart = () => window.dispatchEvent(speechStartEvent);
-      if (index === sentences.length - 1) utterance.onend = () => window.dispatchEvent(speechEndEvent);
+      utterance.onstart = () => {
+        if (index === 0) {
+          window.dispatchEvent(isSpeakingEvent);
+        }
+      };
+
+      utterance.onend = () => {
+        if (index === sentences.length - 1) {
+          window.dispatchEvent(isSilentEvent);
+        }
+      };
 
       window.speechSynthesis.speak(utterance);
     }
   });
 };
-
 
 // const speak = (text: string) => {
 //   const { plainText } = splitCodeFromText(text.replace('ibrain:', ''));
@@ -103,7 +111,7 @@ export default function ChatPage() {
   useEffect(() => {
     subscribeInsertMessage();
 
-    return unSubscribeInsertMessage
+    return unSubscribeInsertMessage;
   }, []);
   return (
     <div>
