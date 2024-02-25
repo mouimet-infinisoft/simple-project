@@ -120,11 +120,11 @@ export async function POST(request: NextRequest) {
 
   const context = await prepareContext(user.id, supabase);
   console.log(`Context: `, context);
-  
+
   const ai = userData?.openai_apikey
     ? new OpenAIIntegration(5, new OpenAI({ apiKey: userData.openai_apikey }))
     : new OpenAIIntegration(5);
-  const answer = await ai.ask(
+  const answer = await ai.ask("You are ibrain a helpful assistant.\n"+
     context + 'Consider following new message:\n' + text
   );
 
