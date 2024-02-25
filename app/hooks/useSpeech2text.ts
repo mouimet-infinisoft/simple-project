@@ -1,7 +1,7 @@
-"use client"
+'use client';
 
 // useSpeech2text.ts
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 type OnTriggerFunction = (speech: string) => void;
 type TriggerConditionFunction = (text: string) => boolean;
@@ -10,21 +10,23 @@ const useSpeech2text = (
   onTrigger: OnTriggerFunction,
   triggerCondition: TriggerConditionFunction = (text) => text.includes('?')
 ) => {
-  const SpeechRecognition = (global?.window as any)?.SpeechRecognition || (global?.window as any)?.webkitSpeechRecognition;
+  const SpeechRecognition =
+    (global?.window as any)?.SpeechRecognition ||
+    (global?.window as any)?.webkitSpeechRecognition;
 
   if (!SpeechRecognition) {
-    console.error("Speech Recognition is not supported by this browser.");
+    console.error('Speech Recognition is not supported by this browser.');
     return {
-      userSpeech: "",
+      userSpeech: '',
       isRecognizing: false,
       startListening: () => {},
       stopListening: () => {},
-      setLanguage: (lang: string) => {},
+      setLanguage: (lang: string) => {}
     };
   }
 
   const recognition = useRef<typeof SpeechRecognition>(new SpeechRecognition());
-  const [userSpeech, setUserSpeech] = useState<string>("");
+  const [userSpeech, setUserSpeech] = useState<string>('');
   const [isRecognizing, setIsRecognizing] = useState<boolean>(false);
 
   const setLanguage = useCallback((lang: string) => {
@@ -34,7 +36,7 @@ const useSpeech2text = (
   useEffect(() => {
     const _recognition = recognition.current;
     _recognition.continuous = true;
-    _recognition.lang = "en-US"; // Default language
+    _recognition.lang = 'en-US'; // Default language
 
     _recognition.onend = () => {
       setIsRecognizing(false);
@@ -42,33 +44,36 @@ const useSpeech2text = (
 
     _recognition.onresult = (event: any) => {
       const transcript = Array.from(event.results)
-        .map((result:any) => result[0].transcript)
-        .join("");
-      const newSpeech = `${userSpeech} ${transcript}`.trim();
-      setUserSpeech(newSpeech);
+        .map((result: any) => result[0].transcript)
+        .join('');
+      setUserSpeech((prev) => {
+        const newSpeech = `${prev} ${transcript}`.trim();
 
-      if (triggerCondition(newSpeech)) {
-        onTrigger(newSpeech);
-        setUserSpeech("");
-      }
+        if (triggerCondition(newSpeech)) {
+          onTrigger(newSpeech);
+          return '';
+        }
+
+        return newSpeech;
+      });
     };
 
     _recognition.onerror = (event: Event) => {
-      console.error("Speech recognition error", (event as ErrorEvent).message);
+      console.error('Speech recognition error', (event as ErrorEvent).message);
     };
 
     return () => {
       _recognition.stop();
     };
-  }, [userSpeech, onTrigger, triggerCondition]);
+  }, [onTrigger, triggerCondition]);
 
   const startListening = useCallback(() => {
     try {
       recognition.current.start();
       setIsRecognizing(true);
-      setUserSpeech("");
+      setUserSpeech('');
     } catch (error) {
-      console.error("Error starting speech recognition:", error);
+      console.error('Error starting speech recognition:', error);
     }
   }, []);
 
@@ -77,7 +82,7 @@ const useSpeech2text = (
       recognition.current.stop();
       setIsRecognizing(false);
     } catch (error) {
-      console.error("Error stopping speech recognition:", error);
+      console.error('Error stopping speech recognition:', error);
     }
   }, []);
 
@@ -86,7 +91,7 @@ const useSpeech2text = (
     isRecognizing,
     startListening,
     stopListening,
-    setLanguage,
+    setLanguage
   };
 };
 
