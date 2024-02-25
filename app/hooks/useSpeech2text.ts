@@ -9,17 +9,17 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
   const [isRecognizing, setIsRecognizing] = useState<boolean>(false);
   const recognition = useRef<typeof SpeechRecognition | null>(null);
 
-  const startListening = useCallback(() => {
+  const startListening = () => {
     console.log('const startListening = useCallback(() => {');
     recognition.current?.start();
     setIsRecognizing(true);
-  }, []);
+  }
 
-  const stopListening = useCallback(() => {
+  const stopListening = () => {
     console.log('const stopListening = useCallback(() => {');
-    recognition.current?.stop();
+    recognition.current?.abort()
     setIsRecognizing(false);
-  }, []);
+  }
 
   useEffect(() => {
     if (!SpeechRecognition) {
