@@ -11,7 +11,7 @@ const subscribeInsertMessage = () => {
   const channels = supabase.channel('custom-insert-channel')
   .on(
     'postgres_changes',
-    { event: 'INSERT', schema: 'public', table: 'messages' },
+    { event: 'INSERT', schema: 'public', table: 'messages', filter:"role=ibrain" },
     (payload) => {
       console.log('Change received!', payload)
     }
