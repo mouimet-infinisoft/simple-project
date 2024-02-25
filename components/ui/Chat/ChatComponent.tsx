@@ -46,7 +46,7 @@ const ChatComponent = () => {
           placeholder="Type or speak your message here..."
           className="flex-1 p-2 border rounded shadow-sm bg-gray-700 text-white"
         />
-        {isRecognizing && (
+        {!isRecognizing && (
           <button
             type="button"
             onClick={startListening}
@@ -56,7 +56,7 @@ const ChatComponent = () => {
             Speak
           </button>
         )}
-        {!isRecognizing && (
+        {isRecognizing && (
           <button
             type="button"
             onClick={stopListening}
