@@ -13,13 +13,19 @@ const subscribeInsertMessage = () => {
       'postgres_changes',
       { event: 'INSERT', schema: 'public', table: 'messages' },
       (payload) => {
-        if (String(payload?.new?.role).includes('ibrain')) {
+        if (String(payload?.new?.role).includes('ibrain')){
           console.log('Change received!', payload);
           speak(String(payload?.new?.text));
         }
       }
     )
     .subscribe();
+};
+
+const unSubscribeInsertMessage = () => {
+  const supabase = createClient();
+
+  supabase.removeAllChannels()
 };
 
 const speak = (text: string) => {
@@ -71,6 +77,8 @@ function splitCodeFromText(markdown: string) {
 export default function ChatPage() {
   useEffect(() => {
     subscribeInsertMessage();
+
+    return unSubscribeInsertMessage
   }, []);
   return (
     <div>
