@@ -10,11 +10,13 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
   const recognition = useRef<typeof SpeechRecognition | null>(null);
 
   const startListening = useCallback(() => {
+    console.log('const startListening = useCallback(() => {');
     recognition.current?.start();
     setIsRecognizing(true);
   }, []);
 
   const stopListening = useCallback(() => {
+    console.log('const stopListening = useCallback(() => {');
     recognition.current?.stop();
     setIsRecognizing(false);
   }, []);
