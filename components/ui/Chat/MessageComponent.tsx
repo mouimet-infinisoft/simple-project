@@ -15,7 +15,7 @@ const MessageComponent = ({ text, role }: Partial<ChatMessage>) => {
 
   return (
     <li className={combinedStyles}>
-      {text}
+      {role}: {text}
     </li>
   );
 };

@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
 
   const { data: newAiMessage, error: errorAi } = await supabase
     .from('messages')
-    .insert([{ userId: user.id, text: `iBrain: ${answer}`, role: 'ibrain' }])
+    .insert([{ userId: user.id, text: answer, role: 'ibrain' }])
     .single();
 
   if (errorAi) {
