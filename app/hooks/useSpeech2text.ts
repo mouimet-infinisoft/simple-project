@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 // useSpeech2text.ts
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -7,8 +7,8 @@ type OnTriggerFunction = (speech: string) => void;
 
 const useSpeech2text = (onTrigger: OnTriggerFunction) => {
   const SpeechRecognition =
-    (window as any)?.SpeechRecognition ||
-    (window as any)?.webkitSpeechRecognition;
+    (global?.window as any)?.SpeechRecognition ||
+    (global?.window as any)?.webkitSpeechRecognition;
   const [isRecognizing, setIsRecognizing] = useState<boolean>(false);
   const recognition = useRef<typeof SpeechRecognition | null>(null);
 
