@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
   // Insert the new message with the authenticated user's ID
   const { data: newMessage, error } = await supabase
     .from('messages')
-    .insert([{ userId: user.id, text }])
+    .insert([{ userId: user.id, text, role: 'me' }])
     .single();
 
   if (error) {
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
 
   const { data: newAiMessage, error: errorAi } = await supabase
     .from('messages')
-    .insert([{ userId: user.id, text: `iBrain: ${answer}` }])
+    .insert([{ userId: user.id, text: `iBrain: ${answer}`, role: 'ibrain' }])
     .single();
 
   if (errorAi) {
