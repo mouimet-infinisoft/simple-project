@@ -3,7 +3,7 @@
 // useSpeech2text.ts
 import { useCallback, useEffect, useRef } from 'react';
 
-type OnTriggerFunction = (speech: string) => void;
+type OnTriggerFunction = (speech: string) => Promise<void>;
 const SpeechRecognition =
   (global?.window as any)?.SpeechRecognition ||
   (global?.window as any)?.webkitSpeechRecognition;
@@ -18,12 +18,13 @@ const useSpeech2text = (onTrigger: OnTriggerFunction) => {
       recognition.current.continuous = true;
       recognition.current.lang = 'en-US';
 
-      recognition.current.onresult = (event: any) => {
+      recognition.current.onresult = async (event: any) => {
         console.log(event);
         const transcript = Array.from(event.results)
           .map((result: any) => result?.[0].transcript)
           .join('');
-        onTrigger(transcript);
+
+        await onTrigger(transcript);
       };
 
       recognition.current.onerror = (event: any) => {
