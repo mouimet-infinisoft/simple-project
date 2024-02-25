@@ -1,3 +1,5 @@
+"use client"
+
 // useSpeech2text.ts
 import { useCallback, useEffect, useRef, useState } from 'react';
 
