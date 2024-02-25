@@ -30,8 +30,8 @@ const unSubscribeInsertMessage = () => {
 };
 
 // Define custom events for starting and stopping speech recognition
-export const isSpeakingEvent = new Event('isTalking');
-export const isSilentEvent = new Event('isSilent');
+const isSpeakingEvent = new Event('isTalking');
+const isSilentEvent = new Event('isSilent');
 
 const speak = (text: string) => {
   const { plainText } = splitCodeFromText(text.replace('ibrain:', ''));
