@@ -42,12 +42,12 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
 
   useEffect(() => {
     // Listen for custom events to start/stop recognition
-    window.addEventListener('speechStart', stopListening);
-    window.addEventListener('speechEnd', startListening);
+    window.addEventListener('isTalking', stopListening);
+    window.addEventListener('isSilent', startListening);
 
     return () => {
-      window.removeEventListener('speechStart', stopListening);
-      window.removeEventListener('speechEnd', startListening);
+      window.removeEventListener('isTalking', stopListening);
+      window.removeEventListener('isSilent', startListening);
       stopListening();
     };
   }, [startListening, stopListening]);
