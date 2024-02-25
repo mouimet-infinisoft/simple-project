@@ -124,13 +124,18 @@ export async function POST(request: NextRequest) {
   const ai = userData?.openai_apikey
     ? new OpenAIIntegration(5, new OpenAI({ apiKey: userData.openai_apikey }))
     : new OpenAIIntegration(5);
-  const answer = await ai.ask("Your name is ibrain and you are a helpful AI assistant.\n"+
-    context + '\nConsider following new message:\n' + text
+  const answer = await ai.ask(
+    'Your name is ibrain and you are a helpful AI assistant.\n' +
+      context +
+      '\nConsider following new message:\n' +
+      text
   );
 
   const { data: newAiMessage, error: errorAi } = await supabase
     .from('messages')
-    .insert([{ user_id: user.id, text: answer, role: 'ibrain' }])
+    .insert([
+      { user_id: user.id, text: answer.replace('ibrain:', ''), role: 'ibrain' }
+    ])
     .single();
 
   if (errorAi) {
