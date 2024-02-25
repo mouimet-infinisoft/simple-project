@@ -5,19 +5,41 @@ import React, { useEffect } from 'react';
 import ChatComponent from 'components/ui/Chat';
 import { createClient } from '@/utils/supabase/client';
 
-const subscribeInsertMessage = () => {
+const subscribeInsertMessage = async () => {
   const supabase = createClient();
 
-  const channels = supabase
-    .channel('custom-insert-channel')
+  // Extract the user session from the request to identify the user
+  const {
+    data: { user },
+    error: userError
+  } = await supabase.auth.getUser();
+
+  // const channels = supabase
+  //   .channel('custom-insert-channel')
+  //   .on(
+  //     'postgres_changes',
+  //     { event: 'INSERT', schema: 'public', table: 'messages' },
+  //     (payload) => {
+  //       if (String(payload?.new?.role).includes('ibrain')) {
+  //         console.log('Change received!', payload);
+  //         speak(String(payload?.new?.text));
+  //       }
+  //     }
+  //   )
+  //   .subscribe();
+
+  const messages = supabase
+    .channel('custom-filter-channel')
     .on(
       'postgres_changes',
-      { event: 'INSERT', schema: 'public', table: 'messages' },
+      {
+        event: '*',
+        schema: 'public',
+        table: 'messages',
+        filter: `user_id=eq.${user?.id}`
+      },
       (payload) => {
-        if (String(payload?.new?.role).includes('ibrain')) {
-          console.log('Change received!', payload);
-          speak(String(payload?.new?.text));
-        }
+        console.log('Change received!', payload);
       }
     )
     .subscribe();
@@ -107,7 +129,11 @@ function splitCodeFromText(markdown: string) {
 
 export default function ChatPage() {
   useEffect(() => {
-    subscribeInsertMessage();
+    subscribeInsertMessage()
+      .then(() => {
+        console.log(`Subsribed`);
+      })
+      .catch(console.error);
 
     return unSubscribeInsertMessage;
   }, []);
