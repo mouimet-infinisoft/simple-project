@@ -1,58 +1,4 @@
 'use client';
-
-// import { any } from '@tensorflow/tfjs';
-// // useSpeech2text.ts
-// import { useCallback, useEffect, useRef } from 'react';
-
-// type OnTriggerFunction = (speech: string) => Promise<void>;
-
-// const useSpeech2text = (onTrigger: OnTriggerFunction) => {
-//   const recognition = useRef<typeof SpeechRecognition | null>(null);
-//   const isRecognizingRef = useRef<boolean>(false);
-
-//   useEffect(() => {
-//     if (SpeechRecognition) {
-//       recognition.current = new SpeechRecognition();
-//       recognition.current.continuous = true;
-//       recognition.current.lang = 'en-US';
-
-//       recognition.current.onresult = async (event: any) => {
-//         console.log(event);
-//         const transcript = Array.from(event.results)
-//           .map((result: any) => result?.[0].transcript)
-//           .join('');
-
-//         await onTrigger(transcript);
-//       };
-
-//       recognition.current.onerror = (event: any) => {
-//         console.error('Speech recognition error', event.error);
-//       };
-//     }
-
-//     return stopListening;
-//   }, []);
-
-//   const startListening = useCallback(() => {
-//     recognition.current?.start();
-//     isRecognizingRef.current = true;
-//   }, []);
-
-//   const stopListening = useCallback(() => {
-//     recognition.current?.stop();
-//     isRecognizingRef.current = false;
-//   }, []);
-
-//   return {
-//     isRecognizing: isRecognizingRef.current,
-//     startListening,
-//     stopListening
-//   };
-// };
-
-// export default useSpeech2text;
-
-// useSpeech2text.ts
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const SpeechRecognition =
@@ -62,26 +8,6 @@ const SpeechRecognition =
 const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
   const [isRecognizing, setIsRecognizing] = useState<boolean>(false);
   const recognition = useRef<typeof SpeechRecognition | null>(null);
-
-  useEffect(() => {
-    if (!SpeechRecognition) {
-      console.error('Speech Recognition is not supported by this browser.');
-      return;
-    }
-
-    recognition.current = new SpeechRecognition();
-    recognition.current.continuous = true;
-    recognition.current.lang = 'en-US';
-    recognition.current.onresult = async (event: any) => {
-      const transcript = Array.from(event.results)
-        .map((result: any) => result?.[0]?.transcript)
-        .join('');
-      await onTrigger(transcript);
-    };
-    recognition.current.onerror = (event: any) => {
-      console.error('Speech recognition error', event.error);
-    };
-  }, [onTrigger]);
 
   const startListening = useCallback(() => {
     recognition.current?.start();
@@ -93,7 +19,86 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
     setIsRecognizing(false);
   }, []);
 
+  useEffect(() => {
+    if (!('SpeechRecognition' in window)) {
+      console.error('Speech Recognition is not supported by this browser.');
+      return;
+    }
+
+    recognition.current = new SpeechRecognition()
+    recognition.current.continuous = true;
+    recognition.current.lang = 'en-US';
+    recognition.current.onresult = async (event:any) => {
+      const transcript = Array.from(event.results)
+        .map((result:any) => result?.[0]?.transcript)
+        .join('');
+      await onTrigger(transcript);
+    };
+
+    recognition.current.onerror = (event:any) => {
+      console.error('Speech recognition error', event);
+    };
+
+    // Listen for custom events to start/stop recognition
+    window.addEventListener('speechStart', stopListening);
+    window.addEventListener('speechEnd', startListening);
+
+    return () => {
+      window.removeEventListener('speechStart', stopListening);
+      window.removeEventListener('speechEnd', startListening);
+      stopListening();
+    };
+  }, [startListening, stopListening, onTrigger]);
+
   return { isRecognizing, startListening, stopListening };
 };
 
 export default useSpeech2text;
+
+
+
+
+
+// // useSpeech2text.ts
+// import { useCallback, useEffect, useRef, useState } from 'react';
+
+
+
+// const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
+//   const [isRecognizing, setIsRecognizing] = useState<boolean>(false);
+//   const recognition = useRef<typeof SpeechRecognition | null>(null);
+
+//   useEffect(() => {
+//     if (!SpeechRecognition) {
+//       console.error('Speech Recognition is not supported by this browser.');
+//       return;
+//     }
+
+//     recognition.current = new SpeechRecognition();
+//     recognition.current.continuous = true;
+//     recognition.current.lang = 'en-US';
+//     recognition.current.onresult = async (event: any) => {
+//       const transcript = Array.from(event.results)
+//         .map((result: any) => result?.[0]?.transcript)
+//         .join('');
+//       await onTrigger(transcript);
+//     };
+//     recognition.current.onerror = (event: any) => {
+//       console.error('Speech recognition error', event.error);
+//     };
+//   }, [onTrigger]);
+
+//   const startListening = useCallback(() => {
+//     recognition.current?.start();
+//     setIsRecognizing(true);
+//   }, []);
+
+//   const stopListening = useCallback(() => {
+//     recognition.current?.stop();
+//     setIsRecognizing(false);
+//   }, []);
+
+//   return { isRecognizing, startListening, stopListening };
+// };
+
+// export default useSpeech2text;

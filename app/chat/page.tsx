@@ -28,29 +28,54 @@ const unSubscribeInsertMessage = () => {
   supabase.removeAllChannels()
 };
 
+// Define custom events for starting and stopping speech recognition
+const speechStartEvent = new Event('speechStart');
+const speechEndEvent = new Event('speechEnd');
+
+
 const speak = (text: string) => {
   const { plainText } = splitCodeFromText(text.replace('ibrain:', ''));
   const sentences = plainText.split(/(?<=[.!?])/);
 
-  sentences.forEach((sentence) => {
+  sentences.forEach((sentence, index) => {
     const trimmedSentence = sentence.trim();
     if (trimmedSentence) {
       const utterance = new SpeechSynthesisUtterance(trimmedSentence);
       utterance.lang = 'en';
       utterance.voice = window.speechSynthesis.getVoices()[87];
 
-      utterance.onstart = () => {
-        // bstack.store.emit("audio.stopListening");
-      };
-
-      utterance.onend = () => {
-        // bstack.store.emit("audio.startListening");
-      };
+      if (index === 0) utterance.onstart = () => window.dispatchEvent(speechStartEvent);
+      if (index === sentences.length - 1) utterance.onend = () => window.dispatchEvent(speechEndEvent);
 
       window.speechSynthesis.speak(utterance);
     }
   });
 };
+
+
+// const speak = (text: string) => {
+//   const { plainText } = splitCodeFromText(text.replace('ibrain:', ''));
+//   const sentences = plainText.split(/(?<=[.!?])/);
+
+//   sentences.forEach((sentence) => {
+//     const trimmedSentence = sentence.trim();
+//     if (trimmedSentence) {
+//       const utterance = new SpeechSynthesisUtterance(trimmedSentence);
+//       utterance.lang = 'en';
+//       utterance.voice = window.speechSynthesis.getVoices()[87];
+
+//       utterance.onstart = () => {
+//         // bstack.store.emit("audio.stopListening");
+//       };
+
+//       utterance.onend = () => {
+//         // bstack.store.emit("audio.startListening");
+//       };
+
+//       window.speechSynthesis.speak(utterance);
+//     }
+//   });
+// };
 
 function splitCodeFromText(markdown: string) {
   // Regex to find code blocks
