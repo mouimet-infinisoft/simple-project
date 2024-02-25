@@ -18,7 +18,7 @@ const DiscussionComponent = ({ messages }: { messages: ChatMessage[] }) => {
   return (
     <ul ref={containerRef} className="space-y-2 max-h-96 overflow-auto p-3">
       {messages.map((msg) => (
-        <MessageComponent key={msg.id} text={msg.text} />
+        <MessageComponent key={msg.id} {...msg}/>
       ))}
     </ul>
   );
