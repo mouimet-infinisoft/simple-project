@@ -10,7 +10,7 @@ const useSpeech2text = (
   onTrigger: OnTriggerFunction,
   triggerCondition: TriggerConditionFunction = (text) => text.includes('?')
 ) => {
-  const SpeechRecognition = (global.window as any).SpeechRecognition || (global.window as any).webkitSpeechRecognition;
+  const SpeechRecognition = (global?.window as any)?.SpeechRecognition || (global?.window as any)?.webkitSpeechRecognition;
 
   if (!SpeechRecognition) {
     console.error("Speech Recognition is not supported by this browser.");
