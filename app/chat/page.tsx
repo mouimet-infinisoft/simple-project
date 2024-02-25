@@ -30,8 +30,8 @@ const unSubscribeInsertMessage = () => {
 };
 
 // Define custom events for starting and stopping speech recognition
-const isSpeakingEvent = new CustomEvent('isTalking');
-const isSilentEvent = new CustomEvent('isSilent');
+const isSpeakingEvent = new Event('isTalking');
+const isSilentEvent = new Event('isSilent');
 
 const speak = (text: string) => {
   const { plainText } = splitCodeFromText(text.replace('ibrain:', ''));
@@ -49,9 +49,7 @@ const speak = (text: string) => {
       }
 
       utterance.onend = () => {
-        if (index === sentences.length - 1) {
-          window.dispatchEvent(isSilentEvent);
-        }
+        window.dispatchEvent(isSilentEvent);
       };
 
       window.speechSynthesis.speak(utterance);
