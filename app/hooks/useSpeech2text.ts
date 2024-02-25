@@ -38,7 +38,9 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
     recognition.current.onerror = (event: any) => {
       console.error('Speech recognition error', event);
     };
+  }, [onTrigger]);
 
+  useEffect(() => {
     // Listen for custom events to start/stop recognition
     window.addEventListener('speechStart', stopListening);
     window.addEventListener('speechEnd', startListening);
@@ -48,7 +50,7 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
       window.removeEventListener('speechEnd', startListening);
       stopListening();
     };
-  }, [startListening, stopListening, onTrigger]);
+  }, [startListening, stopListening]);
 
   return { isRecognizing, startListening, stopListening };
 };
