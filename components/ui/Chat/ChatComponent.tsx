@@ -8,11 +8,10 @@ const ChatComponent = () => {
   const { messages, sendMessage, fetchMessages } = useChat();
   const [message, setMessage] = useState('');
 
-  const handleRecognizedSpeech = (recognizedSpeech: string) => {
+  const handleRecognizedSpeech = async (recognizedSpeech: string) => {
+    setMessage((prev) => prev + ' ' + recognizedSpeech);
     if (recognizedSpeech.includes('?')) {
-      sendMessage(recognizedSpeech);
-    } else {
-      setMessage((prev) => prev + ' ' + recognizedSpeech);
+      await _sendMessage();
     }
   };
 
@@ -24,11 +23,15 @@ const ChatComponent = () => {
     fetchMessages();
   }, [fetchMessages]);
 
-  const handleSendMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const _sendMessage = async () => {
     if (!message.trim()) return;
     await sendMessage(message);
     setMessage('');
+  };
+
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await _sendMessage();
   };
 
   return (
@@ -43,22 +46,25 @@ const ChatComponent = () => {
           placeholder="Type or speak your message here..."
           className="flex-1 p-2 border rounded shadow-sm bg-gray-700 text-white"
         />
-        <button
-          type="button"
-          onClick={startListening}
-          hidden={isRecognizing}
-          className={`px-4 py-2 rounded bg-green-500 hover:bg-green-700 text-white font-bold`}
-        >
-          Speak
-        </button>
-        <button
-          type="button"
-          onClick={stopListening}
-          hidden={!isRecognizing}
-          className={`px-4 py-2 rounded bg-red-500  hover:bg-green-700 text-white font-bold`}
-        >
-          Stop
-        </button>
+        {isRecognizing && (
+          <button
+            type="button"
+            onClick={startListening}
+            hidden={isRecognizing}
+            className={`px-4 py-2 rounded bg-green-500 hover:bg-green-700 text-white font-bold`}
+          >
+            Speak
+          </button>
+        )}
+        {!isRecognizing && (
+          <button
+            type="button"
+            onClick={stopListening}
+            className={`px-4 py-2 rounded bg-red-500  hover:bg-red-700 text-white font-bold`}
+          >
+            Stop
+          </button>
+        )}
         <button
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
