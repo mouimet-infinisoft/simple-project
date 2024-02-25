@@ -12,7 +12,7 @@ const MessageComponent = ({ text, role }: Partial<ChatMessage>) => {
   };
 
   // Combine base styles with conditional styles
-  const combinedStyles = `${messageStyles.base} ${role === 'me' ? messageStyles.me : messageStyles.ibrain}`;
+  const combinedStyles = `${messageStyles.base} ${role === 'user' ? messageStyles.me : messageStyles.ibrain}`;
 
   return (
     <li className={combinedStyles}>

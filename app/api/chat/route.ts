@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
   // Insert the new message with the authenticated user's ID
   const { data: newMessage, error } = await supabase
     .from('messages')
-    .insert([{ user_id: user.id, text, role: 'me' }])
+    .insert([{ user_id: user.id, text, role: 'user' }])
     .single();
 
   if (error) {
@@ -124,8 +124,8 @@ export async function POST(request: NextRequest) {
   const ai = userData?.openai_apikey
     ? new OpenAIIntegration(5, new OpenAI({ apiKey: userData.openai_apikey }))
     : new OpenAIIntegration(5);
-  const answer = await ai.ask("You are ibrain a helpful assistant.\n"+
-    context + 'Consider following new message:\n' + text
+  const answer = await ai.ask("Your name is ibrain and you are a helpful AI assistant.\n"+
+    context + '\nConsider following new message:\n' + text
   );
 
   const { data: newAiMessage, error: errorAi } = await supabase
