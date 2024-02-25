@@ -1,3 +1,5 @@
+'use client';
+
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 // import { updateSettings } from '@/utils/auth-helpers/server'; // Assume this is a new or updated utility function
