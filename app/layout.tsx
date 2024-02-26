@@ -5,7 +5,6 @@ import { Toaster } from '@/components/ui/Toasts/toaster';
 import { PropsWithChildren, Suspense } from 'react';
 import { getURL } from '@/utils/helpers';
 import 'styles/main.css';
-import { BrainStackProvider } from '@/utils/brainstack/client';
 
 const meta = {
   title: 'Next.js Subscription Starter',
@@ -49,7 +48,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   return (
-    <BrainStackProvider>
       <html lang="en">
         <body className="bg-black loading">
           <Navbar />
@@ -65,6 +63,5 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           </Suspense>
         </body>
       </html>
-    </BrainStackProvider>
   );
 }
