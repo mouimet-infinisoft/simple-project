@@ -347,7 +347,7 @@ export async function updateKey(formData: FormData) {
   } = await supabase.auth.getUser();
   const { error, status } = await supabase
     .from('users')
-    .upsert({ id: user?.id ?? '', openai_apikey: apiKey, assistant_id:assistantId });
+    .update({ id: user?.id ?? '', openai_apikey: apiKey, assistant_id:assistantId });
 
   if (error) {
     return getErrorRedirect(
