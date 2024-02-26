@@ -2,7 +2,7 @@
 
 import React, { useMemo } from 'react';
 import { ChatMessage } from '@/types/ChatMessage';
-// import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown';
 // import remarkGfm from 'remark-gfm';
 import { Remark } from 'react-remark';
 import { DiagramModule } from '@brainstack/diagram';
@@ -20,7 +20,7 @@ const MessageComponent = ({ text, role }: ChatMessage) => {
 
   // Function to replace PlantUML code with the SVG URL
   const processText = useMemo(() => {
-    console.log(`MessageComponent ProcessText: `, text);
+    console.log(`MessageComponent ProcessText: `, text)
     const plantUmlRegex = /@startuml([\s\S]*?)@enduml/g;
     return text.replace(plantUmlRegex, (match, p1) => {
       const plantUmlCode = p1.trim(); // Remove @startuml and @enduml
@@ -29,7 +29,11 @@ const MessageComponent = ({ text, role }: ChatMessage) => {
     });
   }, [text]);
   //    <ReactMarkdown className={combinedStyles} remarkPlugins={[remarkGfm]}>
-  return <Remark>{processText.trim()}</Remark>;
+  return (
+    <ReactMarkdown>
+      {`${processText.trim()}`}
+    </ReactMarkdown>
+  );
 };
 
 export default MessageComponent;
