@@ -12,3 +12,31 @@
     overflow-y: auto; /* Scroll inside the chat component if needed */
   }
   
+  @keyframes boopBounce {
+    0% {
+      transform: scale(1);
+    }
+    15% {
+      transform: scale(1.1);
+    }
+    30% {
+      transform: scale(0.9);
+    }
+    45% {
+      transform: scale(1.05);
+    }
+    60% {
+      transform: scale(0.95);
+    }
+    75% {
+      transform: scale(1.02);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .chatOverlay img {
+    animation: boopBounce 0.6s ease-in-out;
+  }
+  
