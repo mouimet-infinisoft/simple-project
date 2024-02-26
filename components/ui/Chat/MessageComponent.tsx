@@ -34,6 +34,7 @@ const MessageComponent = ({ text, role }: ChatMessage) => {
 
   // console.log(String(file))
 
+  // This is to be refactored as React-Markdown custom renderer
   const processText = useMemo(() => {
     console.log(`MessageComponent ProcessText: `, text);
 
@@ -42,7 +43,8 @@ const MessageComponent = ({ text, role }: ChatMessage) => {
       /(```(?:plantuml)?\s*\n)?@startuml([\s\S]*?)@enduml\s*(?:\n```)?/g;
 
     return text.replace(plantUmlRegex, (match, p1, p2) => {
-      const plantUmlCode = p2.trim(); // Extract PlantUML code
+      const plantUmlCode = `!theme superhero
+${p2.trim()}`; // Extract PlantUML code
       const svgUrl = DiagramModule.generate_svg(plantUmlCode); // Generate SVG URL
       return `![PlantUML Diagram](${svgUrl})`; // Return Markdown image syntax
     });
