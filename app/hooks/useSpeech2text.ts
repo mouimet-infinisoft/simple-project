@@ -14,7 +14,6 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
       console.log('const startListening = useCallback(() => {');
       if (!isRecognizing) {
         recognition.current?.start();
-        setIsRecognizing(true);
       }
     } catch (err) {}
   };
@@ -25,10 +24,7 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
       if (isRecognizing) {
         recognition.current?.abort();
       }
-    } catch (err) {
-    } finally {
-      setIsRecognizing(false);
-    }
+    } catch (err) {}
   };
 
   useEffect(() => {
@@ -40,6 +36,10 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
     recognition.current = new SpeechRecognition();
     recognition.current.continuous = true;
     recognition.current.lang = 'en-US';
+
+    recognition.current.onstart = () => {setIsRecognizing(true)}
+    recognition.current.onend = () => {setIsRecognizing(false)}
+
     recognition.current.onresult = async (event: any) => {
       const transcript = Array.from(event.results)
         .map((result: any) => result?.[0]?.transcript)
@@ -48,9 +48,8 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
     };
 
     recognition.current.onerror = (event: any) => {
+      setIsRecognizing(false);
       if (String(event?.error).includes('no-speech')) {
-        setIsRecognizing(false);
-        startListening();
       } else if (String(event?.error).includes('abort')) {
       } else {
         console.error('Speech recognition error', event);

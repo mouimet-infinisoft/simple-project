@@ -5,35 +5,19 @@ interface ChatInputComponentProps {
   sendMessage: (message: string) => Promise<void>;
 }
 
-const ChatInputComponent: React.FC<ChatInputComponentProps> = ({
-  sendMessage
-}) => {
+const ChatInputComponent: React.FC<ChatInputComponentProps> = ({ sendMessage }) => {
   const [message, setMessage] = useState('');
 
-  const onRecognizedSpeech = async (recognizedSpeech: string) => {
-    await handleSpeechRecognitionResult(recognizedSpeech)
-    // if (recognizedSpeech.includes('?')) {
-    //   await sendMessage(message + ' ' + recognizedSpeech);
-    //   setMessage('');
-    // } else {
-    //   setMessage((prev) => prev + ' ' + recognizedSpeech);
-    // }
-  };
-
-  const { isRecognizing, startListening, stopListening } = useSpeech2text(
-    onRecognizedSpeech
-  );
-
-  const handleSpeechRecognitionResult = async (recognizedSpeech: string) => {
+  const handleRecognizedSpeech = async (recognizedSpeech: string) => {
     if (recognizedSpeech.includes('?')) {
-      stopListening();
-      const msg = message;
+      await sendMessage(message + " " + recognizedSpeech);
       setMessage('');
-      await sendMessage(msg + ' ' + recognizedSpeech);
     } else {
-      setMessage((prev) => prev + ' ' + recognizedSpeech);
+      setMessage(prev => prev + " " + recognizedSpeech);
     }
   };
+
+  const { isRecognizing, startListening, stopListening } = useSpeech2text(handleRecognizedSpeech);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
