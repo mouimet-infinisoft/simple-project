@@ -7,12 +7,12 @@ import { getURL } from '@/utils/helpers';
 import 'styles/main.css';
 
 const meta = {
-  title: 'Next.js Subscription Starter',
-  description: 'Brought to you by Vercel, Stripe, and Supabase.',
-  cardImage: '/og.png',
+  title: 'iBrain One - Your AI Assistant',
+  description: 'Empowering conversations with AI-driven insights. Brought to you by iBrain One.',
+  cardImage: '/og.png', // Ensure this image reflects your brand
   robots: 'follow, index',
-  favicon: '/favicon.ico',
-  url: getURL()
+  favicon: '/favicon.ico', // Ensure this icon is branded
+  url: 'https://ibrain.one' // Your main website URL
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -20,10 +20,10 @@ export async function generateMetadata(): Promise<Metadata> {
     title: meta.title,
     description: meta.description,
     referrer: 'origin-when-cross-origin',
-    keywords: ['Vercel', 'Supabase', 'Next.js', 'Stripe', 'Subscription'],
-    authors: [{ name: 'Vercel', url: 'https://vercel.com/' }],
-    creator: 'Vercel',
-    publisher: 'Vercel',
+    keywords: ['AI Assistant', 'iBrain One', 'Intelligent Conversations', 'AI Insights'],
+    authors: [{ name: 'iBrain One', url: 'https://ibrain.one' }], // Your main website URL
+    creator: 'iBrain One',
+    publisher: 'iBrain One',
     robots: meta.robots,
     icons: { icon: meta.favicon },
     metadataBase: new URL(meta.url),
@@ -31,20 +31,21 @@ export async function generateMetadata(): Promise<Metadata> {
       url: meta.url,
       title: meta.title,
       description: meta.description,
-      images: [meta.cardImage],
+      images: [meta.cardImage], // Ensure this image is properly branded
       type: 'website',
       siteName: meta.title
     },
     twitter: {
       card: 'summary_large_image',
-      site: '@Vercel',
-      creator: '@Vercel',
+      site: '@InfinisoftI', // Your Twitter handle
+      creator: '@InfinisoftI', // Your Twitter handle
       title: meta.title,
       description: meta.description,
-      images: [meta.cardImage]
+      images: [meta.cardImage] // Ensure this image is properly branded
     }
   };
 }
+
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   return (
