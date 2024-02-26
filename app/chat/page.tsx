@@ -14,20 +14,6 @@ const subscribeInsertMessage = async () => {
     error: userError
   } = await supabase.auth.getUser();
 
-  // const channels = supabase
-  //   .channel('custom-insert-channel')
-  //   .on(
-  //     'postgres_changes',
-  //     { event: 'INSERT', schema: 'public', table: 'messages' },
-  //     (payload) => {
-  //       if (String(payload?.new?.role).includes('ibrain')) {
-  //         console.log('Change received!', payload);
-  //         speak(String(payload?.new?.text));
-  //       }
-  //     }
-  //   )
-  //   .subscribe();
-
   const messages = supabase
     .channel('custom-filter-channel')
     .on(
@@ -83,30 +69,6 @@ const speak = (text: string) => {
     }
   });
 };
-
-// const speak = (text: string) => {
-//   const { plainText } = splitCodeFromText(text.replace('ibrain:', ''));
-//   const sentences = plainText.split(/(?<=[.!?])/);
-
-//   sentences.forEach((sentence) => {
-//     const trimmedSentence = sentence.trim();
-//     if (trimmedSentence) {
-//       const utterance = new SpeechSynthesisUtterance(trimmedSentence);
-//       utterance.lang = 'en';
-//       utterance.voice = window.speechSynthesis.getVoices()[87];
-
-//       utterance.onstart = () => {
-//         // bstack.store.emit("audio.stopListening");
-//       };
-
-//       utterance.onend = () => {
-//         // bstack.store.emit("audio.startListening");
-//       };
-
-//       window.speechSynthesis.speak(utterance);
-//     }
-//   });
-// };
 
 function splitCodeFromText(markdown: string) {
   // Regex to find code blocks
