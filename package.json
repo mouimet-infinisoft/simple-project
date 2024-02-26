@@ -17,7 +17,7 @@
     "supabase:migrate": "npx supabase migration up --linked"
   },
   "dependencies": {
-    "@brainstack/diagram": "^1.0.3",
+    "@brainstack/diagram": "^1.0.4",
     "@brainstack/log": "^1.1.134",
     "@radix-ui/react-toast": "^1.1.5",
     "@stripe/stripe-js": "2.4.0",
