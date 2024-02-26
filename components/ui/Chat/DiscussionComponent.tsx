@@ -7,6 +7,19 @@ const DiscussionComponent = ({ messages }: { messages: ChatMessage[] }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Introduce a slight delay to allow for the initial loading message rendering
+    const timer = setTimeout(() => {
+      const scrollHeight = containerRef.current?.scrollHeight ?? 0;
+      const height = containerRef.current?.clientHeight ?? 0;
+  
+      // Scroll to the bottom of the message container
+      containerRef.current?.scrollTo(0, scrollHeight - height);
+    }, 100); // Adjust delay as needed
+  
+    return () => clearTimeout(timer); // Cleanup the timer on component unmount
+  }, []);
+
+  useEffect(() => {
     // Scroll the container to the bottom
     const scrollHeight = containerRef.current?.scrollHeight ?? 0;
     const height = containerRef.current?.clientHeight ?? 0;
