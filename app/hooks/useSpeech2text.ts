@@ -11,15 +11,19 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
 
   const startListening = () => {
     console.log('const startListening = useCallback(() => {');
-    recognition.current?.start();
-    setIsRecognizing(true);
-  }
+    if (!isRecognizing) {
+      recognition.current?.start();
+      setIsRecognizing(true);
+    }
+  };
 
   const stopListening = () => {
     console.log('const stopListening = useCallback(() => {');
-    recognition.current?.abort()
-    setIsRecognizing(false);
-  }
+    if (isRecognizing) {
+      recognition.current?.abort();
+      setIsRecognizing(false);
+    }
+  };
 
   useEffect(() => {
     if (!SpeechRecognition) {
@@ -40,6 +44,10 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
     recognition.current.onerror = (event: any) => {
       console.error('Speech recognition error', event);
     };
+
+    return () => {
+      stopListening();
+    };
   }, []);
 
   useEffect(() => {
@@ -50,7 +58,6 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
     return () => {
       window.removeEventListener('isTalking', stopListening);
       window.removeEventListener('isSilent', startListening);
-      // stopListening();
     };
   }, [startListening, stopListening]);
 
