@@ -6,7 +6,6 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-// Assuming `supabase` is an instance of `SupabaseClient` and is initialized elsewhere
 async function prepareContext(
   userId: string,
   supabase: SupabaseClient
@@ -43,9 +42,7 @@ async function prepareContext(
 }
 
 export async function GET(request: NextRequest) {
-  // Initialize Supabase client
   const supabase = createClient();
-  // Extract the user session from the request to identify the user
   const {
     data: { user },
     error: userError
@@ -57,12 +54,6 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  // Fetch messages for the authenticated user
-  // const { data: messages, error } = await supabase
-  //   .from('messages')
-  //   .select('*')
-  //   .eq('user_id', user.id) // Filter messages by the authenticated user's ID
-  //   .order('created_at', { ascending: true });
 
   const { data, error } = await supabase
     .from('messages')
@@ -71,7 +62,7 @@ export async function GET(request: NextRequest) {
     .order('created_at', { ascending: false }) // Order by created_at in descending order
     .limit(25); // Limit to the last 25 messages
 
-  // If there's no error and data is returned, reverse the array to have the messages in ascending order
+    // If there's no error and data is returned, reverse the array to have the messages in ascending order
   const messages = data && !error ? data.reverse() : [];
 
   if (error) {

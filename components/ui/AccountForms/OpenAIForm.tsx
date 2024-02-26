@@ -10,20 +10,10 @@ import { useState } from 'react';
 export default function OpenAIForm({ userSettings }: { userSettings: { apiKey: string; assistantId: string } }) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [apiKey, setApiKey] = useState(userSettings.apiKey);
-  // const [assistantId, setAssistantId] = useState(userSettings.assistantId);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault(); 
     setIsSubmitting(true);
-
-    // Check if the new settings are the same as the old settings
-    // if (apiKey === userSettings.apiKey && assistantId === userSettings.assistantId) {
-    //   setIsSubmitting(false);
-    //   return;
-    // }
-
-    // Assuming handleRequest can be adapted or is flexible enough to handle this new structure
     await handleRequest(e, updateKey, router);
     setIsSubmitting(false);
   };
@@ -50,11 +40,9 @@ export default function OpenAIForm({ userSettings }: { userSettings: { apiKey: s
           <label htmlFor="apiKey" className="block mb-2">OpenAI API Key</label>
           <input
             type="text"
-            // id="apiKey"
             name="apiKey"
             className="w-full p-3 rounded-md bg-zinc-800"
             defaultValue={userSettings.apiKey}
-            // onChange={(e) => setApiKey(e.target.value)}
             placeholder="Your OpenAI API Key"
           />
         </div>
@@ -62,11 +50,9 @@ export default function OpenAIForm({ userSettings }: { userSettings: { apiKey: s
           <label htmlFor="assistantId" className="block mb-2">Assistant ID</label>
           <input
             type="text"
-            // id="assistantId"
             name="assistantId"
             className="w-full p-3 rounded-md bg-zinc-800"
             defaultValue={userSettings.assistantId}
-            // onChange={(e) => setAssistantId(e.target.value)}
             placeholder="Your Assistant ID"
           />
         </div>

@@ -48,7 +48,7 @@ const MessageComponent = ({ text, role }: ChatMessage) => {
   }, [text]);
   //    <ReactMarkdown className={combinedStyles} remarkPlugins={[remarkGfm]}>
   return (
-    <ReactMarkdown remarkPlugins={[remarkParse, remarkRehype, remarkGfm]}>
+    <ReactMarkdown className={combinedStyles} remarkPlugins={[remarkParse, remarkRehype, remarkGfm]}>
       {processText}
     </ReactMarkdown>
   );
