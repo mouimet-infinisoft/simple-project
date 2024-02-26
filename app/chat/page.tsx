@@ -53,19 +53,19 @@ const speak = (text: string) => {
     if (trimmedSentence) {
       const utterance = new SpeechSynthesisUtterance(trimmedSentence);
       utterance.lang = 'en';
-      utterance.voice = window.speechSynthesis.getVoices()[87];
+      utterance.voice = global.window.speechSynthesis.getVoices()[87];
 
       if (index === 0) {
-        window.dispatchEvent(isSpeakingEvent);
+        global.window.dispatchEvent(isSpeakingEvent);
       }
 
       utterance.onend = () => {
         if (index === sentences.length - 1) {
-          window.dispatchEvent(isSilentEvent);
+          global.window.dispatchEvent(isSilentEvent);
         }
       };
 
-      window.speechSynthesis.speak(utterance);
+      global.window.speechSynthesis.speak(utterance);
     }
   });
 };
