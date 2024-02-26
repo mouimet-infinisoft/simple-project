@@ -10,17 +10,23 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
   const recognition = useRef<typeof SpeechRecognition | null>(null);
 
   const startListening = () => {
-    console.log('const startListening = useCallback(() => {');
-    if (!isRecognizing) {
-      recognition.current?.start();
-      setIsRecognizing(true);
-    }
+    try {
+      console.log('const startListening = useCallback(() => {');
+      if (!isRecognizing) {
+        recognition.current?.start();
+        setIsRecognizing(true);
+      }
+    } catch (err) {}
   };
 
   const stopListening = () => {
-    console.log('const stopListening = useCallback(() => {');
-    if (isRecognizing) {
-      recognition.current?.abort();
+    try {
+      console.log('const stopListening = useCallback(() => {');
+      if (isRecognizing) {
+        recognition.current?.abort();
+      }
+    } catch (err) {
+    } finally {
       setIsRecognizing(false);
     }
   };
@@ -42,9 +48,10 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
     };
 
     recognition.current.onerror = (event: any) => {
-      setIsRecognizing(false);
       if (String(event?.error).includes('no-speech')) {
+        setIsRecognizing(false);
         startListening();
+      } else if (String(event?.error).includes('abort')) {
       } else {
         console.error('Speech recognition error', event);
       }
