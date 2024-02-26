@@ -2,12 +2,16 @@
 
 import React, { useMemo } from 'react';
 import { ChatMessage } from '@/types/ChatMessage';
-import ReactMarkdown from 'react-markdown';
+import dynamic from 'next/dynamic';
+// import ReactMarkdown from 'react-markdown';
 // import remarkGfm from 'remark-gfm';
-import { Remark } from 'react-remark';
+// import { Remark } from 'react-remark';
 import { DiagramModule } from '@brainstack/diagram';
 
-// components/MessageComponent.tsx
+// Dynamically import ReactMarkdown with SSR disabled
+const ReactMarkdown = dynamic(() => import('react-markdown'), { ssr: false });
+
+
 
 const MessageComponent = ({ text, role }: ChatMessage) => {
   const messageStyles: Record<string, string> = {
