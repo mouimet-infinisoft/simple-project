@@ -16,7 +16,7 @@ const DiscussionComponent = ({ messages }: { messages: ChatMessage[] }) => {
   }, [messages]); // Run every time the messages array changes
 
   return (
-    <div ref={containerRef} className="space-y-2 max-h-96 overflow-auto p-3">
+    <div ref={containerRef} className="space-y-2 overflow-auto p-3" style={{maxHeight:'65vh'}}>
       {messages.map((msg) => (
         <MessageComponent key={msg.id} {...msg} />
       ))}
