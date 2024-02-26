@@ -30,7 +30,7 @@ const MessageComponent = ({ text, role }: ChatMessage) => {
   //    <ReactMarkdown className={combinedStyles} remarkPlugins={[remarkGfm]}>
   return (
     <ReactMarkdown>
-      {processText}
+      {processText.trim()}
     </ReactMarkdown>
   );
 };
