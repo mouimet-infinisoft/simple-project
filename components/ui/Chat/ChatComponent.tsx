@@ -11,7 +11,7 @@ const ChatComponent = () => {
   }, [fetchMessages]);
 
   return (
-    <div className="max-w-md mx-auto my-4 bg-gray-800 p-4 rounded-lg shadow">
+    <div className="mx-auto my-4 p-4 rounded-lg shadow bg-gray-800 w-full max-w-md md:max-w-lg lg:max-w-2xl">
       <h1 className="text-xl font-bold text-white mb-4">Chat</h1>
       <DiscussionComponent messages={messages} />
       <ChatInputComponent sendMessage={sendMessage} />
