@@ -19,6 +19,7 @@ const MessageComponent = ({ text, role }: ChatMessage) => {
 
   // Function to replace PlantUML code with the SVG URL
   const processText = useMemo(() => {
+    console.log(`MessageComponent ProcessText: `, text)
     const plantUmlRegex = /@startuml([\s\S]*?)@enduml/g;
     return text.replace(plantUmlRegex, (match, p1) => {
       const plantUmlCode = p1.trim(); // Remove @startuml and @enduml
@@ -26,9 +27,9 @@ const MessageComponent = ({ text, role }: ChatMessage) => {
       return `![PlantUML Diagram](${svgUrl})`; // Markdown image syntax
     });
   }, [text]);
-
+  //    <ReactMarkdown className={combinedStyles} remarkPlugins={[remarkGfm]}>
   return (
-    <ReactMarkdown className={combinedStyles} remarkPlugins={[remarkGfm]}>
+    <ReactMarkdown>
       {processText}
     </ReactMarkdown>
   );
