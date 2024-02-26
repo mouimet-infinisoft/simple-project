@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@brainstack/diagram':
-    specifier: ^1.0.5
-    version: 1.0.5
+    specifier: ^1.0.6
+    version: 1.0.6
   '@brainstack/log':
     specifier: ^1.1.134
     version: 1.1.134
@@ -145,8 +145,8 @@ packages:
     dependencies:
       regenerator-runtime: 0.14.1
 
-  /@brainstack/diagram@1.0.5:
-    resolution: {integrity: sha512-91Nyu8Oyqi+YsSR9Hd8shcJy5gEBUkUOLijKAw7dndA1oahrO68Uh+Bxb6nukLGjIuxWQ+Y3EQDAbtmA6Vr8Cw==}
+  /@brainstack/diagram@1.0.6:
+    resolution: {integrity: sha512-lPU7fwccMvfef662vzTt3lkNdJqbD1uvJ7Grwru3d8LIKBuOxEAoZIO3wO7XxaevpfU/XHZos1gE9S7ePnSLmA==}
     dev: false
 
   /@brainstack/log@1.1.134:
