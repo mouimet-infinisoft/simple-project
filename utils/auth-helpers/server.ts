@@ -334,3 +334,32 @@ export async function updateName(formData: FormData) {
     );
   }
 }
+
+export async function updateKey(formData: FormData) {
+  // Get form data
+  const apiKey = String(formData.get('apiKey')).trim();
+  const assistantId = String(formData.get('assistantId')).trim();
+
+  const supabase = createClient();
+  const {
+    error: errorUser,
+    data: { user }
+  } = await supabase.auth.getUser();
+  const { error, status } = await supabase
+    .from('users')
+    .upsert({ id: user?.id ?? '', openai_apikey: apiKey, assistant_id:assistantId });
+
+  if (error) {
+    return getErrorRedirect(
+      '/account',
+      'Your key could not be updated.',
+      error.message
+    );
+  }
+
+  return getStatusRedirect(
+    '/account',
+    'Success!',
+    'Your key has been updated.'
+  );
+}
