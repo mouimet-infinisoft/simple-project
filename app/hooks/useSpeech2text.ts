@@ -42,7 +42,12 @@ const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
     };
 
     recognition.current.onerror = (event: any) => {
-      console.error('Speech recognition error', event);
+      setIsRecognizing(false);
+      if (String(event?.error).includes('no-speech')) {
+        startListening();
+      } else {
+        console.error('Speech recognition error', event);
+      }
     };
 
     return () => {
