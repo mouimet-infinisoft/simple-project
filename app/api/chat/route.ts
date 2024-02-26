@@ -58,11 +58,21 @@ export async function GET(request: NextRequest) {
   }
 
   // Fetch messages for the authenticated user
-  const { data: messages, error } = await supabase
+  // const { data: messages, error } = await supabase
+  //   .from('messages')
+  //   .select('*')
+  //   .eq('user_id', user.id) // Filter messages by the authenticated user's ID
+  //   .order('created_at', { ascending: true });
+
+  const { data, error } = await supabase
     .from('messages')
     .select('*')
     .eq('user_id', user.id) // Filter messages by the authenticated user's ID
-    .order('created_at', { ascending: true });
+    .order('created_at', { ascending: false }) // Order by created_at in descending order
+    .limit(25); // Limit to the last 25 messages
+
+  // If there's no error and data is returned, reverse the array to have the messages in ascending order
+  const messages = data && !error ? data.reverse() : [];
 
   if (error) {
     return new NextResponse(JSON.stringify({ error: error.message }), {
