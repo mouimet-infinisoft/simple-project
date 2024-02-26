@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useMemo } from 'react';
 import { ChatMessage } from '@/types/ChatMessage';
 import ReactMarkdown from 'react-markdown';
@@ -10,7 +12,7 @@ const MessageComponent = ({ text, role }: ChatMessage) => {
   const messageStyles: Record<string, string> = {
     base: 'rounded-md p-2 mb-2 shadow text-white',
     user: 'bg-blue-600 text-right',
-    ibrain: 'bg-green-600 text-left',
+    ibrain: 'bg-green-600 text-left'
   };
 
   const combinedStyles = `${messageStyles.base} ${messageStyles[role]}`;
