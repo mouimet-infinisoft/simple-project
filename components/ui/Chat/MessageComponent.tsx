@@ -7,6 +7,11 @@ import dynamic from 'next/dynamic';
 // import remarkGfm from 'remark-gfm';
 // import { Remark } from 'react-remark';
 import { DiagramModule } from '@brainstack/diagram';
+import remarkRehype from 'remark-rehype'
+// import rehypeStringify from 'rehype-stringify'
+import remarkGfm from 'remark-gfm'
+import remarkParse from 'remark-parse'
+// import {unified} from 'unified'
 
 // Dynamically import ReactMarkdown with SSR disabled
 const ReactMarkdown = dynamic(() => import('react-markdown'), { ssr: false });
@@ -22,6 +27,15 @@ const MessageComponent = ({ text, role }: ChatMessage) => {
 
   const combinedStyles = `${messageStyles.base} ${messageStyles[role]}`;
 
+  // const file = await unified()
+  // .use(remarkParse)
+  // .use(remarkGfm)
+  // .use(remarkRehype)
+  // .use(rehypeStringify)
+  // .process('# Hi\n\n*Hello*, world!')
+
+// console.log(String(file))
+
   // Function to replace PlantUML code with the SVG URL
   const processText = useMemo(() => {
     console.log(`MessageComponent ProcessText: `, text)
@@ -34,8 +48,8 @@ const MessageComponent = ({ text, role }: ChatMessage) => {
   }, [text]);
   //    <ReactMarkdown className={combinedStyles} remarkPlugins={[remarkGfm]}>
   return (
-    <ReactMarkdown>
-      {`${processText.trim()}`}
+    <ReactMarkdown remarkPlugins={[remarkParse, remarkRehype, remarkGfm]}>
+      {processText}
     </ReactMarkdown>
   );
 };
