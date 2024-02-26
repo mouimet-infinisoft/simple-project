@@ -14,7 +14,7 @@ const DiscussionComponent = ({ messages }: { messages: ChatMessage[] }) => {
   
       // Scroll to the bottom of the message container
       containerRef.current?.scrollTo(0, scrollHeight - height);
-    }, 100); // Adjust delay as needed
+    }, 1500); // Adjust delay as needed
   
     return () => clearTimeout(timer); // Cleanup the timer on component unmount
   }, []);
