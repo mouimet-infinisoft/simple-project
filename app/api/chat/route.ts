@@ -1,3 +1,4 @@
+import { UserAwareness } from '@/app/lib/awareness/user_awareness_base';
 import { ChatMessage } from '@/types/ChatMessage';
 import { OpenAIIntegration } from '@/utils/openai/integrations/openai';
 import { createClient } from '@/utils/supabase/server';
@@ -54,7 +55,6 @@ export async function GET(request: NextRequest) {
     });
   }
 
-
   const { data, error } = await supabase
     .from('messages')
     .select('*')
@@ -62,7 +62,7 @@ export async function GET(request: NextRequest) {
     .order('created_at', { ascending: false }) // Order by created_at in descending order
     .limit(25); // Limit to the last 25 messages
 
-    // If there's no error and data is returned, reverse the array to have the messages in ascending order
+  // If there's no error and data is returned, reverse the array to have the messages in ascending order
   const messages = data && !error ? data.reverse() : [];
 
   if (error) {
@@ -125,11 +125,19 @@ export async function POST(request: NextRequest) {
   const ai = userData?.openai_apikey
     ? new OpenAIIntegration(5, new OpenAI({ apiKey: userData.openai_apikey }))
     : new OpenAIIntegration(5);
+
+  const userAwareness = new UserAwareness(ai);
+  await userAwareness.updateFromUser(text);
+  const userAwarenessContent = await userAwareness.content();
+
   const answer = await ai.ask(
     'Your name is ibrain and you are a helpful AI assistant.\n' +
+      'Consider the following content as your self thoughts awareness toward the user:\n' +
+      userAwarenessContent +
+      '\n' +
       context +
-      '\nConsider following new message:\n' +
-      text
+      '\nGenerare your answer accordingly.\n' 
+      // text
   );
 
   const { data: newAiMessage, error: errorAi } = await supabase
@@ -138,6 +146,8 @@ export async function POST(request: NextRequest) {
       { user_id: user.id, text: answer.replace('ibrain:', ''), role: 'ibrain' }
     ])
     .single();
+
+  await userAwareness.updateFromAi(answer);
 
   if (errorAi) {
     return new NextResponse(JSON.stringify({ error: errorAi.message }), {

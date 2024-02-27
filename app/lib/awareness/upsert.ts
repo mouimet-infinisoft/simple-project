@@ -1,9 +1,9 @@
 import { Database } from '@/types_db';
 import { createClient } from '@/utils/supabase/server';
 
-type Awareness = Database['public']['Tables']['awareness']['Row'];
+export type Awareness = Database['public']['Tables']['awareness']['Row'];
 
-export async function upsert(awarenessData: Omit<Awareness, 'id'>) {
+export async function upsert(awarenessData: string) {
 
       const supabase = createClient();
       try {
@@ -16,7 +16,7 @@ export async function upsert(awarenessData: Omit<Awareness, 'id'>) {
         }
       const { data, error } = await supabase
         .from('awareness')
-        .upsert({ ...awarenessData, id: user.id }, { onConflict: 'user_id' })
+        .upsert({ informations:awarenessData, id: user.id }, { onConflict: 'id' })
         .single(); // Assuming you want to work with a single record
   
       if (error) throw error;
