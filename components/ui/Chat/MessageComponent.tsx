@@ -17,13 +17,13 @@ import remarkParse from 'remark-parse';
 const ReactMarkdown = dynamic(() => import('react-markdown'), { ssr: false });
 
 const MessageComponent = ({ text, role }: ChatMessage) => {
-  const messageStyles: Record<string, string> = {
-    base: 'rounded-md p-2 mb-2 shadow text-white',
-    user: 'bg-blue-600 text-right',
-    ibrain: 'bg-green-600 text-left'
-  };
+  // const messageStyles: Record<string, string> = {
+  //   base: 'rounded-md p-2 mb-2 shadow text-white',
+  //   user: 'bg-blue-600 text-right',
+  //   ibrain: 'bg-green-600 text-left'
+  // };
 
-  const combinedStyles = `${messageStyles.base} ${messageStyles[role]}`;
+  // const combinedStyles = `${messageStyles.base} ${messageStyles[role]}`;
 
   // const file = await unified()
   // .use(remarkParse)
@@ -33,6 +33,16 @@ const MessageComponent = ({ text, role }: ChatMessage) => {
   // .process('# Hi\n\n*Hello*, world!')
 
   // console.log(String(file))
+
+  const messageStyle: React.CSSProperties = {
+    background: `linear-gradient(180deg, rgba(82, 92, 139, 1) 0%, rgba(30, 35, 67, 1) 100%)`,
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)', // Box shadow for elevation
+    borderRadius: '0.375rem', // Equivalent to 'rounded-md'
+    padding: '0.5rem', // Equivalent to 'p-2'
+    marginBottom: '0.5rem', // Equivalent to 'mb-2'
+    color: 'white', // Text color
+    textAlign: role === 'user' ? 'right' : 'left', // Text alignment based on role
+  };
 
   // This is to be refactored as React-Markdown custom renderer
   const processText = useMemo(() => {
@@ -51,12 +61,13 @@ ${p2.trim()}`; // Extract PlantUML code
   }, [text]);
 
   return (
-    <ReactMarkdown
-      className={combinedStyles}
-      remarkPlugins={[remarkParse, remarkRehype, remarkGfm]}
-    >
-      {processText}
-    </ReactMarkdown>
+    <div style={messageStyle}>
+      <ReactMarkdown
+        remarkPlugins={[remarkParse, remarkRehype, remarkGfm]}
+      >
+        {processText}
+      </ReactMarkdown>
+    </div>
   );
 };
 

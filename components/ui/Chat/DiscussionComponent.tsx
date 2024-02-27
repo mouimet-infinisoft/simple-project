@@ -28,7 +28,7 @@ const DiscussionComponent = ({ messages }: { messages: ChatMessage[] }) => {
 
   return (
     <div ref={containerRef} className="space-y-2 overflow-auto p-3" style={{ maxHeight: '65vh' }}>
-      {messages.map((msg) => (
+      {messages?.map?.((msg) => (
         <MessageComponent key={msg.id} {...msg} />
       ))}
     </div>

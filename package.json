@@ -12,7 +12,7 @@
     "stripe:fixtures": "stripe fixtures fixtures/stripe-fixtures.json --project-name=saas-starter",
     "supabase:start": "npx supabase start",
     "supabase:link": "node supabase/link.js",
-    "supabase:generate-types": "npx supabase gen types typescript --local --schema public > types_db.ts",
+    "supabase:generate-types": "npx supabase gen types typescript --linked --schema public > types_db.ts",
     "supabase:generate-migration": "npx supabase db diff | npx supabase migration new update",
     "supabase:migrate": "npx supabase migration up --linked"
   },
@@ -49,6 +49,7 @@
     "@types/react": "^18.2.55",
     "@vercel/node": "^3.0.19",
     "autoprefixer": "^10.4.17",
+    "dotenv": "^16.4.5",
     "eslint": "^8.56.0",
     "eslint-config-next": "14.1.0",
     "eslint-config-prettier": "^9.1.0",
