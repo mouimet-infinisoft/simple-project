@@ -12,7 +12,8 @@
     "stripe:fixtures": "stripe fixtures fixtures/stripe-fixtures.json --project-name=saas-starter",
     "supabase:start": "npx supabase start",
     "supabase:link": "node supabase/link.js",
-    "supabase:generate-types": "npx supabase gen types typescript --linked --schema public > types_db.ts",
+    "supabase:generate-types": "npx supabase gen types typescript --local --schema public > types_db.ts",
+    "supabase:generate-types-remote": "npx supabase gen types typescript --linked --schema public > types_db.ts",
     "supabase:generate-migration": "npx supabase db diff | npx supabase migration new update",
     "supabase:migrate": "npx supabase migration up --linked"
   },

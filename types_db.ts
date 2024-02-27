@@ -1,4 +1,3 @@
-
 export type Json =
   | string
   | number
@@ -7,23 +6,23 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export type Database = {
+export interface Database {
   public: {
     Tables: {
       awareness: {
         Row: {
           created_at: string
-          id: number
+          id: string
           informations: string | null
         }
         Insert: {
           created_at?: string
-          id?: number
+          id?: string
           informations?: string | null
         }
         Update: {
           created_at?: string
-          id?: number
+          id?: string
           informations?: string | null
         }
         Relationships: []
@@ -367,3 +366,4 @@ export type Enums<
   : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
   ? Database["public"]["Enums"][PublicEnumNameOrOptions]
   : never
+
