@@ -15,7 +15,8 @@
     "supabase:generate-types": "npx supabase gen types typescript --local --schema public > types_db.ts",
     "supabase:generate-types-remote": "npx supabase gen types typescript --linked --schema public > types_db.ts",
     "supabase:generate-migration": "npx supabase db diff | npx supabase migration new update",
-    "supabase:migrate": "npx supabase migration up --linked"
+    "supabase:migrate:local": "npx supabase migration up --linked",
+    "supabase:migrate": "npx supabase migration up"
   },
   "dependencies": {
     "@brainstack/diagram": "^1.0.6",
