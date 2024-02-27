@@ -104,10 +104,10 @@ export async function POST(request: NextRequest) {
     const { text } = requestData;
 
     // Start both operations without waiting for them to complete
-    const insertMessagePromise = supabase
-      .from('messages')
-      .insert([{ user_id: user.id, text, role: 'user' }])
-      .single();
+    // const insertMessagePromise = supabase
+    //   .from('messages')
+    //   .insert([{ user_id: user.id, text, role: 'user' }])
+    //   .single();
 
     const fetchUserDataPromise = supabase
       .from('users')
@@ -115,20 +115,21 @@ export async function POST(request: NextRequest) {
       .eq('id', user.id) // Filter messages by the authenticated user's ID
       .single();
 
-    const [insertMessageResult, fetchUserDataResult] = await Promise.all([
-      insertMessagePromise,
+    // const [insertMessageResult, fetchUserDataResult] = await Promise.all([
+    const [fetchUserDataResult] = await Promise.all([
+      // insertMessagePromise,
       fetchUserDataPromise
     ]);
 
-    const { data: newMessage, error } = insertMessageResult;
+    // const { data: newMessage, error } = insertMessageResult;
     const { data: userData, error: userDataError } = fetchUserDataResult;
 
     // Handle errors for message insertion
-    if (error) {
-      return new NextResponse(JSON.stringify({ error: error.message }), {
-        status: 400
-      });
-    }
+    // if (error) {
+    //   return new NextResponse(JSON.stringify({ error: error.message }), {
+    //     status: 400
+    //   });
+    // }
 
     // Handle errors for fetching user data
     if (userDataError) {
@@ -160,13 +161,13 @@ export async function POST(request: NextRequest) {
     const insertAiMessagePromise = supabase
       .from('messages')
       .insert([
+        { user_id: user.id, text, role: 'user' },
         {
           user_id: user.id,
           text: answer.replace('ibrain:', ''),
           role: 'ibrain'
         }
-      ])
-      .single();
+      ]);
 
     // Fire-and-forget: Update the user awareness based on AI's answer
     userAwareness
@@ -174,7 +175,7 @@ export async function POST(request: NextRequest) {
       .catch((error) => console.error('Error updating user awareness:', error));
 
     // Await only the critical operation for response
-    await insertAiMessagePromise;
+    await insertAiMessagePromise
 
     // Respond with 200 status code, no body required
     return new NextResponse(null, { status: 200 });
