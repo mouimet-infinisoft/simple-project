@@ -10,7 +10,7 @@ class UserAwarenessBase {
     this.aiService = aiService;
   }
 
-  async updateFromUser(newInformations: string): Promise<void> {
+  async updateFromUser(newInformations: string): Promise<string> {
     try {
       // Recall current awareness from long-term memory
       const currentAwareness = await this.longTermMemory.recall();
@@ -23,6 +23,7 @@ class UserAwarenessBase {
 
       // Remember (update) the awareness in long-term memory
       await this.longTermMemory.remember(updatedAwareness);
+      return updatedAwareness
     } catch (error) {
       console.error(
         'Error updating user awareness with AI interaction:',

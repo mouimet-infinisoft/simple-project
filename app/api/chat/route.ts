@@ -80,82 +80,108 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   // Initialize Supabase client
   const supabase = createClient();
-  const {
-    data: { user },
-    error: userError
-  } = await supabase.auth.getUser();
+  const userPromise = supabase.auth.getUser();
+  const jsonPromise = request.json();
 
-  if (!user || userError) {
-    return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
-      status: 401
-    });
-  }
+  try {
+    // Wait for both promises to resolve
+    const [
+      {
+        data: { user },
+        error: userError
+      },
+      requestData
+    ] = await Promise.all([userPromise, jsonPromise]);
 
-  const data = await request.json();
-  const { text } = data;
+    // Check for user fetch error
+    if (!user || userError) {
+      return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401
+      });
+    }
 
-  // Insert the new message with the authenticated user's ID
-  const { data: newMessage, error } = await supabase
-    .from('messages')
-    .insert([{ user_id: user.id, text, role: 'user' }])
-    .single();
+    // Now you have both the user and the request data
+    const { text } = requestData;
 
-  if (error) {
-    return new NextResponse(JSON.stringify({ error: error.message }), {
-      status: 400
-    });
-  }
+    // Start both operations without waiting for them to complete
+    const insertMessagePromise = supabase
+      .from('messages')
+      .insert([{ user_id: user.id, text, role: 'user' }])
+      .single();
 
-  // Fetch api key
-  const { data: userData, error: userDataError } = await supabase
-    .from('users')
-    .select('*')
-    .eq('id', user.id) // Filter messages by the authenticated user's ID
-    .single();
+    const fetchUserDataPromise = supabase
+      .from('users')
+      .select('*')
+      .eq('id', user.id) // Filter messages by the authenticated user's ID
+      .single();
 
-  if (userDataError) {
-    return new NextResponse(JSON.stringify({ error: userDataError.message }), {
-      status: 400
-    });
-  }
+    const [insertMessageResult, fetchUserDataResult] = await Promise.all([
+      insertMessagePromise,
+      fetchUserDataPromise
+    ]);
 
-  const context = await prepareContext(user.id, supabase);
-  console.log(`Context: `, context);
+    const { data: newMessage, error } = insertMessageResult;
+    const { data: userData, error: userDataError } = fetchUserDataResult;
 
-  const ai = userData?.openai_apikey
-    ? new OpenAIIntegration(5, new OpenAI({ apiKey: userData.openai_apikey }))
-    : new OpenAIIntegration(5);
+    // Handle errors for message insertion
+    if (error) {
+      return new NextResponse(JSON.stringify({ error: error.message }), {
+        status: 400
+      });
+    }
 
-  const userAwareness = new UserAwareness(ai);
-  await userAwareness.updateFromUser(text);
-  const userAwarenessContent = await userAwareness.content();
+    // Handle errors for fetching user data
+    if (userDataError) {
+      return new NextResponse(
+        JSON.stringify({ error: userDataError.message }),
+        { status: 400 }
+      );
+    }
 
-  const answer = await ai.ask(
-    'Your name is ibrain and you are a helpful AI assistant.\n' +
-      'Consider the following content as your self thoughts awareness toward the user:\n' +
-      userAwarenessContent +
-      '\n' +
-      context +
-      '\nGenerare your answer accordingly.\n' 
+    const context = await prepareContext(user.id, supabase);
+
+    const ai = userData?.openai_apikey
+      ? new OpenAIIntegration(5, new OpenAI({ apiKey: userData.openai_apikey }))
+      : new OpenAIIntegration(5);
+
+    const userAwareness = new UserAwareness(ai);
+    const userAwarenessContent = await userAwareness.updateFromUser(text);
+
+    const answer = await ai.ask(
+      'Your name is ibrain and you are a helpful AI assistant.\n' +
+        'Consider the following content as your self thoughts awareness toward the user:\n' +
+        userAwarenessContent +
+        '\n' +
+        context +
+        '\nGenerare your answer accordingly.\n'
       // text
-  );
+    );
 
-  const { data: newAiMessage, error: errorAi } = await supabase
-    .from('messages')
-    .insert([
-      { user_id: user.id, text: answer.replace('ibrain:', ''), role: 'ibrain' }
-    ])
-    .single();
+    await Promise.all([
+      // Insert the new AI message into the database
+      supabase
+        .from('messages')
+        .insert([
+          {
+            user_id: user.id,
+            text: answer.replace('ibrain:', ''),
+            role: 'ibrain'
+          }
+        ])
+        .single(),
 
-  await userAwareness.updateFromAi(answer);
+      // Update the user awareness based on AI's answer
+      userAwareness.updateFromAi(answer)
+    ]);
 
-  if (errorAi) {
-    return new NextResponse(JSON.stringify({ error: errorAi.message }), {
-      status: 400
+    return new NextResponse(JSON.stringify(newMessage), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  } catch (error) {
+    // Handle any errors that occurred during the fetching of the user or reading of the request body
+    console.error('An error occurred:', error);
+    return new NextResponse(JSON.stringify({ error: 'An error occurred' }), {
+      status: 500
     });
   }
-
-  return new NextResponse(JSON.stringify(newMessage), {
-    headers: { 'Content-Type': 'application/json' }
-  });
 }
