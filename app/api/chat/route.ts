@@ -157,26 +157,27 @@ export async function POST(request: NextRequest) {
       // text
     );
 
-    await Promise.all([
-      // Insert the new AI message into the database
-      supabase
-        .from('messages')
-        .insert([
-          {
-            user_id: user.id,
-            text: answer.replace('ibrain:', ''),
-            role: 'ibrain'
-          }
-        ])
-        .single(),
+    const insertAiMessagePromise = supabase
+      .from('messages')
+      .insert([
+        {
+          user_id: user.id,
+          text: answer.replace('ibrain:', ''),
+          role: 'ibrain'
+        }
+      ])
+      .single();
 
-      // Update the user awareness based on AI's answer
-      userAwareness.updateFromAi(answer)
-    ]);
+    // Fire-and-forget: Update the user awareness based on AI's answer
+    userAwareness
+      .updateFromAi(answer)
+      .catch((error) => console.error('Error updating user awareness:', error));
 
-    return new NextResponse(JSON.stringify(newMessage), {
-      headers: { 'Content-Type': 'application/json' }
-    });
+    // Await only the critical operation for response
+    await insertAiMessagePromise;
+
+    // Respond with 200 status code, no body required
+    return new NextResponse(null, { status: 200 });
   } catch (error) {
     // Handle any errors that occurred during the fetching of the user or reading of the request body
     console.error('An error occurred:', error);
