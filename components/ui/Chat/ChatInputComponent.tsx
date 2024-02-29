@@ -5,25 +5,36 @@ interface ChatInputComponentProps {
   sendMessage: (message: string) => Promise<void>;
 }
 
-const ChatInputComponent: React.FC<ChatInputComponentProps> = ({ sendMessage }) => {
+const ChatInputComponent: React.FC<ChatInputComponentProps> = ({
+  sendMessage
+}) => {
   const [message, setMessage] = useState('');
 
   const handleRecognizedSpeech = async (recognizedSpeech: string) => {
     if (recognizedSpeech.includes('?')) {
-      await sendMessage(message + " " + recognizedSpeech);
+      await sendMessage(message + ' ' + recognizedSpeech);
       setMessage('');
     } else {
-      setMessage(prev => prev + " " + recognizedSpeech);
+      setMessage((prev) => prev + ' ' + recognizedSpeech);
     }
   };
 
-  const { isRecognizing, startListening, stopListening } = useSpeech2text(handleRecognizedSpeech);
+  const { isRecognizing, startListening, stopListening } = useSpeech2text(
+    handleRecognizedSpeech
+  );
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim()) return;
     await sendMessage(message);
     setMessage('');
+  };
+
+  // Function to stop speech synthesis
+  const handleStopSpeaking = () => {
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+    }
   };
 
   return (
@@ -35,6 +46,15 @@ const ChatInputComponent: React.FC<ChatInputComponentProps> = ({ sendMessage }) 
         placeholder="Type or speak your message here..."
         className="flex-1 p-2 border rounded shadow-sm bg-gray-700 text-white"
       />
+      {window?.speechSynthesis?.speaking && (
+        <button
+          type="button"
+          onClick={handleStopSpeaking}
+          className="px-4 py-2 rounded bg-yellow-500 hover:bg-yellow-700 text-white font-bold"
+        >
+          Stop Speaking
+        </button>
+      )}
       {!isRecognizing && (
         <button
           type="button"
