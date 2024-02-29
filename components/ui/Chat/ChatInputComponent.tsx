@@ -32,7 +32,7 @@ const ChatInputComponent: React.FC<ChatInputComponentProps> = ({
 
   // Function to stop speech synthesis
   const handleStopSpeaking = () => {
-    if (window?.speechSynthesis?.speaking) {
+    if (typeof window !== 'undefined' && window?.speechSynthesis?.speaking) {
       window?.speechSynthesis?.cancel();
     }
   };
@@ -46,7 +46,7 @@ const ChatInputComponent: React.FC<ChatInputComponentProps> = ({
         placeholder="Type or speak your message here..."
         className="flex-1 p-2 border rounded shadow-sm bg-gray-700 text-white"
       />
-      {window?.speechSynthesis?.speaking && (
+      {typeof window !== 'undefined' && window?.speechSynthesis?.speaking && (
         <button
           type="button"
           onClick={handleStopSpeaking}
