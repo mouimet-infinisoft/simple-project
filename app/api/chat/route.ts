@@ -104,10 +104,10 @@ export async function POST(request: NextRequest) {
     const { text } = requestData;
 
     // Start both operations without waiting for them to complete
-    // const insertMessagePromise = supabase
-    //   .from('messages')
-    //   .insert([{ user_id: user.id, text, role: 'user' }])
-    //   .single();
+    const insertMessagePromise = supabase
+      .from('messages')
+      .insert([{ user_id: user.id, text, role: 'user' }])
+      .single();
 
     const fetchUserDataPromise = supabase
       .from('users')
@@ -115,9 +115,9 @@ export async function POST(request: NextRequest) {
       .eq('id', user.id) // Filter messages by the authenticated user's ID
       .single();
 
-    // const [insertMessageResult, fetchUserDataResult] = await Promise.all([
-    const [fetchUserDataResult] = await Promise.all([
-      // insertMessagePromise,
+    const [insertMessageResult, fetchUserDataResult] = await Promise.all([
+      // const [fetchUserDataResult] = await Promise.all([
+      insertMessagePromise,
       fetchUserDataPromise
     ]);
 
@@ -145,37 +145,36 @@ export async function POST(request: NextRequest) {
       ? new OpenAIIntegration(5, new OpenAI({ apiKey: userData.openai_apikey }))
       : new OpenAIIntegration(5);
 
-    const userAwareness = new UserAwareness(ai);
-    const userAwarenessContent = await userAwareness.updateFromUser(text);
+    // const userAwareness = new UserAwareness(ai);
+    // const userAwarenessContent = await userAwareness.updateFromUser(text);
 
     const answer = await ai.ask(
       'Your name is ibrain and you are a helpful AI assistant.\n' +
-        'Consider the following content as your self thoughts awareness toward the user:\n' +
-        userAwarenessContent +
-        '\n' +
+        // 'Consider the following content as your self thoughts awareness toward the user:\n' +
+        // userAwarenessContent +
+        // '\n' +
         context +
-        '\nGenerare your answer accordingly.\n'
-      // text
+        // '\nGenerare your answer accordingly.\n'
+        'new user message: \n' +
+        text
     );
 
-    const insertAiMessagePromise = supabase
-      .from('messages')
-      .insert([
-        { user_id: user.id, text, role: 'user' },
-        {
-          user_id: user.id,
-          text: answer.replace('ibrain:', ''),
-          role: 'ibrain'
-        }
-      ]);
+    const insertAiMessagePromise = supabase.from('messages').insert([
+      // { user_id: user.id, text, role: 'user' },
+      {
+        user_id: user.id,
+        text: answer.replace('ibrain:', ''),
+        role: 'ibrain'
+      }
+    ]);
 
     // Fire-and-forget: Update the user awareness based on AI's answer
-    userAwareness
-      .updateFromAi(answer)
-      .catch((error) => console.error('Error updating user awareness:', error));
+    // userAwareness
+    //   .updateFromAi(answer)
+    //   .catch((error) => console.error('Error updating user awareness:', error));
 
     // Await only the critical operation for response
-    await insertAiMessagePromise
+    await insertAiMessagePromise;
 
     // Respond with 200 status code, no body required
     return new NextResponse(null, { status: 200 });
