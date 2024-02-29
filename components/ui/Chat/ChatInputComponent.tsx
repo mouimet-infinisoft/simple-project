@@ -32,8 +32,8 @@ const ChatInputComponent: React.FC<ChatInputComponentProps> = ({
 
   // Function to stop speech synthesis
   const handleStopSpeaking = () => {
-    if (window.speechSynthesis.speaking) {
-      window.speechSynthesis.cancel();
+    if (window?.speechSynthesis?.speaking) {
+      window?.speechSynthesis?.cancel();
     }
   };
 
