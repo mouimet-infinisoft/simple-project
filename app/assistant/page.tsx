@@ -1,36 +1,54 @@
 'use client';
 import { AssistantComponent } from '@/components/ui/Assistant';
 import React, { useState, useEffect } from 'react';
-import { useBrainStack } from '../../utils/BrainStackProvider';
-import Button from '@/components/ui/Button';
+import { core, useBrainStack } from '../../utils/BrainStackProvider';
+import useCommunicationManager from '../hooks/useCommunicationManager';
+import { useDevTools } from '../hooks/useDevTool';
+import useSpeech2text from '../hooks/useSpeech2text';
+import useTextToSpeech from '../hooks/useText2Speech';
+import { motion } from 'framer-motion';
+import useIBrain from '../hooks/useIBrain';
+import useAuthorization from '../hooks/useAuthorization';
 
 export default function AssistantPage() {
-  const [today, setToday] = useState(new Date());
+  useAuthorization();
   const bstack = useBrainStack();
+  useIBrain();
+  const { onAiCommunication } = useCommunicationManager();
+  const { isRecognizing, startListening, stopListening } = useSpeech2text();
+  const { aiSpeak } = useTextToSpeech();
+  useDevTools(core);
 
-  // Temporary workaround to rerender on state change
-  bstack.useOn(
-    'state.changed',
-    (e: any) => {
-      bstack.log.verbose(`state changed: `, e);
-      setToday(new Date());
-    },
-    []
-  );
+  useEffect(() => {
+    const handleAiCommunication = async (message: string) => {
+      aiSpeak(message);
+      setTopicMessage(message);
+    };
+
+    return onAiCommunication(handleAiCommunication);
+  }, []);
+
+  useEffect(() => {
+    startListening();
+    return () => stopListening();
+  }, []);
+
+  const [topicMessage, setTopicMessage] = useState('');
 
   return (
-    <div>
-      <AssistantComponent
-        topic={JSON.stringify(bstack.store.getState())}
-        active={true}
-      />
-      <Button
-        onClick={() => {
-          bstack.store.mutate(() => new Date());
-        }}
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }} // Initial animation values
+        animate={{ opacity: 1, y: 0 }} // Animation states
+        exit={{ opacity: 0, y: -20 }} // Animation states
+        transition={{ duration: 2 }} // Animation duration
       >
-        test
-      </Button>
-    </div>
+        <AssistantComponent
+          key={topicMessage}
+          topic={topicMessage}
+          active={Boolean(topicMessage?.length > 0)}
+        />
+      </motion.div>
+    </>
   );
 }

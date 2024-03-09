@@ -3,11 +3,13 @@ import Footer from '@/components/ui/Footer';
 import Navbar from '@/components/ui/Navbar';
 import { Toaster } from '@/components/ui/Toasts/toaster';
 import { PropsWithChildren, Suspense } from 'react';
+import { BrainStackProvider } from '../utils/BrainStackProvider';
 import 'styles/main.css';
 
 const meta = {
   title: 'iBrain One - Your AI Assistant',
-  description: 'Empowering conversations with AI-driven insights. Brought to you by iBrain One.',
+  description:
+    'Empowering conversations with AI-driven insights. Brought to you by iBrain One.',
   cardImage: '/og.png', // Ensure this image reflects your brand
   robots: 'follow, index',
   favicon: '/favicon.ico', // Ensure this icon is branded
@@ -19,7 +21,12 @@ export async function generateMetadata(): Promise<Metadata> {
     title: meta.title,
     description: meta.description,
     referrer: 'origin-when-cross-origin',
-    keywords: ['AI Assistant', 'iBrain One', 'Intelligent Conversations', 'AI Insights'],
+    keywords: [
+      'AI Assistant',
+      'iBrain One',
+      'Intelligent Conversations',
+      'AI Insights'
+    ],
     authors: [{ name: 'iBrain One', url: 'https://ibrain.one' }], // Your main website URL
     creator: 'iBrain One',
     publisher: 'iBrain One',
@@ -45,23 +52,24 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-
 export default async function RootLayout({ children }: PropsWithChildren) {
   return (
-      <html lang="en">
-        <body className="bg-black loading">
-          <Navbar />
+    <html lang="en">
+      <body className="bg-black loading">
+        <Navbar />
+        <BrainStackProvider>
           <main
             id="skip"
             className="min-h-[calc(100dvh-4rem)] md:min-h[calc(100dvh-5rem)] mx-auto max-w-screen-lg px-4 md:px-0"
           >
             {children}
           </main>
-          <Footer />
-          <Suspense>
-            <Toaster />
-          </Suspense>
-        </body>
-      </html>
+        </BrainStackProvider>
+        <Footer />
+        <Suspense>
+          <Toaster />
+        </Suspense>
+      </body>
+    </html>
   );
 }

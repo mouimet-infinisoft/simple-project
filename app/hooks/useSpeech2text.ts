@@ -10,17 +10,6 @@ const SpeechRecognition =
 const useSpeech2text = () => {
   const bstack = useBrainStack();
   const { addUserCommunication } = useCommunicationManager();
-  // const isRecognizing = useMemo(
-  //   () => bstack.store.getState((s) => s?.isRecognizing),
-  //   [bstack.store.getState((s) => s?.isRecognizing)]
-  // );
-
-  // Accessing state from Brain Stack's store
-  // const { isRecognizing, recognition, language } = bstack.store.getState() || {
-  //   isRecognizing: false,
-  //   recognition: null,
-  //   language: 'en-US'
-  // };
 
   const startListening = () => {
     const recognition = bstack.store.getState((s) => s?.recognition);

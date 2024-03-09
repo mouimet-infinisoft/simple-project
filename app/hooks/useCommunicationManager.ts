@@ -23,19 +23,19 @@ const useCommunicationManager = () => {
     bstack.log.info(`AI communication added: ${message}`);
   };
 
-  const onUserCommunication = (handler: (message: string) => void) => {
+  const onUserCommunication = (handler: (message: string) => Promise<void>) => {
     bstack.log.verbose('Listening for user communication...');
-    return bstack.store.on('communication.user', (e: any) => {
+    return bstack.store.on('communication.user', async (e: any) => {
       bstack.log.verbose('communication.user: ', e);
-      handler(e?.message);
+      await handler(e?.message);
     });
   };
 
-  const onAiCommunication = (handler: (message: string) => void) => {
+  const onAiCommunication = (handler: (message: string) => Promise<void>) => {
     bstack.log.verbose('Listening for AI communication...');
-    return bstack.store.on('communication.ai', (e: any) => {
+    return bstack.store.on('communication.ai', async (e: any) => {
       bstack.log.verbose('communication.ai: ', e);
-      handler(e?.message);
+      await handler(e?.message);
     });
   };
 

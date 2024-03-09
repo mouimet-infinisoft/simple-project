@@ -2,12 +2,12 @@
 import React, { useEffect } from 'react';
 import { FeatureList } from '../FeatureList';
 import { Hero } from '../Hero';
-import useCommunicationManager from '@/app/hooks/useCommunicationManager';
-import useSpeech2text from '@/app/hooks/useSpeech2text';
-import { useDevTools } from '@/app/hooks/useDevTool';
-import useTextToSpeech from '@/app/hooks/useText2Speech';
+// import useCommunicationManager from '@/app/hooks/useCommunicationManager';
+// import useSpeech2text from '@/app/hooks/useSpeech2text';
+// import { useDevTools } from '@/app/hooks/useDevTool';
+// import useTextToSpeech from '@/app/hooks/useText2Speech';
 import Button from '../Button';
-import { useBrainStack, core } from '@/utils/BrainStackProvider';
+// import { useBrainStack, core } from '@/utils/BrainStackProvider';
 
 const features = [
   {
@@ -45,27 +45,27 @@ const features = [
 ];
 
 const HomeComponent: React.FC<{}> = () => {
-  const bstack = useBrainStack();
-  const { addUserCommunication, onAiCommunication, addAiCommunication } =
-    useCommunicationManager();
-  const { isRecognizing, startListening, stopListening } = useSpeech2text();
-  const { aiSpeak } = useTextToSpeech();
-  useDevTools(core);
-  const handleAiCommunication = (message: string) => {
-    // Speak the AI response when received
-    aiSpeak(message);
-  };
+  // const bstack = useBrainStack();
+  // const { addUserCommunication, onAiCommunication, addAiCommunication } =
+  //   useCommunicationManager();
+  // const { isRecognizing, startListening, stopListening } = useSpeech2text();
+  // const { aiSpeak } = useTextToSpeech();
+  // useDevTools(core);
+  // const handleAiCommunication = (message: string) => {
+  //   // Speak the AI response when received
+  //   aiSpeak(message);
+  // };
 
-  // Subscribe to AI communication events
-  useEffect(() => {
-    return onAiCommunication(handleAiCommunication);
-  }, []);
+  // // Subscribe to AI communication events
+  // useEffect(() => {
+  //   return onAiCommunication(handleAiCommunication);
+  // }, []);
 
-  // Trigger speech recognition when the page loads
-  useEffect(() => {
-    startListening();
-    return () => stopListening();
-  }, []);
+  // // Trigger speech recognition when the page loads
+  // useEffect(() => {
+  //   startListening();
+  //   return () => stopListening();
+  // }, []);
 
   return (
     <div>
@@ -75,13 +75,13 @@ const HomeComponent: React.FC<{}> = () => {
         buttonText="Get Started"
         buttonLink="/"
       />
-      <Button
+      {/* <Button
         onClick={() => {
           addAiCommunication('Steve my bollz!');
         }}
       >
         Speak
-      </Button>
+      </Button> */}
       <FeatureList features={features} />
     </div>
   );

@@ -20,7 +20,7 @@ export class OpenAIIntegration extends AiBase {
         model: 'gpt-3.5-turbo', // or "gpt-3.5-turbo" as per your requirement
         max_tokens: 512,
         temperature: 0.7,
-        messages: [{ role: 'user', content: prompt }]
+        messages: [{ role: 'user', content: prompt }]        
       };
 
       const completion =
