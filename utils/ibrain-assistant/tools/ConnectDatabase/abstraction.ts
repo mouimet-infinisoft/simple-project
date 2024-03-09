@@ -13,5 +13,5 @@ export interface DatabaseLogin {
 }
 // Define an interface for the database client
 export interface DatabaseClient {
-  connect(): void;
+  connect(): Promise<void>;
 }
