@@ -11,6 +11,9 @@ dependencies:
   '@brainstack/log':
     specifier: ^1.1.134
     version: 1.1.134
+  '@brainstack/react':
+    specifier: ^1.3.150
+    version: 1.3.150(react-dom@18.2.0)(react@18.2.0)
   '@radix-ui/react-toast':
     specifier: ^1.1.5
     version: 1.1.5(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0)
@@ -35,6 +38,9 @@ dependencies:
   clsx:
     specifier: ^2.1.0
     version: 2.1.0
+  framer-motion:
+    specifier: ^11.0.8
+    version: 11.0.8(react-dom@18.2.0)(react@18.2.0)
   lucide-react:
     specifier: 0.330.0
     version: 0.330.0(react@18.2.0)
@@ -148,12 +154,73 @@ packages:
     dependencies:
       regenerator-runtime: 0.14.1
 
+  /@brainstack/auth@1.0.145:
+    resolution: {integrity: sha512-Kqal0yUF3+tMkXO7TohFzewR1aob7ymtDg9xAGiK74XS057l39rh5G49/180b/U5jURkKiQFWXl+OSLX7Jwt2w==}
+    dev: false
+
+  /@brainstack/config@1.0.143:
+    resolution: {integrity: sha512-yhWZWQE5gjZKKQ0FaYJEsAbfGB1G6XNRTaf9/HnbUpzGm5X55C2YfDzWiz46w2Sb5i+XfXm7+qUqaxn+zgaSPQ==}
+    dev: false
+
+  /@brainstack/core@1.2.141:
+    resolution: {integrity: sha512-jkvDLi0imM/8PiX8qO5zwK3KIGEtM9zEZ78dFeQfTQH6GIqJJGflIIuXdnVnAjyVR3DfZauY5yD3GXQDLajosA==}
+    dependencies:
+      '@brainstack/auth': 1.0.145
+      '@brainstack/config': 1.0.143
+      '@brainstack/crud': 1.0.139
+      '@brainstack/hub': 1.2.47
+      '@brainstack/inject': 1.2.140
+      '@brainstack/log': 1.1.148
+      '@brainstack/state': 1.1.144
+      '@brainstack/store': 1.0.139
+    dev: false
+
+  /@brainstack/crud@1.0.139:
+    resolution: {integrity: sha512-X/qUyEvgDDPCxyevw723Ei8qyK6DMs+Ff0lz2Up99O3VqJ8t2ibFKi/zZ0O3N9pHNra3RIK9CFwYzX/izVco7g==}
+    dev: false
+
   /@brainstack/diagram@1.0.6:
     resolution: {integrity: sha512-lPU7fwccMvfef662vzTt3lkNdJqbD1uvJ7Grwru3d8LIKBuOxEAoZIO3wO7XxaevpfU/XHZos1gE9S7ePnSLmA==}
     dev: false
 
+  /@brainstack/hub@1.2.47:
+    resolution: {integrity: sha512-I/G8/g446Q/Run+KowJgwbNjzYov8e2H1aFk1cxGrcuS6/PumgI6RrPMhoqSrEJSvLYZ8QXG9+FOJfPdj0yyvw==}
+    dependencies:
+      '@brainstack/log': 1.1.148
+    dev: false
+
+  /@brainstack/inject@1.2.140:
+    resolution: {integrity: sha512-kKcW3b+k3l8iiCOh4YC46zuwwPR4uMzwKl3Z2pQ+oME862HPJotUDlvgkaH8KEXtIuv8ck+fSegaFNff+/3s1Q==}
+    dev: false
+
   /@brainstack/log@1.1.134:
     resolution: {integrity: sha512-iHSL/RhS9l15z52HrZbDgOR51WVh8vTB+dcSjboUgtYjWjat6Ix5qCBlhJzTS61T8C9G7ZPGyCG6pXuh9/MPaw==}
+    dev: false
+
+  /@brainstack/log@1.1.148:
+    resolution: {integrity: sha512-c2Snh+/YE33O6qls9pvL4Dl066864pb/42as6GM8h6GSveJnausIQLvk8n2VTNx7u8qwE1/TW50Fcvp/sRo2SA==}
+    dev: false
+
+  /@brainstack/react@1.3.150(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-z/RI+koEm/mrpS/nwjR6pC7rqZNQRPRPGRJRxmYVMFcNirgU8FiZ8H6o/44brXP+yRE03J6DEsjW2e8fIhsciw==}
+    peerDependencies:
+      react: ^18.2.0
+      react-dom: ^18.2.0
+    dependencies:
+      '@brainstack/core': 1.2.141
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@brainstack/state@1.1.144:
+    resolution: {integrity: sha512-ozqnylckULfauCAZ+gc70tz7PD/180aaL9lk+AE7U3EHyYZ6K13zDEu6BX9ipD0vEvqzbTYzp12wKU1e3d+feg==}
+    dev: false
+
+  /@brainstack/store@1.0.139:
+    resolution: {integrity: sha512-VgwQh1jM62F28o2kd2zuIL7qqZ0JxQ8CaEvkdd9ykMLyESHGFngji80JlZ9h7JPv8JzML3GkVsVuMs5/6YVuDQ==}
+    dependencies:
+      '@brainstack/hub': 1.2.47
+      '@brainstack/state': 1.1.144
     dev: false
 
   /@cspotcode/source-map-support@0.8.1:
@@ -189,6 +256,20 @@ packages:
     dependencies:
       '@edge-runtime/primitives': 4.1.0
     dev: true
+
+  /@emotion/is-prop-valid@0.8.8:
+    resolution: {integrity: sha512-u5WtneEAr5IDG2Wv65yhunPSMLIpuKsbuOktRojfrEiEvRyC85LgPMZI63cr7NUqT8ZIGdSVg8ZKGxIug4lXcA==}
+    requiresBuild: true
+    dependencies:
+      '@emotion/memoize': 0.7.4
+    dev: false
+    optional: true
+
+  /@emotion/memoize@0.7.4:
+    resolution: {integrity: sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==}
+    requiresBuild: true
+    dev: false
+    optional: true
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.56.0):
     resolution: {integrity: sha512-1/sA4dwrzBAyeUoQ6oxahHKmrZvsnLCg4RfxW3ZFGGmQkSNQPFNLV9CUEFQP1x9EYXHTo5p6xdhZM1Ne9p/AfA==}
@@ -2519,6 +2600,24 @@ packages:
   /fraction.js@4.3.7:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
     dev: true
+
+  /framer-motion@11.0.8(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-1KSGNuqe1qZkS/SWQlDnqK2VCVzRVEoval379j0FiUBJAZoqgwyvqFkfvJbgW2IPFo4wX16K+M0k5jO23lCIjA==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      tslib: 2.6.2
+    optionalDependencies:
+      '@emotion/is-prop-valid': 0.8.8
+    dev: false
 
   /fs-minipass@2.1.0:
     resolution: {integrity: sha512-V/JgOLFCS+R6Vcq0slCuaeWEdNC3ouDlJMNIsacH2VtALiu9mV4LPrHc5cDl8k5aw6J8jwgWWpiTo5RYhmIzvg==}

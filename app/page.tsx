@@ -1,38 +1,26 @@
-import Pricing from '@/components/ui/Pricing/Pricing';
-import { createClient } from '@/utils/supabase/server';
+"use client"
+import { createBrainstack } from '@brainstack/react';
+import { HomeComponent } from '@/components/ui/Home';
 
-export default async function PricingPage() {
-  const supabase = createClient();
+export const {
+  BrainStackProvider,
+  useBrainStack,
+  core,
+  createEventHandlerMutator,
+  createEventHandlerMutatorShallow
+} = createBrainstack({
+  eventHubOptions: [],
+  //@ts-ignore
+  stateOptions: {communications:[]},
+  loggerOptions: [5]
+});
 
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
 
-  const { data: subscription, error } = await supabase
-    .from('subscriptions')
-    .select('*, prices(*, products(*))')
-    .in('status', ['trialing', 'active'])
-    .maybeSingle();
 
-  if (error) {
-    console.log(error);
-  }
-
-  const { data: products } = await supabase
-    .from('products')
-    .select('*, prices(*)')
-    .eq('active', true)
-    .eq('prices.active', true)
-    .order('metadata->index')
-    .order('unit_amount', { referencedTable: 'prices' });
-
+export default function HomePage() {
   return (
-    <>
-    <Pricing
-      user={user}
-      products={products ?? []}
-      subscription={subscription}
-    />
-    </>
+    <BrainStackProvider>
+      <HomeComponent/>
+    </BrainStackProvider>
   );
 }

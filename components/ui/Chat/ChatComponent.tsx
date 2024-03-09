@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useChat } from 'app/hooks/useChat';
 import DiscussionComponent from './DiscussionComponent';
 import ChatInputComponent from './ChatInputComponent';
-import './ChatStyles.css'; 
+import './ChatStyles.css';
 
 const ChatComponent = () => {
   const { messages, sendMessage, fetchMessages } = useChat();
@@ -15,7 +15,9 @@ const ChatComponent = () => {
     <div className="chatOverlay">
       <h1 className="text-xl font-bold text-white mb-4">Chat</h1>
       <DiscussionComponent messages={messages} />
-      <ChatInputComponent sendMessage={sendMessage} />
+      <div className="chatInputHud">
+        <ChatInputComponent sendMessage={sendMessage} />
+      </div>
     </div>
   );
 };

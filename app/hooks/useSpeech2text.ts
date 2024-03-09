@@ -1,78 +1,98 @@
 'use client';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useBrainStack } from '../page';
+import useCommunicationManager from './useCommunicationManager';
 
 const SpeechRecognition =
   (global?.window as any)?.SpeechRecognition ||
   (global?.window as any)?.webkitSpeechRecognition;
 
-const useSpeech2text = (onTrigger: (speech: string) => Promise<void>) => {
-  const [isRecognizing, setIsRecognizing] = useState<boolean>(false);
-  const recognition = useRef<typeof SpeechRecognition | null>(null);
+const useSpeech2text = () => {
+  const bstack = useBrainStack();
+  const { addUserCommunication } = useCommunicationManager();
+  // const isRecognizing = useMemo(
+  //   () => bstack.store.getState((s) => s?.isRecognizing),
+  //   [bstack.store.getState((s) => s?.isRecognizing)]
+  // );
+
+  // Accessing state from Brain Stack's store
+  // const { isRecognizing, recognition, language } = bstack.store.getState() || {
+  //   isRecognizing: false,
+  //   recognition: null,
+  //   language: 'en-US'
+  // };
 
   const startListening = () => {
-    try {
-      console.log('const startListening = useCallback(() => {');
-      if (!isRecognizing) {
-        recognition.current?.start();
-      }
-    } catch (err) {}
+    const recognition = bstack.store.getState((s) => s?.recognition);
+    const isRecognizing = bstack.store.getState((s) => s?.isRecognizing);
+
+    if (!isRecognizing) {
+      recognition?.start();
+      bstack.log.verbose('Started listening...');
+    }
   };
 
   const stopListening = () => {
-    try {
-      console.log('const stopListening = useCallback(() => {');
-      if (isRecognizing) {
-        recognition.current?.abort();
-      }
-    } catch (err) {}
+    const recognition = bstack.store.getState((s) => s?.recognition);
+    const isRecognizing = bstack.store.getState((s) => s?.isRecognizing);
+
+    if (isRecognizing) {
+      recognition?.abort();
+      bstack.log.verbose('Stopped listening...');
+    }
+  };
+
+  const changeLanguage = (newLanguage: string) => {
+    bstack.store.mutate((s) => ({ ...s, language: newLanguage }));
+    bstack.log.verbose(`Language changed to ${newLanguage}`);
   };
 
   useEffect(() => {
     if (!SpeechRecognition) {
-      console.error('Speech Recognition is not supported by this browser.');
+      bstack.log.error('Speech Recognition is not supported by this browser.');
       return;
     }
 
-    recognition.current = new SpeechRecognition();
-    recognition.current.continuous = true;
-    recognition.current.lang = 'en-US';
+    const recognitionInstance = new SpeechRecognition();
+    recognitionInstance.continuous = true;
+    recognitionInstance.lang =
+      bstack.store.getState((s) => s?.language) ?? 'en-US';
 
-    recognition.current.onstart = () => {setIsRecognizing(true)}
-    recognition.current.onend = () => {setIsRecognizing(false)}
-
-    recognition.current.onresult = async (event: any) => {
-      const transcript = Array.from(event.results)
-        .map((result: any) => result?.[0]?.transcript)
-        .join('');
-      await onTrigger(transcript);
+    recognitionInstance.onstart = () => {
+      bstack.store.mutate((s) => ({ ...s, isRecognizing: true }));
+      bstack.log.verbose('Recognition started...');
     };
 
-    recognition.current.onerror = (event: any) => {
-      setIsRecognizing(false);
-      if (String(event?.error).includes('no-speech')) {
-      } else if (String(event?.error).includes('abort')) {
-      } else {
-        console.error('Speech recognition error', event);
-      }
+    recognitionInstance.onend = () => {
+      bstack.store.mutate((s) => ({ ...s, isRecognizing: false }));
+      bstack.log.verbose('Recognition ended...');
+      startListening();
     };
+
+    recognitionInstance.onresult = (event: any) => {
+      const transcript =
+        event.results?.[event.results?.length - 1]?.[0]?.transcript;
+      bstack.log.verbose('Speech recognition result received: ', event);
+      addUserCommunication(transcript);
+    };
+
+    recognitionInstance.onerror = (event: any) => {
+      bstack.log.error('Speech recognition error', event);
+    };
+
+    bstack.store.mutate((s) => ({ ...s, recognition: recognitionInstance }));
 
     return () => {
       stopListening();
     };
   }, []);
 
-  useEffect(() => {
-    // Listen for custom events to start/stop recognition
-    window.addEventListener('isTalking', stopListening);
-    window.addEventListener('isSilent', startListening);
-
-    return () => {
-      window.removeEventListener('isTalking', stopListening);
-      window.removeEventListener('isSilent', startListening);
-    };
-  }, [startListening, stopListening]);
-
-  return { isRecognizing, startListening, stopListening };
+  return {
+    isRecognizing: false,
+    startListening,
+    stopListening,
+    changeLanguage
+  };
 };
 
 export default useSpeech2text;

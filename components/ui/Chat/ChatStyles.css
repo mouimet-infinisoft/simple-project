@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(82, 92, 139, 0.7);
+  background: rgba(82, 92, 139, 1);
   background: -moz-linear-gradient(
     180deg,
     rgba(82, 92, 139, 1) 0%,
@@ -62,4 +62,22 @@
 .chatOverlay img {
   opacity: 0; /* Initial state: invisible */
   animation: boopBounce 0.6s ease-in-out 1s forwards;
+}
+
+.chatInputHud {
+  position: fixed; /* Fixed positioning relative to the viewport */
+  bottom: 20px; /* Distance from the bottom of the viewport */
+  left: 50%; /* Center aligning */
+  transform: translateX(-50%); /* Offset by half its width to truly center it */
+  z-index: 1500; /* Ensure it floats above other content, adjust as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Update the form inside the ChatInputComponent if needed */
+.chatInputHud form {
+  display: flex;
+  gap: 2px; /* Adjust gap between elements if needed */
+  /* Add any additional styling here to fit the floating HUD design */
 }

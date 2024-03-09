@@ -30,6 +30,9 @@ export default function Navlinks({ user }: NavlinksProps) {
               <Link href="/account" className={s.link}>
                 Account
               </Link>
+              <Link href="/assistant" className={s.link}>
+                Assistant
+              </Link>
               <Link href="/chat" className={s.link}>
                 iBrain Chat
               </Link>
