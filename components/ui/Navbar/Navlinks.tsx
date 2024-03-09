@@ -33,9 +33,9 @@ export default function Navlinks({ user }: NavlinksProps) {
               <Link href="/assistant" className={s.link}>
                 Assistant
               </Link>
-              <Link href="/chat" className={s.link}>
+              {/* <Link href="/chat" className={s.link}>
                 iBrain Chat
-              </Link>
+              </Link> */}
               {/* <Link href="/chat" className={s.link}>
                 iBrain Assistant
               </Link> */}

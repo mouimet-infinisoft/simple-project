@@ -59,6 +59,7 @@ const HomeComponent: React.FC<{}> = () => {
 
       {/* <FeatureList features={features} /> */}
       <Features />
+      <MobileFeatures />
       <Informations />
     </div>
   );
@@ -67,7 +68,7 @@ const HomeComponent: React.FC<{}> = () => {
 export default HomeComponent;
 
 const Features = () => (
-  <div className="flex justify-center items-start self-stretch flex-grow-0 flex-shrink-0  py-20">
+  <div className="hidden lg:flex justify-center items-start self-stretch flex-grow-0 flex-shrink-1  py-20">
     <div className="flex flex-col justify-center items-center flex-grow px-8">
       <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 w-[1280px] gap-20">
         <div className="flex flex-col justify-start items-center flex-grow gap-[150px] py-20">
@@ -308,8 +309,78 @@ const Features = () => (
   </div>
 );
 
+const MobileFeatures = () => (
+  <div className="flex lg:hidden flex-col justify-center items-center py-10 px-4">
+    <div className="flex flex-col justify-start items-start gap-6">
+      <div className="flex flex-col justify-start items-start gap-4">
+        <p className="text-3xl font-semibold text-center text-white">
+          Revolutionize Your Workflow
+        </p>
+        <p className="text-base font-medium text-center text-white">
+          Empower Your Team with iBrain
+        </p>
+      </div>
+      <div className="flex flex-col justify-center items-center gap-8">
+        <div className="flex flex-col justify-start items-start gap-4">
+          <div className="flex justify-center items-center w-24 h-24 rounded-full bg-[#181924]">
+            <img src="/frame-2.png" alt="Icon" className="w-20 h-20" />
+          </div>
+          <p className="text-lg font-semibold text-center text-white">
+            Intuitive Interaction
+          </p>
+          <p className="text-base text-center text-white">
+            Engage in natural, intention-driven discussions with the AI
+            assistant without the need for specific voice commands or
+            memorization. Understand the context of discussions and queries,
+            allowing the assistant to provide relevant insights and take
+            appropriate actions.
+          </p>
+        </div>
+        <div className="flex flex-col justify-start items-start gap-4">
+          <div className="flex justify-center items-center w-24 h-24 rounded-full bg-[#181924]">
+            <img src="/frame-2.png" alt="Icon" className="w-20 h-20" />
+          </div>
+          <p className="text-lg font-semibold text-center text-white">
+            Dynamic Language Adaptation
+          </p>
+          <p className="text-base text-center text-white">
+            Adapt to the 90+ languages used in discussions seamlessly, enabling
+            users to communicate in their preferred language without explicit
+            configuration.
+          </p>
+        </div>
+        <div className="flex flex-col justify-start items-start gap-4">
+          <div className="flex justify-center items-center w-24 h-24 rounded-full bg-[#181924]">
+            <img src="/frame-2.png" alt="Icon" className="w-20 h-20" />
+          </div>
+          <p className="text-lg font-semibold text-center text-white">
+            Effortless Database Integration
+          </p>
+          <p className="text-base text-center text-white">
+            Integrate databases such as MySQL, SQL, and PostgreSQL effortlessly
+            through natural language discussion, eliminating the need for manual
+            setup.
+          </p>
+        </div>
+        <div className="flex flex-col justify-start items-start gap-4">
+          <div className="flex justify-center items-center w-24 h-24 rounded-full bg-[#181924]">
+            <img src="/frame-2.png" alt="Icon" className="w-20 h-20" />
+          </div>
+          <p className="text-lg font-semibold text-center text-white">
+            Real-time Insights Delivery
+          </p>
+          <p className="text-base text-center text-white">
+            Receive real-time data insights and analytics during discussions,
+            empowering quick decision-making and problem-solving without delays.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 const Informations = () => (
-  <div className="flex justify-center items-start self-stretch flex-grow-0 flex-shrink-0  bg-[url('/section_info.png')] bg-contain bg-no-repeat bg-center">
+  <div className="hidden lg:flex justify-center items-start self-stretch flex-grow-0 flex-shrink-0  bg-[url('/section_info.png')] bg-contain bg-no-repeat bg-center">
     <div className="flex flex-col justify-center items-center flex-grow px-8">
       <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 w-[1280px] gap-20">
         <div className="flex flex-col justify-start items-center flex-grow gap-20 py-20">
@@ -1195,7 +1266,8 @@ const Informations = () => (
                 </p>
                 <p className="flex-grow-0 flex-shrink-0 w-[403.36px] text-[42px] font-medium text-left">
                   <span className="flex-grow-0 flex-shrink-0 w-[403.36px] text-[42px] font-medium text-left text-white">
-                    With iBrain, discussions lead to effortless integration allowing the team to focus on business.
+                    With iBrain, discussions lead to effortless integration
+                    allowing the team to focus on business.
                   </span>
                 </p>
               </div>
@@ -1209,7 +1281,8 @@ const Informations = () => (
                 </p>
                 <p className="flex-grow-0 flex-shrink-0 w-[403.36px] text-[42px] font-medium text-left">
                   <span className="flex-grow-0 flex-shrink-0 w-[403.36px] text-[42px] font-medium text-left text-white">
-                    Unlock actionable insights and make informed decisions with  iBrain's business discussions.
+                    Unlock actionable insights and make informed decisions with
+                    iBrain's business discussions.
                   </span>
                 </p>
               </div>
