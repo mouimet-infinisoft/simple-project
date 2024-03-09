@@ -25,7 +25,7 @@ const useTextToSpeech = () => {
         const utterance = new SpeechSynthesisUtterance(trimmedSentence);
 
         // Set language based on state
-        utterance.lang = bstack.store.getState().language || 'en';
+        utterance.lang = bstack.store.getState().language || 'en-US';
 
         // Set voice based on language
         const voices = synthesisRef?.current?.getVoices();

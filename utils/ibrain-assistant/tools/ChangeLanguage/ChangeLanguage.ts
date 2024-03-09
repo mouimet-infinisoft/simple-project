@@ -1,8 +1,12 @@
+import { core } from '@/utils/BrainStackProvider';
 import { AbstractTool } from '../abstraction';
 
 // Define the arguments interface for changing the language
 interface ChangeLanguageArguments {
   language: string;
+  recognitionLanguageCode: string; // Language code for web speech recognition
+  synthesisLanguageCode: string; // Language code for web speech synthesis
+  feedbackMessage: string;
 }
 
 // Implementation for ChangeLanguageTool
@@ -15,24 +19,51 @@ export class ChangeLanguageTool extends AbstractTool<ChangeLanguageArguments> {
         language: {
           type: 'string',
           description: 'The language to switch to.'
+        },
+        recognitionLanguageCode: {
+          type: 'string',
+          description: 'The language code for web speech recognition.'
+        },
+        synthesisLanguageCode: {
+          type: 'string',
+          description: 'The language code for web speech synthesis.'
+        },
+        feedbackMessage: {
+          type: 'string',
+          description:
+            'A message in language to let the user know it is changed.'
         }
       },
-      ['language'] // Required parameters
+      [
+        'language',
+        'recognitionLanguageCode',
+        'synthesisLanguageCode',
+        'feedbackMessage'
+      ] // Required parameters
     );
   }
 
   // Method to execute the tool
-  async execute(args?: ChangeLanguageArguments): Promise<any> {
+  async execute(args?: ChangeLanguageArguments) {
     // Check if arguments are provided
-    if (!args || !args.language) {
-      console.error('Language argument is missing.');
+    if (
+      !args ||
+      !args.language ||
+      !args.recognitionLanguageCode ||
+      !args.synthesisLanguageCode ||
+      !args.feedbackMessage
+    ) {
+      console.error('Some language arguments are missing.');
       return;
     }
 
-    // Perform the language change logic here (e.g., set language for conversation)
-    console.log(`Language changed to: ${args.language}`);
+    console.log(`Language changed to `, args);
+    core.store.mutate((s) => ({
+      ...s,
+      language: args.recognitionLanguageCode
+    }));
 
     // Return some result or status
-    return true;
+    return args.feedbackMessage;
   }
 }

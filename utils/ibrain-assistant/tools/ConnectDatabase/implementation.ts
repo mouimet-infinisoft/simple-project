@@ -30,7 +30,7 @@ export class ConnectDatabaseTool extends AbstractTool<ConnectDatabaseArguments> 
     );
   }
 
-  async execute(args?: ConnectDatabaseArguments): Promise<any> {
+  async execute(args?: ConnectDatabaseArguments) {
     // Check if arguments are provided
     if (!args) {
       console.error('Arguments are missing.');
@@ -53,6 +53,6 @@ export class ConnectDatabaseTool extends AbstractTool<ConnectDatabaseArguments> 
     console.log(`Connected to ${dbtype} database successfully.`);
 
     // Return some result or status
-    return true;
+    return `Connected to ${dbtype} database successfully.`;
   }
 }

@@ -1,6 +1,5 @@
 import { OpenAIAssistant } from '@brainstack/openai-assistantapi';
 import { AbstractTool } from './tools/abstraction';
-import { ConnectDatabaseTool } from './tools';
 
 export class IBrainAssistant {
   private assistant: OpenAIAssistant;
@@ -19,7 +18,7 @@ export class IBrainAssistant {
   }
 
   // Method to handle tool calls
-  private async handleToolCalls(toolCall: any): Promise<void> {
+  private async handleToolCalls(toolCall: any) {
     try {
       const functionName = toolCall.function.name;
       const argumentsObject = JSON.parse(toolCall.function.arguments);
@@ -29,7 +28,8 @@ export class IBrainAssistant {
 
       // Execute the tool based on the function name
       if (this.tools[functionName]) {
-        await this.tools?.[functionName]?.execute(argumentsObject);
+        const answer = await this.tools?.[functionName]?.execute(argumentsObject);
+        return answer;
       } else {
         console.error('Unknown function name:', functionName);
       }
@@ -66,8 +66,8 @@ export class IBrainAssistant {
           ' arguments ',
           toolCall.function.arguments
         );
-        await this.handleToolCalls(toolCall);
-        return `One moment my collegue is coming to speak with you!`;
+        const answer = await this.handleToolCalls(toolCall);
+        return answer
       } else {
         console.log(
           'Assistant response:',

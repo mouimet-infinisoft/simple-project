@@ -79,7 +79,7 @@ const useSpeech2text = () => {
     return () => {
       stopListening();
     };
-  }, []);
+  }, [bstack.store.getState((s) => s?.language)]);
 
   return {
     isRecognizing: false,
