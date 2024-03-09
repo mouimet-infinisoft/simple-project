@@ -6,8 +6,8 @@ import useCommunicationManager from '@/app/hooks/useCommunicationManager';
 import useSpeech2text from '@/app/hooks/useSpeech2text';
 import { useDevTools } from '@/app/hooks/useDevTool';
 import useTextToSpeech from '@/app/hooks/useText2Speech';
-import { useBrainStack, core } from '@/app/page';
 import Button from '../Button';
+import { useBrainStack, core } from '@/utils/BrainStackProvider';
 
 const features = [
   {

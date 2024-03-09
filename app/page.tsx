@@ -1,21 +1,6 @@
 "use client"
-import { createBrainstack } from '@brainstack/react';
 import { HomeComponent } from '@/components/ui/Home';
-
-export const {
-  BrainStackProvider,
-  useBrainStack,
-  core,
-  createEventHandlerMutator,
-  createEventHandlerMutatorShallow
-} = createBrainstack({
-  eventHubOptions: [],
-  //@ts-ignore
-  stateOptions: {communications:[]},
-  loggerOptions: [5]
-});
-
-
+import { BrainStackProvider } from '../utils/BrainStackProvider';
 
 export default function HomePage() {
   return (

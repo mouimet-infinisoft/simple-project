@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { useBrainStack } from '../page';
+import { useBrainStack } from '../../utils/BrainStackProvider';
 
 const useCommunicationManager = () => {
   const bstack = useBrainStack();

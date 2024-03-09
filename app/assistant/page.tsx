@@ -1,7 +1,7 @@
 'use client';
 import { AssistantComponent } from '@/components/ui/Assistant';
 import React, { useState, useEffect } from 'react';
-import { useBrainStack } from '../page';
+import { useBrainStack } from '../../utils/BrainStackProvider';
 import Button from '@/components/ui/Button';
 
 export default function AssistantPage() {

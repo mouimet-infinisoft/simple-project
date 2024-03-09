@@ -20,7 +20,7 @@ const ChatInputComponent: React.FC<ChatInputComponentProps> = ({
   };
 
   const { isRecognizing, startListening, stopListening } = useSpeech2text(
-    handleRecognizedSpeech
+    // handleRecognizedSpeech
   );
 
   const handleSendMessage = async (e: React.FormEvent) => {

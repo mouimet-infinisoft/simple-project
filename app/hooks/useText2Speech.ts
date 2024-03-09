@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useRef } from 'react';
-import { useBrainStack } from '../page';
+import { useBrainStack } from '../../utils/BrainStackProvider';
 
 const useTextToSpeech = () => {
   const bstack = useBrainStack();

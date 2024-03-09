@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useMemo } from 'react';
-import { useBrainStack } from '../page';
+import { useBrainStack } from '../../utils/BrainStackProvider';
 import useCommunicationManager from './useCommunicationManager';
 
 const SpeechRecognition =
