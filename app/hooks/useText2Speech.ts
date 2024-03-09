@@ -40,11 +40,13 @@ const useTextToSpeech = () => {
 
         if (index === 0) {
           bstack.store.mutate((s) => ({ ...s, isSpeaking: true }));
+          bstack.store.emit('speech.speaking');
         }
 
         utterance.onend = () => {
           if (index === sentences.length - 1) {
             bstack.store.mutate((s) => ({ ...s, isSpeaking: false }));
+            bstack.store.emit('speech.silent');
           }
         };
 

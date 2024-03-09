@@ -12,13 +12,15 @@ const useSpeech2text = () => {
   const { addUserCommunication } = useCommunicationManager();
 
   const startListening = () => {
-    const recognition = bstack.store.getState((s) => s?.recognition);
-    const isRecognizing = bstack.store.getState((s) => s?.isRecognizing);
+    try {
+      const recognition = bstack.store.getState((s) => s?.recognition);
+      const isRecognizing = bstack.store.getState((s) => s?.isRecognizing);
 
-    if (!isRecognizing) {
-      recognition?.start();
-      bstack.log.verbose('Started listening...');
-    }
+      if (!isRecognizing) {
+        recognition?.start();
+        bstack.log.verbose('Started listening...');
+      }
+    } catch (e) {}
   };
 
   const stopListening = () => {
@@ -30,6 +32,9 @@ const useSpeech2text = () => {
       bstack.log.verbose('Stopped listening...');
     }
   };
+
+  bstack.useOn('speech.speaking', stopListening, []);
+  bstack.useOn('speech.silent', startListening, []);
 
   const changeLanguage = (newLanguage: string) => {
     bstack.store.mutate((s) => ({ ...s, language: newLanguage }));

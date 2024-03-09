@@ -307,12 +307,21 @@ export async function updateEmail(formData: FormData) {
 
 export async function updateName(formData: FormData) {
   // Get form data
-  const fullName = String(formData.get('fullName')).trim();
+  const full_name = String(formData.get('full_name')).trim();
 
   const supabase = createClient();
-  const { error, data } = await supabase.auth.updateUser({
-    data: { full_name: fullName }
+  const { data } = await supabase.auth.updateUser({
+    data: { full_name }
   });
+  const {
+    error: errorUser,
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  const { error, status } = await supabase
+    .from('users')
+    .update({ full_name })
+    .eq('id', user?.id ?? '');
 
   if (error) {
     return getErrorRedirect(
@@ -347,8 +356,8 @@ export async function updateKey(formData: FormData) {
   } = await supabase.auth.getUser();
   const { error, status } = await supabase
     .from('users')
-    .update({ openai_apikey: apiKey, assistant_id:assistantId })
-    .eq('id', user?.id ?? '');;
+    .update({ openai_apikey: apiKey, assistant_id: assistantId })
+    .eq('id', user?.id ?? '');
 
   if (error) {
     return getErrorRedirect(

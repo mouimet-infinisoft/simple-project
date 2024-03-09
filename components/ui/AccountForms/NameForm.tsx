@@ -14,7 +14,7 @@ export default function NameForm({ userName }: { userName: string }) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsSubmitting(true);
     // Check if the new name is the same as the old name
-    if (e.currentTarget.fullName.value === userName) {
+    if (e.currentTarget.full_name.value === userName) {
       e.preventDefault();
       setIsSubmitting(false);
       return;
@@ -45,7 +45,7 @@ export default function NameForm({ userName }: { userName: string }) {
         <form id="nameForm" onSubmit={(e) => handleSubmit(e)}>
           <input
             type="text"
-            name="fullName"
+            name="full_name"
             className="w-1/2 p-3 rounded-md bg-zinc-800"
             defaultValue={userName}
             placeholder="Your name"
