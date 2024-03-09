@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
 *,
 *:before,
@@ -24,7 +25,7 @@ html {
 
 html,
 body {
-  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Helvetica Neue',
+  font-family: 'Urbanist', -apple-system, system-ui, BlinkMacSystemFont, 'Helvetica Neue',
     'Helvetica', sans-serif;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
