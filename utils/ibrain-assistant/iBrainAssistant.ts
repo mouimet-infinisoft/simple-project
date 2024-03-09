@@ -1,5 +1,7 @@
+'use client';
 import { OpenAIAssistant } from '@brainstack/openai-assistantapi';
 import { AbstractTool } from './tools/abstraction';
+import { core } from '../BrainStackProvider';
 
 export class IBrainAssistant {
   private assistant: OpenAIAssistant;
@@ -28,7 +30,8 @@ export class IBrainAssistant {
 
       // Execute the tool based on the function name
       if (this.tools[functionName]) {
-        const answer = await this.tools?.[functionName]?.execute(argumentsObject);
+        const answer =
+          await this.tools?.[functionName]?.execute(argumentsObject);
         return answer;
       } else {
         console.error('Unknown function name:', functionName);
@@ -41,12 +44,15 @@ export class IBrainAssistant {
   // Method to ask the assistant
   async ask(message: string) {
     try {
+      const context: any[] =
+        core.store.getState((s) => s?.communications) ?? [];
       console.log('Asking the assistant:', message);
       const completion = await this.assistant.openai.chat.completions.create({
         tools: Object.values(this.tools).map((tool) =>
           tool.getToolDefinition()
         ),
         messages: [
+          ...context,
           {
             role: 'assistant',
             content: 'My name is iBrain and I am an AI superstar to help you.'
@@ -67,7 +73,7 @@ export class IBrainAssistant {
           toolCall.function.arguments
         );
         const answer = await this.handleToolCalls(toolCall);
-        return answer
+        return answer;
       } else {
         console.log(
           'Assistant response:',

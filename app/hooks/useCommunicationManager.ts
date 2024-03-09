@@ -5,37 +5,37 @@ import { useBrainStack } from '../../utils/BrainStackProvider';
 const useCommunicationManager = () => {
   const bstack = useBrainStack();
 
-  const addUserCommunication = (message: string) => {
+  const addUserCommunication = (content: string) => {
     bstack.store.mutate((s) => {
-      s?.communications?.push({ role: 'user', message });
+      s?.communications?.push({ role: 'user', content });
       return { ...s };
     });
-    bstack.store.emit('communication.user', { message });
-    bstack.log.info(`User communication added: ${message}`);
+    bstack.store.emit('communication.user', { content });
+    bstack.log.info(`User communication added: ${content}`);
   };
 
-  const addAiCommunication = (message: string) => {
+  const addAiCommunication = (content: string) => {
     bstack.store.mutate((s) => {
-      s?.communications?.push({ role: 'assistant', message });
+      s?.communications?.push({ role: 'assistant', content });
       return { ...s };
     });
-    bstack.store.emit('communication.ai', { message });
-    bstack.log.info(`AI communication added: ${message}`);
+    bstack.store.emit('communication.ai', { content });
+    bstack.log.info(`AI communication added: ${content}`);
   };
 
-  const onUserCommunication = (handler: (message: string) => Promise<void>) => {
+  const onUserCommunication = (handler: (content: string) => Promise<void>) => {
     bstack.log.verbose('Listening for user communication...');
     return bstack.store.on('communication.user', async (e: any) => {
       bstack.log.verbose('communication.user: ', e);
-      await handler(e?.message);
+      await handler(e?.content);
     });
   };
 
-  const onAiCommunication = (handler: (message: string) => Promise<void>) => {
+  const onAiCommunication = (handler: (content: string) => Promise<void>) => {
     bstack.log.verbose('Listening for AI communication...');
     return bstack.store.on('communication.ai', async (e: any) => {
       bstack.log.verbose('communication.ai: ', e);
-      await handler(e?.message);
+      await handler(e?.content);
     });
   };
 
