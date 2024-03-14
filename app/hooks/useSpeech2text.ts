@@ -71,7 +71,9 @@ const useSpeech2text = () => {
     };
 
     recognitionInstance.onerror = (event: any) => {
-      bstack.log.error('Speech recognition error', event);
+      if (!event?.error?.includes('no-speech')) {
+        bstack.log.error('Speech recognition error', event);
+      }
     };
 
     bstack.store.mutate((s) => ({ ...s, recognition: recognitionInstance }));

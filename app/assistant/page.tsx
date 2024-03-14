@@ -1,39 +1,22 @@
 'use client';
 import { AssistantComponent } from '@/components/ui/Assistant';
-import React, { useState, useEffect } from 'react';
-import { core, useBrainStack } from '../../utils/BrainStackProvider';
-import useCommunicationManager from '../hooks/useCommunicationManager';
-import { useDevTools } from '../hooks/useDevTool';
-import useSpeech2text from '../hooks/useSpeech2text';
-import useTextToSpeech from '../hooks/useText2Speech';
+import React, { useEffect, useState } from 'react';
+
 import { motion } from 'framer-motion';
-import useIBrain from '../hooks/useIBrain';
-import useAuthorization from '../hooks/useAuthorization';
+import useCommunicationManager from '../hooks/useCommunicationManager';
 
 export default function AssistantPage() {
-  // useAuthorization();
-  // const bstack = useBrainStack();
-  // useIBrain();
-  // const { onAiCommunication } = useCommunicationManager();
-  // const { isRecognizing, startListening, stopListening } = useSpeech2text();
-  // const { aiSpeak } = useTextToSpeech();
-  // useDevTools(core);
-
-  // useEffect(() => {
-  //   const handleAiCommunication = async (message: string) => {
-  //     aiSpeak(message);
-  //     setTopicMessage(message);
-  //   };
-
-  //   return onAiCommunication(handleAiCommunication);
-  // }, []);
-
-  // useEffect(() => {
-  //   startListening();
-  //   return () => stopListening();
-  // }, []);
-
   const [topicMessage, setTopicMessage] = useState('');
+  const { onAiCommunication, onUserCommunication } = useCommunicationManager();
+
+  useEffect(() => {
+    onAiCommunication((c) =>
+      Promise.resolve(setTopicMessage((s) => s.concat(`\n iBrain:` + c)))
+    );
+    onUserCommunication((c) =>
+      Promise.resolve(setTopicMessage((s) => s.concat(`\n You:` + c)))
+    );
+  }, []);
 
   return (
     <>

@@ -20,7 +20,6 @@ function useIBrain() {
     []
   );
 
-
   useEffect(() => {
     const apiKey = core.store.getState((s) => s?.userData?.openai_apikey);
     if (apiKey) {
@@ -39,7 +38,7 @@ function useIBrain() {
       // Method to handle user input
       const handleUserInput = async (message: string) => {
         try {
-          if (message.includes('?')) {
+          if (message.includes('?') || message?.length >= 10) {
             const answer = (await iBrain.ask(message)) ?? 'What the heck?';
             addAiCommunication(answer);
           }
