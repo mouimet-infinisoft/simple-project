@@ -7,6 +7,7 @@ import useCommunicationManager from '@/app/hooks/useCommunicationManager';
 import { core } from '@/utils/BrainStackProvider';
 import { NavigateTool } from '@/utils/ibrain-assistant/tools/Navigate';
 import { useRouter } from 'next/navigation';
+import { PricingTool } from '@/utils/ibrain-assistant/tools/Pricing';
 
 function useIBrain() {
   const { addAiCommunication, onUserCommunication } = useCommunicationManager();
@@ -34,6 +35,9 @@ function useIBrain() {
 
       const navigateTool = new NavigateTool();
       iBrain.addTool(navigateTool);
+
+      const pricingTool = new PricingTool();
+      iBrain.addTool(pricingTool);
 
       // Method to handle user input
       const handleUserInput = async (message: string) => {

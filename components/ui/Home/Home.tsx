@@ -110,18 +110,18 @@ const Features = () => (
                     <path
                       d="M25.714 21.4385C38.9686 21.4385 49.7135 17.0733 49.7135 11.6885C49.7135 6.30379 38.9686 1.9386 25.714 1.9386C12.4595 1.9386 1.7146 6.30379 1.7146 11.6885C1.7146 17.0733 12.4595 21.4385 25.714 21.4385Z"
                       stroke="#E862FE"
-                      stroke-width="2.3"
+                      strokeWidth="2.3"
                     />
                     <path
                       d="M1.71521 31.1886C1.71521 31.1886 1.71521 38.8039 1.71521 44.1885C1.71521 49.5733 12.4601 53.9385 25.7143 53.9385C38.9687 53.9385 49.7146 49.5733 49.7146 44.1885C49.7146 41.5008 49.7146 31.1886 49.7146 31.1886"
                       stroke="#E862FE"
-                      stroke-width="2.3"
-                      stroke-linecap="square"
+                      strokeWidth="2.3"
+                      strokeLinecap="square"
                     />
                     <path
                       d="M1.71521 11.6886C1.71521 11.6886 1.71521 22.5538 1.71521 27.9385C1.71521 33.3233 12.4601 37.6885 25.7143 37.6885C38.9687 37.6885 49.7146 33.3233 49.7146 27.9385C49.7146 25.2507 49.7146 11.6886 49.7146 11.6886"
                       stroke="#E862FE"
-                      stroke-width="2.3"
+                      strokeWidth="2.3"
                     />
                   </svg>
                   <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2">
@@ -165,18 +165,18 @@ const Features = () => (
                     <path
                       d="M25.714 21.4385C38.9686 21.4385 49.7135 17.0733 49.7135 11.6885C49.7135 6.30379 38.9686 1.9386 25.714 1.9386C12.4595 1.9386 1.7146 6.30379 1.7146 11.6885C1.7146 17.0733 12.4595 21.4385 25.714 21.4385Z"
                       stroke="#7534FF"
-                      stroke-width="2.3"
+                      strokeWidth="2.3"
                     />
                     <path
                       d="M1.71521 31.1886C1.71521 31.1886 1.71521 38.8039 1.71521 44.1885C1.71521 49.5733 12.4601 53.9385 25.7143 53.9385C38.9687 53.9385 49.7146 49.5733 49.7146 44.1885C49.7146 41.5008 49.7146 31.1886 49.7146 31.1886"
                       stroke="#7534FF"
-                      stroke-width="2.3"
-                      stroke-linecap="square"
+                      strokeWidth="2.3"
+                      strokeLinecap="square"
                     />
                     <path
                       d="M1.71521 11.6886C1.71521 11.6886 1.71521 22.5538 1.71521 27.9385C1.71521 33.3233 12.4601 37.6885 25.7143 37.6885C38.9687 37.6885 49.7146 33.3233 49.7146 27.9385C49.7146 25.2507 49.7146 11.6886 49.7146 11.6886"
                       stroke="#7534FF"
-                      stroke-width="2.3"
+                      strokeWidth="2.3"
                     />
                   </svg>
                   <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2">
@@ -211,18 +211,18 @@ const Features = () => (
                     <path
                       d="M25.714 21.4383C38.9686 21.4383 49.7135 17.0731 49.7135 11.6884C49.7135 6.30367 38.9686 1.93848 25.714 1.93848C12.4595 1.93848 1.7146 6.30367 1.7146 11.6884C1.7146 17.0731 12.4595 21.4383 25.714 21.4383Z"
                       stroke="#E862FE"
-                      stroke-width="2.3"
+                      strokeWidth="2.3"
                     />
                     <path
                       d="M1.71521 31.1885C1.71521 31.1885 1.71521 38.8037 1.71521 44.1884C1.71521 49.5732 12.4601 53.9384 25.7143 53.9384C38.9687 53.9384 49.7146 49.5732 49.7146 44.1884C49.7146 41.5007 49.7146 31.1885 49.7146 31.1885"
                       stroke="#E862FE"
-                      stroke-width="2.3"
-                      stroke-linecap="square"
+                      strokeWidth="2.3"
+                      strokeLinecap="square"
                     />
                     <path
                       d="M1.71521 11.6885C1.71521 11.6885 1.71521 22.5537 1.71521 27.9383C1.71521 33.3231 12.4601 37.6884 25.7143 37.6884C38.9687 37.6884 49.7146 33.3231 49.7146 27.9383C49.7146 25.2506 49.7146 11.6885 49.7146 11.6885"
                       stroke="#E862FE"
-                      stroke-width="2.3"
+                      strokeWidth="2.3"
                     />
                   </svg>
                   <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2">
@@ -266,18 +266,18 @@ const Features = () => (
                     <path
                       d="M25.714 21.4383C38.9686 21.4383 49.7135 17.0731 49.7135 11.6884C49.7135 6.30367 38.9686 1.93848 25.714 1.93848C12.4595 1.93848 1.7146 6.30367 1.7146 11.6884C1.7146 17.0731 12.4595 21.4383 25.714 21.4383Z"
                       stroke="#7534FF"
-                      stroke-width="2.3"
+                      strokeWidth="2.3"
                     />
                     <path
                       d="M1.71521 31.1885C1.71521 31.1885 1.71521 38.8037 1.71521 44.1884C1.71521 49.5732 12.4601 53.9384 25.7143 53.9384C38.9687 53.9384 49.7146 49.5732 49.7146 44.1884C49.7146 41.5007 49.7146 31.1885 49.7146 31.1885"
                       stroke="#7534FF"
-                      stroke-width="2.3"
-                      stroke-linecap="square"
+                      strokeWidth="2.3"
+                      strokeLinecap="square"
                     />
                     <path
                       d="M1.71521 11.6885C1.71521 11.6885 1.71521 22.5537 1.71521 27.9383C1.71521 33.3231 12.4601 37.6884 25.7143 37.6884C38.9687 37.6884 49.7146 33.3231 49.7146 27.9383C49.7146 25.2506 49.7146 11.6885 49.7146 11.6885"
                       stroke="#7534FF"
-                      stroke-width="2.3"
+                      strokeWidth="2.3"
                     />
                   </svg>
                   <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2">
@@ -425,8 +425,8 @@ const Informations = () => (
                     d="M181.837 1.38062H16.1009C7.77963 1.38062 1.03394 8.12076 1.03394 16.4352V176.181C1.03394 184.495 7.77963 191.235 16.1009 191.235H181.837C190.158 191.235 196.904 184.495 196.904 176.181V16.4352C196.904 8.12076 190.158 1.38062 181.837 1.38062Z"
                     fill="#131318"
                     stroke="#7A7D9C"
-                    stroke-opacity="0.5"
-                    stroke-width={2}
+                    strokeOpacity="0.5"
+                    strokeWidth={2}
                   />
                 </svg>
                 <svg
@@ -526,8 +526,8 @@ const Informations = () => (
                     d="M181.837 1.81689H16.1009C7.77963 1.81689 1.03394 8.55704 1.03394 16.8714V176.617C1.03394 184.931 7.77963 191.671 16.1009 191.671H181.837C190.158 191.671 196.904 184.931 196.904 176.617V16.8714C196.904 8.55704 190.158 1.81689 181.837 1.81689Z"
                     fill="#131318"
                     stroke="#7A7D9C"
-                    stroke-opacity="0.5"
-                    stroke-width={2}
+                    strokeOpacity="0.5"
+                    strokeWidth={2}
                   />
                 </svg>
                 <svg
@@ -627,8 +627,8 @@ const Informations = () => (
                     d="M181.981 1.38062H16.2449C7.92367 1.38062 1.17798 8.12076 1.17798 16.4352V176.181C1.17798 184.495 7.92367 191.235 16.2449 191.235H181.981C190.302 191.235 197.048 184.495 197.048 176.181V16.4352C197.048 8.12076 190.302 1.38062 181.981 1.38062Z"
                     fill="#131318"
                     stroke="#7A7D9C"
-                    stroke-opacity="0.5"
-                    stroke-width={2}
+                    strokeOpacity="0.5"
+                    strokeWidth={2}
                   />
                 </svg>
                 <svg
@@ -728,8 +728,8 @@ const Informations = () => (
                     d="M181.981 1.81689H16.2449C7.92367 1.81689 1.17798 8.55704 1.17798 16.8714V176.617C1.17798 184.931 7.92367 191.671 16.2449 191.671H181.981C190.302 191.671 197.048 184.931 197.048 176.617V16.8714C197.048 8.55704 190.302 1.81689 181.981 1.81689Z"
                     fill="#131318"
                     stroke="#7A7D9C"
-                    stroke-opacity="0.5"
-                    stroke-width={2}
+                    strokeOpacity="0.5"
+                    strokeWidth={2}
                   />
                 </svg>
                 <svg
@@ -848,7 +848,7 @@ const Informations = () => (
                   <path
                     d="M7.17877 11.6003C10.0986 11.6003 12.4656 9.2353 12.4656 6.31787C12.4656 3.40044 10.0986 1.0354 7.17877 1.0354C4.25894 1.0354 1.89197 3.40044 1.89197 6.31787C1.89197 9.2353 4.25894 11.6003 7.17877 11.6003Z"
                     stroke="#222222"
-                    stroke-width={2}
+                    strokeWidth={2}
                   />
                 </svg>
                 <svg
@@ -863,8 +863,8 @@ const Informations = () => (
                   <path
                     d="M1.11365 1.24829L4.28524 4.41727"
                     stroke="#222222"
-                    stroke-width={2}
-                    stroke-linecap="round"
+                    strokeWidth={2}
+                    strokeLinecap="round"
                   />
                 </svg>
                 <svg
@@ -1049,9 +1049,9 @@ const Informations = () => (
                   <path
                     d="M108.93 76.7588H73.7849C63.6315 76.7588 55.3999 68.5348 55.3999 58.3889V39.1843V19.9798C55.3999 9.83468 47.1692 1.60986 37.0149 1.60986H1.86963"
                     stroke="white"
-                    stroke-width={2}
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
                 <svg
@@ -1066,7 +1066,7 @@ const Informations = () => (
                   <path
                     d="M12.9305 25.2842C6.00767 25.2842 0.395626 19.6768 0.395626 12.7597C0.395626 5.84254 6.00767 0.235107 12.9305 0.235107C19.8533 0.235107 25.4653 5.84254 25.4653 12.7597C25.4653 19.6768 19.8533 25.2842 12.9305 25.2842Z"
                     fill="#7B61FF"
-                    fill-opacity="0.2"
+                    fillOpacity="0.2"
                   />
                 </svg>
                 <svg
@@ -1081,7 +1081,7 @@ const Informations = () => (
                   <path
                     d="M18.9302 38.5469C8.54577 38.5469 0.127518 30.1356 0.127518 19.7596C0.127518 9.38374 8.54577 0.972412 18.9302 0.972412C29.3147 0.972412 37.7329 9.38374 37.7329 19.7596C37.7329 30.1356 29.3147 38.5469 18.9302 38.5469Z"
                     fill="#95ACFC"
-                    fill-opacity="0.1"
+                    fillOpacity="0.1"
                   />
                 </svg>
                 <svg
@@ -1096,7 +1096,7 @@ const Informations = () => (
                   <path
                     d="M25.9295 50.8096C12.0834 50.8096 0.858917 39.5943 0.858917 25.7596C0.858917 11.925 12.0834 0.709717 25.9295 0.709717C39.7755 0.709717 51 11.925 51 25.7596C51 39.5943 39.7755 50.8096 25.9295 50.8096Z"
                     fill="#95ACFC"
-                    fill-opacity="0.1"
+                    fillOpacity="0.1"
                   />
                 </svg>
                 <svg
@@ -1112,7 +1112,7 @@ const Informations = () => (
                     d="M7.92977 12.772C6.59932 12.772 5.32338 12.244 4.38262 11.304C3.44185 10.364 2.91333 9.08908 2.91333 7.75973C2.91333 6.43038 3.44185 5.15549 4.38262 4.2155C5.32338 3.2755 6.59932 2.74742 7.92977 2.74742C8.59625 2.73525 9.25847 2.85592 9.87776 3.10235C10.497 3.34878 11.061 3.71603 11.5366 4.18267C12.0123 4.64932 12.39 5.20595 12.6479 5.82013C12.9058 6.4343 13.0387 7.09369 13.0387 7.75973C13.0387 8.42577 12.9058 9.08516 12.6479 9.69933C12.39 10.3135 12.0123 10.8701 11.5366 11.3368C11.061 11.8034 10.497 12.1707 9.87776 12.4172C9.25847 12.6636 8.59625 12.7842 7.92977 12.772Z"
                     fill="#181924"
                     stroke="#4457FF"
-                    stroke-width={4}
+                    strokeWidth={4}
                   />
                 </svg>
                 <svg
@@ -1127,9 +1127,9 @@ const Informations = () => (
                   <path
                     d="M2.70702 1.6106H1.45312"
                     stroke="#4457FF"
-                    stroke-width="1.997"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.997"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
                 <svg
@@ -1144,7 +1144,7 @@ const Informations = () => (
                   <path
                     d="M5.3778 9.78472L1.134 6.25108C1.03984 6.17283 0.96406 6.07483 0.912063 5.96404C0.860067 5.85325 0.83313 5.73239 0.83313 5.61003C0.83313 5.48766 0.860067 5.36678 0.912063 5.25598C0.96406 5.14519 1.03984 5.0472 1.134 4.96894L5.3778 1.4353"
                     stroke="white"
-                    stroke-linecap="round"
+                    strokeLinecap="round"
                   />
                 </svg>
                 <svg
@@ -1159,9 +1159,9 @@ const Informations = () => (
                   <path
                     d="M1.06958 1.2644H36.2149C46.3692 1.2644 54.5999 9.48919 54.5999 19.6343V38.8388V58.0435C54.5999 68.1894 62.8314 76.4133 72.9849 76.4133H108.13"
                     stroke="white"
-                    stroke-width={2}
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
                 <svg
@@ -1176,7 +1176,7 @@ const Informations = () => (
                   <path
                     d="M13.0695 0.73875C19.9923 0.73875 25.6044 6.34618 25.6044 13.2633C25.6044 20.1804 19.9923 25.7878 13.0695 25.7878C6.14671 25.7878 0.534668 20.1804 0.534668 13.2633C0.534668 6.34618 6.14671 0.73875 13.0695 0.73875Z"
                     fill="#7B61FF"
-                    fill-opacity="0.2"
+                    fillOpacity="0.2"
                   />
                 </svg>
                 <svg
@@ -1191,7 +1191,7 @@ const Informations = () => (
                   <path
                     d="M19.0698 0.477043C29.4542 0.477043 37.8725 8.88837 37.8725 19.2643C37.8725 29.6402 29.4542 38.0515 19.0698 38.0515C8.68534 38.0515 0.26709 29.6402 0.26709 19.2643C0.26709 8.88837 8.68534 0.477043 19.0698 0.477043Z"
                     fill="#95ACFC"
-                    fill-opacity="0.1"
+                    fillOpacity="0.1"
                   />
                 </svg>
                 <svg
@@ -1206,7 +1206,7 @@ const Informations = () => (
                   <path
                     d="M25.0705 0.213619C38.9166 0.213619 50.1411 11.4289 50.1411 25.2635C50.1411 39.0982 38.9166 50.3135 25.0705 50.3135C11.2245 50.3135 0 39.0982 0 25.2635C0 11.4289 11.2245 0.213619 25.0705 0.213619Z"
                     fill="#95ACFC"
-                    fill-opacity="0.1"
+                    fillOpacity="0.1"
                   />
                 </svg>
                 <svg
@@ -1222,7 +1222,7 @@ const Informations = () => (
                     d="M7.07016 2.25098C8.40061 2.25098 9.67656 2.77906 10.6173 3.71905C11.5581 4.65905 12.0866 5.93394 12.0866 7.26329C12.0866 8.59264 11.5581 9.86758 10.6173 10.8076C9.67656 11.7476 8.40061 12.2757 7.07016 12.2757C5.73972 12.2757 4.46376 11.7476 3.523 10.8076C2.58223 9.86758 2.05371 8.59264 2.05371 7.26329C2.05371 5.93394 2.58223 4.65905 3.523 3.71905C4.46376 2.77906 5.73972 2.25098 7.07016 2.25098Z"
                     fill="#181924"
                     stroke="#4457FF"
-                    stroke-width={4}
+                    strokeWidth={4}
                   />
                 </svg>
                 <svg
@@ -1237,9 +1237,9 @@ const Informations = () => (
                   <path
                     d="M1.29272 1.41235H2.54663"
                     stroke="#4457FF"
-                    stroke-width="1.997"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.997"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
                 <svg
@@ -1254,7 +1254,7 @@ const Informations = () => (
                   <path
                     d="M0.62207 1.23804L4.86592 4.77165C4.96009 4.84999 5.03586 4.94809 5.08786 5.05895C5.13986 5.16981 5.16682 5.29074 5.16682 5.41317C5.16682 5.5356 5.13986 5.65653 5.08786 5.76739C5.03586 5.87825 4.96009 5.9763 4.86592 6.05463L0.62207 9.5883"
                     stroke="white"
-                    stroke-linecap="round"
+                    strokeLinecap="round"
                   />
                 </svg>
               </div>
@@ -1304,7 +1304,7 @@ const Informations = () => (
                         d="M2.42712 20.8291C2.42712 10.6119 10.7099 2.3291 20.9271 2.3291H240.912C251.13 2.3291 259.412 10.6118 259.412 20.8291V74.669C259.412 84.8863 251.13 93.1691 240.912 93.1691H20.9271C10.7098 93.1691 2.42712 84.8863 2.42712 74.6691V20.8291Z"
                         fill="#131318"
                         stroke="#46485A"
-                        stroke-width={3}
+                        strokeWidth={3}
                       />
                     </svg>
                     <div className="w-[124.77px] h-[9.83px] absolute left-[131.16px] top-[319.38px] rounded-[50px] bg-[#7a7d9c]" />
@@ -1335,7 +1335,7 @@ const Informations = () => (
                         d="M2.42712 20.3157C2.42712 10.0984 10.7099 1.81567 20.9271 1.81567H240.912C251.13 1.81567 259.412 10.0984 259.412 20.3157V74.1556C259.412 84.3729 251.13 92.6556 240.912 92.6556H20.9271C10.7098 92.6556 2.42712 84.3729 2.42712 74.1556V20.3157Z"
                         fill="#131318"
                         stroke="#46485A"
-                        stroke-width={3}
+                        strokeWidth={3}
                       />
                     </svg>
                     <div className="w-[124.77px] h-[9.83px] absolute left-[130.16px] top-[419.77px] rounded-[50px] bg-[#7a7d9c]" />
@@ -1394,7 +1394,7 @@ const Informations = () => (
                         d="M2.42578 20.3426C2.42578 10.1253 10.7085 1.84253 20.9258 1.84253H240.911C251.128 1.84253 259.411 10.1253 259.411 20.3425V74.1825C259.411 84.3997 251.128 92.6825 240.911 92.6825H20.9258C10.7085 92.6825 2.42578 84.3997 2.42578 74.1825V20.3426Z"
                         fill="#131318"
                         stroke="#46485A"
-                        stroke-width={3}
+                        strokeWidth={3}
                       />
                     </svg>
                     <div className="w-[124.77px] h-[9.83px] absolute left-[131.16px] top-[217.79px] rounded-[50px] bg-[#7a7d9c]" />
@@ -1489,7 +1489,7 @@ const Informations = () => (
                         d="M2.42578 20.856C2.42578 10.6387 10.7085 2.35596 20.9258 2.35596H240.911C251.128 2.35596 259.411 10.6387 259.411 20.856V74.6959C259.411 84.9132 251.128 93.1959 240.911 93.1959H20.9258C10.7085 93.1959 2.42578 84.9132 2.42578 74.6959V20.856Z"
                         fill="#131318"
                         stroke="#46485A"
-                        stroke-width={3}
+                        strokeWidth={3}
                       />
                     </svg>
                     <div className="w-[239.64px] h-[67.73px]">
@@ -1518,23 +1518,23 @@ const Informations = () => (
                     <path
                       d="M30.0429 45.782L89.0678 45.782C91.7884 45.782 93.9939 47.9875 93.9939 50.708V50.708"
                       stroke="white"
-                      stroke-width={3}
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth={3}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M157.945 95.634H98.92C96.1994 95.634 93.9939 93.4286 93.9939 90.708V90.708"
                       stroke="white"
-                      stroke-width={3}
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth={3}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M93.9941 90.7427L93.9941 50.7078C93.9941 47.9872 91.7887 45.7817 89.0681 45.7817V45.7817"
                       stroke="white"
-                      stroke-width={3}
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth={3}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <circle
                       cx="14.9754"
@@ -1542,7 +1542,7 @@ const Informations = () => (
                       r="14.9754"
                       transform="matrix(1 0 0 -1 15.0679 60.7561)"
                       fill="#7B61FF"
-                      fill-opacity="0.2"
+                      fillOpacity="0.2"
                     />
                     <circle
                       cx="22.463"
@@ -1550,7 +1550,7 @@ const Informations = () => (
                       r="22.463"
                       transform="matrix(1 0 0 -1 7.58008 68.2446)"
                       fill="#F4F6FD"
-                      fill-opacity="0.1"
+                      fillOpacity="0.1"
                     />
                     <circle
                       cx="29.9507"
@@ -1558,20 +1558,20 @@ const Informations = () => (
                       r="29.9507"
                       transform="matrix(1 0 0 -1 0.0924072 75.7322)"
                       fill="#F4F6FD"
-                      fill-opacity="0.1"
+                      fillOpacity="0.1"
                     />
                     <path
                       d="M30.0432 39.7878C33.3533 39.7878 36.0367 42.4712 36.0367 45.7812C36.0367 49.0913 33.3533 51.7747 30.0432 51.7747C26.7332 51.7747 24.0498 49.0913 24.0498 45.7812C24.0498 42.4712 26.7332 39.7878 30.0432 39.7878Z"
                       fill="#131318"
                       stroke="#4457FF"
-                      stroke-width={4}
+                      strokeWidth={4}
                     />
-                    <g clip-path="url(#clip0_1_395)">
+                    <g clipPath="url(#clip0_1_395)">
                       <path
                         d="M154.95 90.6419L160.02 94.8667C160.499 95.2659 160.499 96.0015 160.02 96.4007L154.95 100.625"
                         stroke="#131318"
-                        stroke-width="1.90499"
-                        stroke-linecap="round"
+                        strokeWidth="1.90499"
+                        strokeLinecap="round"
                       />
                     </g>
                     <defs>
@@ -1597,43 +1597,43 @@ const Informations = () => (
                     <path
                       d="M30.5429 94.9417L89.5678 94.9417C92.2884 94.9417 94.4939 92.7362 94.4939 90.0156V90.0156"
                       stroke="white"
-                      stroke-width={3}
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth={3}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M158.445 45.0896L99.42 45.0896C96.6994 45.0896 94.4939 47.2951 94.4939 50.0157V50.0157"
                       stroke="white"
-                      stroke-width={3}
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth={3}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <circle
                       cx="30.5432"
                       cy="94.9429"
                       r="14.9754"
                       fill="#7B61FF"
-                      fill-opacity="0.2"
+                      fillOpacity="0.2"
                     />
                     <circle
                       cx="30.5431"
                       cy="94.942"
                       r="22.463"
                       fill="#F4F6FD"
-                      fill-opacity="0.1"
+                      fillOpacity="0.1"
                     />
                     <circle
                       cx="30.5431"
                       cy="94.9422"
                       r="29.9507"
                       fill="#F4F6FD"
-                      fill-opacity="0.1"
+                      fillOpacity="0.1"
                     />
                     <path
                       d="M30.5432 100.936C33.8533 100.936 36.5367 98.2525 36.5367 94.9424C36.5367 91.6323 33.8533 88.949 30.5432 88.949C27.2332 88.949 24.5498 91.6323 24.5498 94.9424C24.5498 98.2525 27.2332 100.936 30.5432 100.936Z"
                       fill="#131318"
                       stroke="#4457FF"
-                      stroke-width={4}
+                      strokeWidth={4}
                     />
                     <line
                       x1="157.447"
@@ -1641,22 +1641,22 @@ const Informations = () => (
                       x2="158.944"
                       y2="45.09"
                       stroke="#131318"
-                      stroke-width="1.99671"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="1.99671"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M155.45 50.0817L160.52 45.8569C160.999 45.4577 160.999 44.7221 160.52 44.323L155.45 40.0981"
                       stroke="#131318"
-                      stroke-width="1.90499"
-                      stroke-linecap="round"
+                      strokeWidth="1.90499"
+                      strokeLinecap="round"
                     />
                     <path
                       d="M94.4941 91.0493L94.4941 50.5899C94.4941 47.5523 96.9566 45.0898 99.9942 45.0898V45.0898"
                       stroke="white"
-                      stroke-width={3}
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth={3}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
                   <div className="w-[234.07px] h-[401.37px]">
@@ -1678,38 +1678,38 @@ const Informations = () => (
                         <path
                           d="M30.3659 22.6585V33.3252C30.3659 36.1536 30.3659 37.5678 29.4872 38.4465C28.6085 39.3252 27.1943 39.3252 24.3659 39.3252H7.19922C4.37079 39.3252 2.95658 39.3252 2.0779 38.4465C1.19922 37.5678 1.19922 36.1536 1.19922 33.3252V7.8252C1.19922 4.99677 1.19922 3.58255 2.0779 2.70387C2.95658 1.8252 4.37079 1.8252 7.19922 1.8252H15.7826"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M28.2812 1.8252L28.2813 14.3252"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M34.5312 8.0752L22.0312 8.07519"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M9.53125 22.6584L22.0312 22.6584"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M9.53125 14.3252L17.8646 14.3252"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M9.53125 30.9919L17.8646 30.9919"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                       </svg>
                     </div>
@@ -1731,38 +1731,38 @@ const Informations = () => (
                         <path
                           d="M30.3659 22.6585V33.3252C30.3659 36.1536 30.3659 37.5678 29.4872 38.4465C28.6085 39.3252 27.1943 39.3252 24.3659 39.3252H7.19922C4.37079 39.3252 2.95658 39.3252 2.0779 38.4465C1.19922 37.5678 1.19922 36.1536 1.19922 33.3252V7.8252C1.19922 4.99677 1.19922 3.58255 2.0779 2.70387C2.95658 1.8252 4.37079 1.8252 7.19922 1.8252H15.7826"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M28.2812 1.8252L28.2813 14.3252"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M34.5312 8.0752L22.0312 8.07519"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M9.53125 22.6584L22.0312 22.6584"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M9.53125 14.3252L17.8646 14.3252"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M9.53125 30.9919L17.8646 30.9919"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                       </svg>
                     </div>
@@ -1784,38 +1784,38 @@ const Informations = () => (
                         <path
                           d="M30.3659 22.6585V33.3252C30.3659 36.1536 30.3659 37.5678 29.4872 38.4465C28.6085 39.3252 27.1943 39.3252 24.3659 39.3252H7.19922C4.37079 39.3252 2.95658 39.3252 2.0779 38.4465C1.19922 37.5678 1.19922 36.1536 1.19922 33.3252V7.8252C1.19922 4.99677 1.19922 3.58255 2.0779 2.70387C2.95658 1.8252 4.37079 1.8252 7.19922 1.8252H15.7826"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M28.2812 1.8252L28.2813 14.3252"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M34.5312 8.0752L22.0312 8.07519"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M9.53125 22.6584L22.0312 22.6584"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M9.53125 14.3252L17.8646 14.3252"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M9.53125 30.9919L17.8646 30.9919"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                       </svg>
                     </div>
@@ -1837,38 +1837,38 @@ const Informations = () => (
                         <path
                           d="M30.3659 22.6585V33.3252C30.3659 36.1536 30.3659 37.5678 29.4872 38.4465C28.6085 39.3252 27.1943 39.3252 24.3659 39.3252H7.19922C4.37079 39.3252 2.95658 39.3252 2.0779 38.4465C1.19922 37.5678 1.19922 36.1536 1.19922 33.3252V7.8252C1.19922 4.99677 1.19922 3.58255 2.0779 2.70387C2.95658 1.8252 4.37079 1.8252 7.19922 1.8252H15.7826"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M28.2812 1.8252L28.2813 14.3252"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M34.5312 8.0752L22.0312 8.07519"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M9.53125 22.6584L22.0312 22.6584"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M9.53125 14.3252L17.8646 14.3252"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M9.53125 30.9919L17.8646 30.9919"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                       </svg>
                     </div>
@@ -1890,38 +1890,38 @@ const Informations = () => (
                         <path
                           d="M30.3659 22.6585V33.3252C30.3659 36.1536 30.3659 37.5678 29.4872 38.4465C28.6085 39.3252 27.1943 39.3252 24.3659 39.3252H7.19922C4.37079 39.3252 2.95658 39.3252 2.0779 38.4465C1.19922 37.5678 1.19922 36.1536 1.19922 33.3252V7.8252C1.19922 4.99677 1.19922 3.58255 2.0779 2.70387C2.95658 1.8252 4.37079 1.8252 7.19922 1.8252H15.7826"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M28.2812 1.8252L28.2813 14.3252"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M34.5312 8.0752L22.0312 8.07519"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M9.53125 22.6584L22.0312 22.6584"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M9.53125 14.3252L17.8646 14.3252"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M9.53125 30.9919L17.8646 30.9919"
                           stroke="#4457FF"
-                          stroke-width="2.3"
-                          stroke-linecap="round"
+                          strokeWidth="2.3"
+                          strokeLinecap="round"
                         />
                       </svg>
                     </div>
