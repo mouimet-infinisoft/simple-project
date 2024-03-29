@@ -1,11 +1,14 @@
 "use client";
 // TaskManagerContext.tsx
 import React, { createContext, useContext } from 'react';
-import useTaskManagerService, { Task } from './client';
+import { Task, TaskHistoryEntry, useTaskManagerService } from './client';
 
 interface TaskManagerContextType {
-    addTask: (description: string, executeFn: () => Promise<void>) => void;
-    tasks: Task[];
+    addSyncTask: (description: string, executeFn: () => Promise<void>) => void;
+    addAsyncTask: (description: string, executeFn: () => Promise<void>) => void;
+    taskHistory: TaskHistoryEntry[];
+    syncTasks: Task[];
+    asyncTasks: Task[];
 }
 
 // Create a context with an undefined initial value

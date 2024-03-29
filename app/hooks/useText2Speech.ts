@@ -4,7 +4,7 @@ import { useTaskManager } from '@/utils/task-manager/provider';
 import { useEffect, useRef } from 'react';
 
 const useTextToSpeech = () => {
-  const { addTask } = useTaskManager();
+  const { addSyncTask } = useTaskManager();
   const bstack = useBrainStack();
   const synthesisRef = useRef<SpeechSynthesis>();
 
@@ -15,10 +15,9 @@ const useTextToSpeech = () => {
     };
   }, []);
 
-  const speakText = (text: string) => {
+  const speakText = (utterance:  SpeechSynthesisUtterance) => {
     if (!synthesisRef.current) return;
 
-    const utterance = new SpeechSynthesisUtterance(text);
     // Configure utterance properties as needed
     synthesisRef.current.speak(utterance);
   };
@@ -51,7 +50,7 @@ const useTextToSpeech = () => {
       .filter((sentence) => sentence.trim());
 
     sentences.forEach((sentence) => {
-      addTask(
+      addSyncTask(
         'Speak Text',
         () =>
           new Promise<void>((resolve) => {
@@ -59,7 +58,7 @@ const useTextToSpeech = () => {
             if (trimmedSentence) {
               const utterance = new SpeechSynthesisUtterance(trimmedSentence);
               utterance.onend = () => resolve();
-              speakText(trimmedSentence);
+              speakText(utterance);
             } else {
               resolve(); // Resolve immediately if there's no sentence to speak
             }
