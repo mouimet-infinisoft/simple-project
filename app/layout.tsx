@@ -6,6 +6,7 @@ import { PropsWithChildren, Suspense } from 'react';
 import { BrainStackProvider } from '../utils/BrainStackProvider';
 import 'styles/main.css';
 import AssistantInit from '@/components/ui/Assistant/AssistantInit';
+import { TaskManagerProvider } from '@/utils/task-manager/provider';
 
 const meta = {
   title: 'iBrain One - Your AI Assistant',
@@ -59,14 +60,16 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <body className="bg-black loading">
         <Navbar />
         <BrainStackProvider>
-          <AssistantInit>
-            <main
-              id="skip"
-              className="min-h-[calc(100dvh-4rem)] md:min-h[calc(100dvh-5rem)] mx-auto max-w-screen-lg px-4 md:px-0"
-            >
-              {children}
-            </main>
-          </AssistantInit>
+          <TaskManagerProvider>
+            <AssistantInit>
+              <main
+                id="skip"
+                className="min-h-[calc(100dvh-4rem)] md:min-h[calc(100dvh-5rem)] mx-auto max-w-screen-lg px-4 md:px-0"
+              >
+                {children}
+              </main>
+            </AssistantInit>
+          </TaskManagerProvider>
         </BrainStackProvider>
         <Footer />
         <Suspense>

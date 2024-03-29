@@ -9,7 +9,12 @@ export class IBrainAssistant {
 
   constructor(apiKey: string, assistantId: string) {
     this.assistant = new OpenAIAssistant(
-      { apiKey, dangerouslyAllowBrowser: true },
+      // { baseURL:'',apiKey, dangerouslyAllowBrowser: true },
+      {
+        baseURL: 'http://127.0.0.1:8082',
+        apiKey: 'useless',
+        dangerouslyAllowBrowser: true
+      },
       assistantId
     );
   }
@@ -59,7 +64,8 @@ export class IBrainAssistant {
           },
           { role: 'user', content: message }
         ],
-        model: 'gpt-3.5-turbo'
+        // model: 'gpt-3.5-turbo',
+        model: 'tinyllama-chat'
       });
 
       const toolCall = completion.choices[0].message.tool_calls?.[0];

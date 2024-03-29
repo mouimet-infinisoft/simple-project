@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import { motion } from 'framer-motion';
 import useCommunicationManager from '../hooks/useCommunicationManager';
+import {TaskComponent} from '@/components/ui/TaskManager';
 
 export default function AssistantPage() {
   const [topicMessage, setTopicMessage] = useState('');
@@ -31,6 +32,7 @@ export default function AssistantPage() {
           topic={topicMessage}
           active={Boolean(topicMessage?.length > 0)}
         />
+        <TaskComponent/>
       </motion.div>
     </>
   );
