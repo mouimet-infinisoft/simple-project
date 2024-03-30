@@ -225,6 +225,7 @@ export interface Database {
       }
       users: {
         Row: {
+          ai_integration: Database["public"]["Enums"]["ai_integration"] | null
           assistant_id: string | null
           avatar_url: string | null
           billing_address: Json | null
@@ -232,8 +233,10 @@ export interface Database {
           id: string
           openai_apikey: string | null
           payment_method: Json | null
+          togetherai_apikey: string | null
         }
         Insert: {
+          ai_integration?: Database["public"]["Enums"]["ai_integration"] | null
           assistant_id?: string | null
           avatar_url?: string | null
           billing_address?: Json | null
@@ -241,8 +244,10 @@ export interface Database {
           id: string
           openai_apikey?: string | null
           payment_method?: Json | null
+          togetherai_apikey?: string | null
         }
         Update: {
+          ai_integration?: Database["public"]["Enums"]["ai_integration"] | null
           assistant_id?: string | null
           avatar_url?: string | null
           billing_address?: Json | null
@@ -250,6 +255,7 @@ export interface Database {
           id?: string
           openai_apikey?: string | null
           payment_method?: Json | null
+          togetherai_apikey?: string | null
         }
         Relationships: [
           {
@@ -269,6 +275,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
+      ai_integration: "openai" | "togetherai"
       pricing_plan_interval: "day" | "week" | "month" | "year"
       pricing_type: "one_time" | "recurring"
       subscription_status:

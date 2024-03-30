@@ -2,6 +2,10 @@
 import { Message } from '@/app/assistant/page';
 import { motion } from 'framer-motion';
 import React from 'react';
+import Markdown from 'react-markdown';
+import gfm from 'remark-gfm';
+import highlight from 'rehype-highlight';
+import 'highlight.js/styles/github.css';
 
 const MessageCard: React.FC<{ message: Message }> = ({ message }) => {
   // Determine the styling based on the message role
@@ -18,7 +22,9 @@ const MessageCard: React.FC<{ message: Message }> = ({ message }) => {
       transition={{ duration: 0.75 }} // Animation duration
       className={`${cardStyle} ${alignment} mb-4 p-4 rounded-lg shadow`}
     >
-        <p style={{ color: 'black' }}>{message.content}</p>
+      <Markdown remarkPlugins={[gfm]} rehypePlugins={[highlight]}>
+        {message.content}
+      </Markdown>
     </motion.div>
   );
 };

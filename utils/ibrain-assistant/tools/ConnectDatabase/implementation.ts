@@ -60,8 +60,6 @@ export class ConnectDatabaseTool extends AbstractTool<ConnectDatabaseArguments> 
     // Simulate successful connection
     console.log(answer);
 
-    core.store.emit('communication.ai', { content: answer });
-
     // Return some result or status
     return `Connected to ${dbtype} database successfully.`;
   }

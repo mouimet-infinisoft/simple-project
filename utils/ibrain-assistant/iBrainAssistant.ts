@@ -3,6 +3,23 @@ import { OpenAIAssistant } from '@brainstack/openai-assistantapi';
 import { AbstractTool } from './tools/abstraction';
 import { core } from '../BrainStackProvider';
 
+export type AiIntegration = 'openai' | 'togetherai' | null | undefined;
+
+const generateOptions = (apiKey: string, aiIntegration: AiIntegration) => ({
+  apiKey,
+  baseURL:
+    aiIntegration?.toLowerCase() === 'openai'
+      ? undefined
+      : 'https://api.together.xyz/v1',
+  dangerouslyAllowBrowser: true,
+  maxRetries: 0
+});
+
+const getModelName = (aiIntegration: AiIntegration) =>
+  aiIntegration?.toLowerCase() === 'openai'
+    ? 'gpt-3.5-turbo'
+    : 'mistralai/Mixtral-8x7B-Instruct-v0.1';
+
 export class IBrainAssistant {
   private assistant: OpenAIAssistant;
   private tools: Record<string, AbstractTool> = {};
@@ -10,6 +27,7 @@ export class IBrainAssistant {
   constructor(
     apiKey: string,
     assistantId: string,
+    private aiIntegration: AiIntegration,
     private addSyncTask?: (
       description: string,
       executeFn: () => Promise<any>
@@ -20,7 +38,7 @@ export class IBrainAssistant {
     ) => void
   ) {
     this.assistant = new OpenAIAssistant(
-      { apiKey, dangerouslyAllowBrowser: true, maxRetries: 0 },
+      generateOptions(apiKey, this.aiIntegration),
       assistantId
     );
   }
@@ -97,15 +115,21 @@ export class IBrainAssistant {
         tools: Object.values(this.tools).map((tool) =>
           tool.getToolDefinition()
         ),
+        tool_choice: 'auto',
         messages: [
           ...context,
           {
-            role: 'assistant',
-            content: 'My name is iBrain and I am an AI superstar to help you.'
+            role: 'system',
+            content:
+              'You are a helpful assistant that can access external functions. The responses from these function calls will be appended to this dialogue. Please provide responses based on the information from these function calls.'
           },
+          // {
+          //   role: 'assistant',
+          //   content: 'My name is iBrain and I am an AI superstar to help you.'
+          // },
           { role: 'user', content: message }
         ],
-        model: 'gpt-3.5-turbo'
+        model: getModelName(this.aiIntegration)
       });
 
       const toolCall = completion.choices[0].message.tool_calls?.[0];

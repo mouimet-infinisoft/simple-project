@@ -1,11 +1,18 @@
 import React from 'react';
 import { useTaskManager } from '@/utils/task-manager/provider';
 import { Task, TaskHistoryEntry } from '@/utils/task-manager/client';
-import './TaskComponent.css'; 
+import './TaskComponent.css';
 
 export const TaskComponent: React.FC = () => {
-  const { addSyncTask, addAsyncTask, taskHistory, syncTasks, asyncTasks } =
-    useTaskManager();
+  const {
+    addSyncTask,
+    addAsyncTask,
+    abortAllSyncTasks,
+    abortAllAsyncTasks,
+    taskHistory,
+    syncTasks,
+    asyncTasks
+  } = useTaskManager();
 
   const handleAddSyncTask = () => {
     addSyncTask('Example Sync Task', async () => {
@@ -43,12 +50,20 @@ export const TaskComponent: React.FC = () => {
       </div>
       <div className="task-list">
         <div className="tasks">
-          <h2>Synchronous Tasks</h2>
+          <h2>Synchronous Tasks
+          <button className="abort-button" onClick={abortAllSyncTasks}>
+              Abort All
+            </button>
+          </h2>
           {syncTasks.map(renderTask)}
         </div>
 
         <div className="tasks">
-          <h2>Asynchronous Tasks</h2>
+          <h2>Asynchronous Tasks
+          <button className="abort-button" onClick={abortAllAsyncTasks}>
+              Abort All
+            </button>
+          </h2>
           {asyncTasks.map(renderTask)}
         </div>
 

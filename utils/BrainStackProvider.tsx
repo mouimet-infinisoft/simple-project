@@ -7,6 +7,6 @@ export const {
 } = createBrainstack({
   eventHubOptions: [],
   //@ts-ignore
-  stateOptions: { communications: [] },
+  stateOptions: { communications: [], isSpeaking: false },
   loggerOptions: [5]
 });

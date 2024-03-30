@@ -348,6 +348,8 @@ export async function updateKey(formData: FormData) {
   // Get form data
   const apiKey = String(formData.get('apiKey')).trim();
   const assistantId = String(formData.get('assistantId')).trim();
+  const togetherApiKey = String(formData.get('togetherApiKey')).trim();
+  const aiIntegration= String(formData.get('aiIntegration')).trim() as "openai" | "togetherai" | null | undefined
 
   const supabase = createClient();
   const {
@@ -356,7 +358,12 @@ export async function updateKey(formData: FormData) {
   } = await supabase.auth.getUser();
   const { error, status } = await supabase
     .from('users')
-    .update({ openai_apikey: apiKey, assistant_id: assistantId })
+    .update({
+      openai_apikey: apiKey,
+      assistant_id: assistantId,
+      togetherai_apikey: togetherApiKey,
+      ai_integration: aiIntegration
+    })
     .eq('id', user?.id ?? '');
 
   if (error) {

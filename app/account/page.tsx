@@ -1,7 +1,7 @@
 import CustomerPortalForm from '@/components/ui/AccountForms/CustomerPortalForm';
 import EmailForm from '@/components/ui/AccountForms/EmailForm';
 import NameForm from '@/components/ui/AccountForms/NameForm';
-import OpenAIForm from '@/components/ui/AccountForms/OpenAIForm';
+import AIForm from '@/components/ui/AccountForms/AIForm';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 
@@ -48,11 +48,11 @@ export default async function Account() {
         <CustomerPortalForm subscription={subscription} />
         <NameForm userName={userDetails?.full_name ?? ''} />
         <EmailForm userEmail={user.email} />
-        <OpenAIForm
-          userSettings={{
-            apiKey: userDetails?.openai_apikey ?? '',
-            assistantId: userDetails?.assistant_id ?? ''
-          }}
+        <AIForm
+          apiKey={userDetails?.openai_apikey ?? ''}
+          assistantId={userDetails?.assistant_id ?? ''}
+          togetherApiKey={userDetails?.togetherai_apikey ?? ''}
+          aiIntegration={userDetails?.ai_integration ?? ''}
         />
       </div>
     </section>

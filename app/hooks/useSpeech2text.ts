@@ -13,13 +13,13 @@ const useSpeech2text = () => {
 
   const startListening = () => {
     try {
-      const recognition = bstack.store.getState((s) => s?.recognition);
-      const isRecognizing = bstack.store.getState((s) => s?.isRecognizing);
+      const recognition = bstack.store.getState()?.recognition;
+      const isRecognizing = bstack.store.getState()?.isRecognizing;
 
-      if (!isRecognizing) {
-        recognition?.start();
-        bstack.log.verbose('Started listening...');
-      }
+      // if (!isRecognizing) {
+      recognition?.start();
+      bstack.log.verbose('Started listening...');
+      // }
     } catch (e) {}
   };
 
@@ -58,9 +58,20 @@ const useSpeech2text = () => {
     };
 
     recognitionInstance.onend = () => {
-      bstack.store.mutate((s) => ({ ...s, isRecognizing: false }));
-      bstack.log.verbose('Recognition ended...');
-      startListening();
+      bstack.log.verbose(
+        'executing recognitionInstance.onend = () => {} window.speechSynthesis.speaking value is ',
+        window.speechSynthesis.speaking
+      );
+
+      if (window.speechSynthesis.speaking) {
+        bstack.store.mutate((s) => ({ ...s, isRecognizing: false }));
+        bstack.log.verbose('Recognition ended...');
+      }
+
+      if (!window.speechSynthesis.speaking) {
+        bstack.log.verbose('Recognition restarting...');
+        startListening();
+      }
     };
 
     recognitionInstance.onresult = (event: any) => {
@@ -81,10 +92,10 @@ const useSpeech2text = () => {
     return () => {
       stopListening();
     };
-  }, [bstack.store.getState((s) => s?.language)]);
+  }, [bstack.store.getState()?.language]);
 
   return {
-    isRecognizing: false,
+    isRecognizing: bstack.store.getState()?.isRecognizing ?? false,
     startListening,
     stopListening,
     changeLanguage

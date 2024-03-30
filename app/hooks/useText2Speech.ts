@@ -15,10 +15,12 @@ const useTextToSpeech = () => {
     };
   }, []);
 
-  const speakText = (utterance:  SpeechSynthesisUtterance) => {
+  const speakText = (utterance: SpeechSynthesisUtterance) => {
     if (!synthesisRef.current) return;
 
     // Configure utterance properties as needed
+    bstack.store.mutate((s) => ({ ...s, isSpeaking: true }));
+    bstack.store.emit('speech.speaking');
     synthesisRef.current.speak(utterance);
   };
 
@@ -49,7 +51,7 @@ const useTextToSpeech = () => {
       .split(/(?<=[.!?])/)
       .filter((sentence) => sentence.trim());
 
-    sentences.forEach((sentence) => {
+    sentences.forEach((sentence, index) => {
       addSyncTask(
         'iBrain Talk',
         () =>
@@ -57,7 +59,29 @@ const useTextToSpeech = () => {
             const trimmedSentence = sentence.trim();
             if (trimmedSentence) {
               const utterance = new SpeechSynthesisUtterance(trimmedSentence);
-              utterance.onend = () => resolve();
+
+              // Set language based on state
+              utterance.lang = bstack.store.getState()?.language || 'en-US';
+
+              // Set voice based on language
+              const voices = synthesisRef?.current?.getVoices();
+              if (voices) {
+                const voiceForLanguage = voices.find(
+                  (voice) => voice.lang === utterance.lang
+                );
+                if (voiceForLanguage) {
+                  utterance.voice = voiceForLanguage;
+                }
+              }
+
+              utterance.onend = () => {
+                if (index <= sentences.length - 1) {
+                  bstack.store.mutate((s) => ({ ...s, isSpeaking: false }));
+                  bstack.store.emit('speech.silent');
+                }
+                resolve();
+              };
+
               speakText(utterance);
             } else {
               resolve(); // Resolve immediately if there's no sentence to speak

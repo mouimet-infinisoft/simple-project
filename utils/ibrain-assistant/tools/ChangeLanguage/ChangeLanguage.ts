@@ -63,8 +63,6 @@ export class ChangeLanguageTool extends AbstractTool<ChangeLanguageArguments> {
       language: args.recognitionLanguageCode
     }));
 
-    core.store.emit('communication.ai', {content:args.feedbackMessage})
-
     // Return some result or status
     return args.feedbackMessage;
   }

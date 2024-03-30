@@ -4,7 +4,7 @@ import { AbstractTool } from '../abstraction';
 
 // Define the arguments interface for navigation
 interface NavigateArguments {
-  destination: 'home' | 'account' | 'assistant';
+  destination: 'home' | 'account' | 'assistant' | string;
 }
 
 // Implementation for NavigateTool
@@ -40,16 +40,16 @@ export class NavigateTool extends AbstractTool<NavigateArguments> {
     };
 
     // Check if the destination is valid
-    if (!routes[args.destination]) {
+    if (!routes[args.destination.toLowerCase()]) {
       console.error('Invalid destination.');
       return;
     }
 
     // Navigate to the specified route imperatively
-    const destination = routes[args.destination]
+    const destination = routes[args.destination.toLowerCase()]
     core.store.emit('navigatetool.go', {destination})
 
     // Return some result or status
-    return `Navigating to ${routes[args.destination]}...`;
+    return `Navigating to ${args.destination.toLowerCase()}...`;
   }
 }

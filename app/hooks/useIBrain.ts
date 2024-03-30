@@ -9,16 +9,27 @@ import { NavigateTool } from '@/utils/ibrain-assistant/tools/Navigate';
 import { useRouter } from 'next/navigation';
 import { PricingTool } from '@/utils/ibrain-assistant/tools/Pricing';
 import { useTaskManager } from '@/utils/task-manager/provider';
-
+import { AiIntegration } from '@/utils/ibrain-assistant/iBrainAssistant';
 
 function useIBrain() {
   const { addAiCommunication, onUserCommunication } = useCommunicationManager();
   const { addAsyncTask } = useTaskManager();
   const { push } = useRouter();
-  const apiKey = useMemo(
+
+  const openaiKey = useMemo(
     () => core.store.getState((s) => s?.userData?.openai_apikey),
     [core.store.getState()?.userData?.openai_apikey]
   );
+  const togetheraiKey = useMemo(
+    () => core.store.getState()?.userData?.togetherai_apikey,
+    [core.store.getState()?.userData?.togetherai_apikey]
+  );
+  const aiIntegration: AiIntegration = useMemo(
+    () => core.store.getState()?.userData?.ai_integration,
+    [core.store.getState()?.userData?.ai_integration]
+  );
+
+  const apiKey = aiIntegration === 'openai' ? openaiKey : togetheraiKey;
 
   // Use useRef to persist the IBrainAssistant instance
   const iBrainRef = useRef<IBrainAssistant | null>(null);
@@ -29,19 +40,20 @@ function useIBrain() {
       iBrainRef.current = new IBrainAssistant(
         apiKey,
         'YOUR_ASSISTANT_ID',
+        aiIntegration,
         addAsyncTask
       );
 
       // Create and add tools to the assistant
-      const tools = [
+      const asyncTools = [
         new ConnectDatabaseTool(),
         new ChangeLanguageTool(),
         new NavigateTool(),
         new PricingTool()
       ];
-      tools.forEach((tool) => iBrainRef.current?.addAsyncTool(tool));
+      asyncTools.forEach((tool) => iBrainRef.current?.addAsyncTool(tool));
     }
-  }, [apiKey, addAsyncTask]);
+  }, [apiKey, addAsyncTask, aiIntegration]);
 
   useEffect(() => {
     const handleUserInput = async (message: string) => {
@@ -57,7 +69,8 @@ function useIBrain() {
               iBrainRef?.current?.ask !== null
             ) {
               const answer =
-                (await iBrainRef.current.ask(message)) ?? `I'm sorry there is a issue reaching my brain connexion!`;
+                (await iBrainRef.current.ask(message)) ??
+                `I'm sorry there is a issue reaching my brain connexion!`;
               addAiCommunication(answer);
             }
           });
@@ -72,7 +85,6 @@ function useIBrain() {
 
   // Listen for navigation events
   core.useOn('navigatetool.go', (e: any) => push(e.destination), []);
-
 }
 
 export default useIBrain;
