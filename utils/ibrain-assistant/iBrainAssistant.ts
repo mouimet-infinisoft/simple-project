@@ -7,9 +7,16 @@ export class IBrainAssistant {
   private assistant: OpenAIAssistant;
   private tools: Record<string, AbstractTool> = {};
 
-  constructor(apiKey: string, assistantId: string) {
+  constructor(
+    apiKey: string,
+    assistantId: string,
+    private addSyncTask?: (
+      description: string,
+      executeFn: () => Promise<any>
+    ) => void
+  ) {
     this.assistant = new OpenAIAssistant(
-      { apiKey, dangerouslyAllowBrowser: true },
+      { apiKey, dangerouslyAllowBrowser: true, maxRetries: 0 },
       // {
       //   baseURL: 'http://127.0.0.1:8082',
       //   apiKey: 'useless',
@@ -21,6 +28,29 @@ export class IBrainAssistant {
 
   // Add a tool to the assistant
   addTool(tool: AbstractTool): void {
+    if (this.addSyncTask) {
+      const originalExecute = tool.execute.bind(tool); // Ensure 'tool.execute' has the correct 'this'
+  
+      tool.execute = async (arg?: any) => {
+        // Initialize a variable to store the result of the original execute method
+        let result;
+  
+        // Wrap the original execute method
+        if (this.addSyncTask) {
+          const taskExecutor = async () => {
+            // Await and store the result of the original execute method
+            result = await originalExecute(arg);
+            // Return the result so it can be used outside, if necessary
+            return result;
+          };
+          // Use 'this.addSyncTask' directly since 'this' is lexically bound here
+          this.addSyncTask(tool.description, taskExecutor);
+        }
+  
+        // Return the result of the original execute method
+        return result;
+      };
+    }
     this.tools[tool.name] = tool;
   }
 
@@ -64,7 +94,7 @@ export class IBrainAssistant {
           },
           { role: 'user', content: message }
         ],
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-3.5-turbo'
         // model: 'tinyllama-chat'
       });
 

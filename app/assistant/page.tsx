@@ -3,36 +3,36 @@ import { AssistantComponent } from '@/components/ui/Assistant';
 import React, { useEffect, useState } from 'react';
 
 import { motion } from 'framer-motion';
-import useCommunicationManager from '../hooks/useCommunicationManager';
-import {TaskComponent} from '@/components/ui/TaskManager';
+// import useCommunicationManager from '../hooks/useCommunicationManager';
+import { TaskComponent } from '@/components/ui/TaskManager';
+import { useBrainStack } from '@/utils/BrainStackProvider';
+
+// If you're using TypeScript, define an interface
+export interface Message {
+  content: string;
+  role: 'user' | 'assistant';
+}
 
 export default function AssistantPage() {
-  const [topicMessage, setTopicMessage] = useState('');
-  const { onAiCommunication, onUserCommunication } = useCommunicationManager();
+  // const [messages, setMessages] = useState<Message[]>([]); // Adjusted to hold an array of Message objects
+  const bstack = useBrainStack()
 
-  useEffect(() => {
-    onAiCommunication((c) =>
-      Promise.resolve(setTopicMessage((s) => s.concat(`\n iBrain:` + c)))
-    );
-    onUserCommunication((c) =>
-      Promise.resolve(setTopicMessage((s) => s.concat(`\n You:` + c)))
-    );
-  }, []);
+  const communications = bstack.store.getState(s=>s?.communications) ?? []
 
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: -20 }} // Initial animation values
-        animate={{ opacity: 1, y: 0 }} // Animation states
-        exit={{ opacity: 0, y: -20 }} // Animation states
-        transition={{ duration: 2 }} // Animation duration
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 2 }}
       >
         <AssistantComponent
-          key={topicMessage}
-          topic={topicMessage}
-          active={Boolean(topicMessage?.length > 0)}
+          // key={communications.length} // Using the length of messages as a key to trigger re-renders
+          messages={communications} // Passing the entire messages array
+          active={communications.length > 0}
         />
-        <TaskComponent/>
+        <TaskComponent />
       </motion.div>
     </>
   );

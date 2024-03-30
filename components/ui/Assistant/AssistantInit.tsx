@@ -20,7 +20,6 @@ const AssistantInit = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     const handleAiCommunication = async (message: string) => {
       aiSpeak(message);
-      setTopicMessage(message);
     };
 
     return onAiCommunication(handleAiCommunication);
@@ -31,7 +30,6 @@ const AssistantInit = ({ children }: PropsWithChildren) => {
     return () => stopListening();
   }, []);
 
-  const [topicMessage, setTopicMessage] = useState('');
   
   return <>{children}</>;
 };

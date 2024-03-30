@@ -1,6 +1,11 @@
-import { AbstractTool } from "../abstraction";
-import { DatabaseClientFactory } from "./integrations/DatabaseClientFactory";
-import { DatabaseLogin, DatabaseClient, ConnectDatabaseArguments } from "./abstraction";
+import { AbstractTool } from '../abstraction';
+import { DatabaseClientFactory } from './integrations/DatabaseClientFactory';
+import {
+  DatabaseLogin,
+  DatabaseClient,
+  ConnectDatabaseArguments
+} from './abstraction';
+import { core } from '@/utils/BrainStackProvider';
 
 // Implementation for ConnectDatabaseTool
 export class ConnectDatabaseTool extends AbstractTool<ConnectDatabaseArguments> {
@@ -12,20 +17,20 @@ export class ConnectDatabaseTool extends AbstractTool<ConnectDatabaseArguments> 
         dbtype: {
           type: 'string',
           description: 'Type of database (e.g., mysql, sql, postgres).',
-          enum: ['mysql', 'sql', 'postgres'],
+          enum: ['mysql', 'sql', 'postgres']
         },
         url: {
           type: 'string',
-          description: 'URL of the database.',
+          description: 'URL of the database.'
         },
         username: {
           type: 'string',
-          description: 'Username for the database connection.',
+          description: 'Username for the database connection.'
         },
         password: {
           type: 'string',
-          description: 'Password for the database connection.',
-        },
+          description: 'Password for the database connection.'
+        }
       }
     );
   }
@@ -44,13 +49,18 @@ export class ConnectDatabaseTool extends AbstractTool<ConnectDatabaseArguments> 
     const login: DatabaseLogin = { url, username, password };
 
     // Create a database client using the factory
-    const client: DatabaseClient = DatabaseClientFactory.createClient(dbtype, login);
+    const client: DatabaseClient = DatabaseClientFactory.createClient(
+      dbtype,
+      login
+    );
 
     // Connect to the database
     client.connect();
-
+    const answer = `Connected to ${dbtype} database successfully.`;
     // Simulate successful connection
-    console.log(`Connected to ${dbtype} database successfully.`);
+    console.log(answer);
+
+    core.store.emit('communication.ai', { content: answer });
 
     // Return some result or status
     return `Connected to ${dbtype} database successfully.`;

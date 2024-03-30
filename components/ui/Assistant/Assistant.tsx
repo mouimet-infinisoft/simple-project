@@ -1,11 +1,13 @@
-"use client"
+'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Message } from '@/app/assistant/page';
+import MessageCard from '../Card/MessageCard';
 
-const AssistantComponent: React.FC<{ topic: string; active: boolean }> = ({
-  topic,
-  active
-}) => {
+const AssistantComponent: React.FC<{
+  messages: Message[];
+  active: boolean;
+}> = ({ messages, active }) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }} // Initial animation values
@@ -13,7 +15,9 @@ const AssistantComponent: React.FC<{ topic: string; active: boolean }> = ({
       transition={{ duration: 0.5 }} // Animation duration
       className="discussion-component rounded-lg shadow-md px-8 py-6 flex flex-col items-center justify-center bg-white"
     >
-      <h2 className='text-black'>{topic}</h2>
+      {messages.map((message, index) => (
+        <MessageCard key={index} message={message} />
+      ))}
     </motion.div>
   );
 };

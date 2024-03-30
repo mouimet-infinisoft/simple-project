@@ -25,6 +25,7 @@ const useCommunicationManager = () => {
 
   const onUserCommunication = (handler: (content: string) => Promise<void>) => {
     bstack.log.verbose('Listening for user communication...');
+
     return bstack.store.on('communication.user', async (e: any) => {
       bstack.log.verbose('communication.user: ', e);
       await handler(e?.content);
