@@ -13,41 +13,54 @@ export class IBrainAssistant {
     private addSyncTask?: (
       description: string,
       executeFn: () => Promise<any>
+    ) => void,
+    private addAsyncTask?: (
+      description: string,
+      executeFn: () => Promise<any>
     ) => void
   ) {
     this.assistant = new OpenAIAssistant(
       { apiKey, dangerouslyAllowBrowser: true, maxRetries: 0 },
-      // {
-      //   baseURL: 'http://127.0.0.1:8082',
-      //   apiKey: 'useless',
-      //   dangerouslyAllowBrowser: true
-      // },
       assistantId
     );
   }
 
-  // Add a tool to the assistant
-  addTool(tool: AbstractTool): void {
+  addSyncTool(tool: AbstractTool): void {
     if (this.addSyncTask) {
-      const originalExecute = tool.execute.bind(tool); // Ensure 'tool.execute' has the correct 'this'
-  
+      const originalExecute = tool.execute.bind(tool);
+
       tool.execute = async (arg?: any) => {
-        // Initialize a variable to store the result of the original execute method
         let result;
-  
-        // Wrap the original execute method
+
         if (this.addSyncTask) {
           const taskExecutor = async () => {
-            // Await and store the result of the original execute method
             result = await originalExecute(arg);
-            // Return the result so it can be used outside, if necessary
             return result;
           };
-          // Use 'this.addSyncTask' directly since 'this' is lexically bound here
           this.addSyncTask(tool.description, taskExecutor);
         }
-  
-        // Return the result of the original execute method
+
+        return result;
+      };
+    }
+    this.tools[tool.name] = tool;
+  }
+
+  addAsyncTool(tool: AbstractTool): void {
+    if (this.addAsyncTask) {
+      const originalExecute = tool.execute.bind(tool);
+
+      tool.execute = async (arg?: any) => {
+        let result;
+
+        if (this.addAsyncTask) {
+          const taskExecutor = async () => {
+            result = await originalExecute(arg);
+            return result;
+          };
+          this.addAsyncTask(tool.description, taskExecutor);
+        }
+
         return result;
       };
     }
@@ -63,7 +76,6 @@ export class IBrainAssistant {
       console.log('Function Name:', functionName);
       console.log('Arguments:', argumentsObject);
 
-      // Execute the tool based on the function name
       if (this.tools[functionName]) {
         const answer =
           await this.tools?.[functionName]?.execute(argumentsObject);
@@ -76,7 +88,6 @@ export class IBrainAssistant {
     }
   }
 
-  // Method to ask the assistant
   async ask(message: string) {
     try {
       const context: any[] =
@@ -95,7 +106,6 @@ export class IBrainAssistant {
           { role: 'user', content: message }
         ],
         model: 'gpt-3.5-turbo'
-        // model: 'tinyllama-chat'
       });
 
       const toolCall = completion.choices[0].message.tool_calls?.[0];

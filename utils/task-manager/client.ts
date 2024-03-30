@@ -52,7 +52,6 @@ export const useTaskManagerService = () => {
   const executeTask = useCallback(async (task: Task, isSync: boolean) => {
     const updateTasks = isSync ? setSyncTasks : setAsyncTasks;
     try {
-      // Update task to Processing
       updateTasks((prev) =>
         prev.map((t) =>
           t.id === task.id
@@ -63,7 +62,6 @@ export const useTaskManagerService = () => {
 
       await task.executeFn();
 
-      // Update task to Completed
       updateTasks((prev) => prev.filter((t) => t.id !== task.id));
       setTaskHistory((prev) => [
         { ...task, status: 'Completed', completedAt: new Date() },
@@ -71,7 +69,6 @@ export const useTaskManagerService = () => {
       ]);
     } catch (error) {
       console.error(`Error executing task ${task.id}: ${error}`);
-      // Optionally handle error status in task and task history
     }
   }, []);
 
