@@ -1,3 +1,4 @@
+import { core } from '@/utils/BrainStackProvider';
 import { AbstractTool } from '../abstraction';
 
 // Define the arguments interface for explaining pricing
@@ -48,6 +49,7 @@ export class PricingTool extends AbstractTool<PricingArguments> {
 
     console.log('Pricing information:');
     console.log(pricingInfo);
+    core.store.emit(`tool.pricing`)
 
     // Return the pricing information
     return pricingInfo;

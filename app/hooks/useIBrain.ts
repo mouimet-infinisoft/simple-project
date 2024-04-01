@@ -4,7 +4,7 @@ import { IBrainAssistant } from '@/utils/ibrain-assistant';
 import { ConnectDatabaseTool } from '@/utils/ibrain-assistant/tools';
 import { ChangeLanguageTool } from '@/utils/ibrain-assistant/tools/ChangeLanguage';
 import useCommunicationManager from '@/app/hooks/useCommunicationManager';
-import { core } from '@/utils/BrainStackProvider';
+import { core, useBrainStack } from '@/utils/BrainStackProvider';
 import { NavigateTool } from '@/utils/ibrain-assistant/tools/Navigate';
 import { useRouter } from 'next/navigation';
 import { PricingTool } from '@/utils/ibrain-assistant/tools/Pricing';
@@ -12,6 +12,7 @@ import { useTaskManager } from '@/utils/task-manager/provider';
 import { AiIntegration } from '@/utils/ibrain-assistant/iBrainAssistant';
 
 function useIBrain() {
+  const bstack = useBrainStack()
   const { addAiCommunication, onUserCommunication } = useCommunicationManager();
   const { addAsyncTask } = useTaskManager();
   const { push } = useRouter();
@@ -37,12 +38,14 @@ function useIBrain() {
   useEffect(() => {
     if (apiKey && iBrainRef?.current === null) {
       // Initialize the IBrainAssistant instance if it hasn't been created yet
-      iBrainRef.current = new IBrainAssistant(
+      const iBrain = new IBrainAssistant(
         apiKey,
         'YOUR_ASSISTANT_ID',
         aiIntegration,
         addAsyncTask
       );
+
+      iBrainRef.current = iBrain
 
       // Create and add tools to the assistant
       const asyncTools = [
@@ -52,6 +55,8 @@ function useIBrain() {
         new PricingTool()
       ];
       asyncTools.forEach((tool) => iBrainRef.current?.addAsyncTool(tool));
+
+      bstack.store.mutate(s=>({...s, iBrain}))
     }
   }, [apiKey, addAsyncTask, aiIntegration]);
 
@@ -88,6 +93,9 @@ function useIBrain() {
   // Assuming core.useOn is a method to listen to events
   core.useOn('tool.database.connect.new', () => {
     push(`/protected/tools/database`);
+  });
+  core.useOn('tool.pricing', () => {
+    push(`/#pricing`);
   });
 }
 

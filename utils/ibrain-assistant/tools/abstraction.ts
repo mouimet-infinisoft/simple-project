@@ -14,7 +14,7 @@ export abstract class AbstractTool<T = any> {
   constructor(
     public name: string,
     public description: string,
-    private parameters: ToolParameters = {},
+    public parameters: ToolParameters = {},
     private requiredParameters: (keyof ToolParameters)[] = []
   ) {}
 

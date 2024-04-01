@@ -7,8 +7,6 @@ export default function HomePage() {
     <>
       <HomeComponent />
       <Subscriptions />
-      <MyComponent />
-      <MyComponent2 />
     </>
   );
 }
