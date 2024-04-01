@@ -8,9 +8,6 @@ import useTextToSpeech from '@/app/hooks/useText2Speech';
 import { useBrainStack, core } from '@/utils/BrainStackProvider';
 import { VoicePermissionAlert } from '@/components/ui/VoicePermissionAlert'; // Import the VoicePermissionAlert component
 
-
-  let window:any = global?.window ? global.window :  {};
-
 const AssistantInit = ({ children }: PropsWithChildren<any>) => {
   useAuthorization();
   const bstack = useBrainStack();
@@ -19,12 +16,8 @@ const AssistantInit = ({ children }: PropsWithChildren<any>) => {
   const { aiSpeak } = useTextToSpeech();
   useDevTools(core);
 
-  const [micPermissionGranted, setMicPermissionGranted] = useState(
-    Boolean(window?.localStorage?.getItem('micPermissionGranted') ?? false)
-  );
-  const [showVoiceAlert, setShowVoiceAlert] = useState(
-    !Boolean(window?.localStorage?.getItem('micPermissionGranted') ?? false)
-  ); // New state to control the visibility of the VoicePermissionAlert
+  const [micPermissionGranted, setMicPermissionGranted] = useState(false);
+  const [showVoiceAlert, setShowVoiceAlert] = useState(true);
 
   useEffect(() => {
     if (micPermissionGranted) {
@@ -44,7 +37,9 @@ const AssistantInit = ({ children }: PropsWithChildren<any>) => {
   }, [micPermissionGranted]);
 
   useEffect(() => {
-    if (micPermissionGranted) {
+    if (window && window?.localStorage?.getItem('micPermissionGranted')) {
+      setShowVoiceAlert(false);
+      setMicPermissionGranted(true);
       core.store.emit('ibrain.talk', {
         // Updated prompt for the LLM to generate a more engaging and informative introduction
         system: `As iBrain, you welcome back the user! It's great to see user coming back. As always, you are here to assist with a wide range of tasks, from providing detailed insights to facilitating easy sign-ins. Remember, the first 14 days are free, allowing the user to fully experience what  you can offer without any commitment. 
@@ -80,7 +75,7 @@ const AssistantInit = ({ children }: PropsWithChildren<any>) => {
 
   return (
     <>
-      {!micPermissionGranted && showVoiceAlert && (
+      {showVoiceAlert && (
         <VoicePermissionAlert
           requestMicPermission={requestMicPermission}
           onClose={handleCloseAlert} // Pass the handleCloseAlert function to the VoicePermissionAlert
