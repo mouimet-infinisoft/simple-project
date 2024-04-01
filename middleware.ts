@@ -14,6 +14,8 @@ export async function middleware(request: NextRequest) {
     return Response.redirect(new URL('/signin/password_signin', request.url));
   }
 
+  await updateSession(request);
+
   const { data: userDetails } = await supabase
     .from('users')
     .select('*')
