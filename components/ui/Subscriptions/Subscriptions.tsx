@@ -1,11 +1,10 @@
-//@ts-nocheck
 import * as React from 'react';
 
 export default function Subscriptions() {
   return (
     <div
       id="pricing"
-      // className="flex overflow-hidden relative flex-col justify-center items-center p-20 min-h-[1147px] max-md:px-5"
+      className="flex overflow-hidden relative flex-col justify-center items-center p-20 min-h-[1147px] max-md:px-5"
     >
       <div className="relative mt-10 text-6xl font-bold text-center bg-clip-text leading-[59.4px] max-md:max-w-full max-md:text-4xl">
         Our Plans
@@ -13,11 +12,53 @@ export default function Subscriptions() {
       <div className="relative text-3xl font-medium text-center text-white leading-[54.08px] max-md:max-w-full">
         Choose the best for you
       </div>
-      <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
-      <stripe-pricing-table
-        pricing-table-id="prctbl_1P0jcqJ6cfD2tzfxvipFBubn"
-        publishable-key="pk_live_51MMjZyJ6cfD2tzfx6TK9Qyy1Hjrnuj1QvjGHRTlFUexR4ulQyJLuR9R9zDCWG9kDYf3vJvF5Cdy92TAEsxekKWQL00CnN6xjcB"
-      ></stripe-pricing-table>
+      <div className="relative self-stretch py-10 mt-10 max-md:max-w-full">
+        <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+          {/* Free Trial Subscription Card */}
+          <SubscriptionCard
+            title="Free Trial"
+            price="$0 (Free)"
+            description="Explore the capabilities of iBrain with our 14-day free trial. Dive into our intuitive voice-based interface and experience the power of natural language data interaction."
+            features={[
+              'Access to basic voice-based data interaction.',
+              'Limited database connectivity for exploration.',
+              'Basic query generation and visualization tools.',
+              'Multi-language support for common languages.'
+            ]}
+            duration="14 days"
+          />
+
+          {/* Basic Subscription Card */}
+          <SubscriptionCard
+            title="Basic"
+            price="$19.99/mo"
+            description="Elevate your data experience with our Basic subscription, designed for individuals and small businesses. Gain access to essential features and flexible billing options."
+            features={[
+              'Full access to voice-based data interaction.',
+              'Up to 3 database integrations.',
+              'Advanced query generation and visualization capabilities.',
+              'Multi-language support for common languages.',
+              'Priority email support.'
+            ]}
+            duration="Monthly or annual billing"
+          />
+
+          {/* Business Subscription Card */}
+          <SubscriptionCard
+            title="Business"
+            price="$99.99/mo"
+            description="Unleash the full potential of iBrain Data with our Business subscription, tailored for teams and enterprises. Empower collaboration, advanced analytics, and seamless data management."
+            features={[
+              'Unlimited database connectivity options.',
+              'Customizable dashboards and reporting.',
+              'Priority support.',
+              'Multi-tenant functionality.',
+              'User management for additional users at $15.99/user/mo.'
+            ]}
+            duration="Monthly or annual billing"
+          />
+        </div>
+      </div>
     </div>
   );
 }
@@ -52,12 +93,11 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
           </div>
 
           <a
-            href={'#pricing'}
+            href={'/signin/signup'}
             className="text-center self-stretch px-6 py-4 mt-4 text-xs font-medium leading-4 text-white bg-indigo-600 border border-violet-600 border-solid rounded-[50px] tracking-[2px] max-md:px-5 hover:bg-indigo-700 hover:border-violet-700 transition-colors duration-300 ease-in-out"
-            target="_blank"
             rel="noopener noreferrer"
           >
-            SUBSCRIBE
+            Get Started Free
           </a>
         </div>
         <div className="shrink-0 mt-6 h-px bg-neutral-100" />

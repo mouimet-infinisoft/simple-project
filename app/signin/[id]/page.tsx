@@ -97,7 +97,7 @@ export default async function SignIn({
             <SignUp allowEmail={allowEmail} redirectMethod={redirectMethod} />
           )}
           {viewProp !== 'update_password' &&
-            viewProp !== 'signup' &&
+            // viewProp !== 'signup' &&
             allowOauth && (
               <>
                 <Separator text="Third-party sign-in" />

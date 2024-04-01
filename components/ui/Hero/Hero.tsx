@@ -49,6 +49,20 @@ const Hero: React.FC<HeroProps> = ({
                 alt="Hero Image"
               />
             </div>
+            <motion.a
+              href={buttonLink}
+              initial={{ scale: 1 }}
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{
+                duration: 0.8,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatType: "loop"
+              }}
+              className="mt-8 bg-[#ff3bff] text-white py-2 px-6 rounded-full text-lg font-medium shadow-lg cursor-pointer hover:bg-[#e33ae3]"
+            >
+              {buttonText}
+            </motion.a>
           </div>
         </div>
       </motion.div>

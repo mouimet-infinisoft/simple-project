@@ -53,8 +53,8 @@ const HomeComponent: React.FC<{}> = () => {
       <Hero
         title="iBrain"
         subtitle="Your Business Answers, Just a Conversation Away"
-        buttonText="Get Started"
-        buttonLink="/"
+        buttonText="Get Started Free"
+        buttonLink="/signin/signup"
       />
 
       {/* <FeatureList features={features} /> */}

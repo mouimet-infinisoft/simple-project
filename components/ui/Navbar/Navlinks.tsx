@@ -23,7 +23,7 @@ export default function Navlinks({ user }: NavlinksProps) {
         </Link>
         <nav className="ml-6 space-x-2 lg:block">
           <Link href="/" className={s.link}>
-            Pricing
+            iBrain
           </Link>
           {user && (
             <>
@@ -54,9 +54,6 @@ export default function Navlinks({ user }: NavlinksProps) {
         ) : (<>
           <Link href="/signin" className={s.link}>
             Sign In
-          </Link>
-          <Link href="/signin/signup" className={s.link}>
-            Free Trial
           </Link>
           </>
         )}
