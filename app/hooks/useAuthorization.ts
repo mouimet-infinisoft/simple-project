@@ -4,6 +4,9 @@ import { createClient } from '@/utils/supabase/client';
 import { core } from '@/utils/BrainStackProvider';
 
 function useAuthorization() {
+
+
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {

@@ -1,10 +1,9 @@
 import React from 'react';
 import AIForm from '@/components/ui/AccountForms/AIForm';
 import { createClient } from '@/utils/supabase/server';
-import useAuthorization from '@/app/hooks/useAuthorization';
+import { core } from '@/utils/BrainStackProvider';
 
 export default async function OnboardingPage() {
-  useAuthorization();
   const supabase = createClient();
 
   const {
@@ -16,6 +15,8 @@ export default async function OnboardingPage() {
     .select('*')
     .eq('id', user?.id ?? '')
     .single();
+
+  core.store.mutate((s) => ({ ...s, userDetails }));
 
   return (
     <>
