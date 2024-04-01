@@ -23,7 +23,6 @@ export default function AIForm(userSettings: UserSettings) {
     setIsSubmitting(true);
     await handleRequest(e, updateKey, router);
     setIsSubmitting(false);
-    window.location.reload();
     router.push(`/protected/assistant`)
   };
 
