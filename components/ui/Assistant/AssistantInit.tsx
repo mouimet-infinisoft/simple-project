@@ -8,6 +8,9 @@ import useTextToSpeech from '@/app/hooks/useText2Speech';
 import { useBrainStack, core } from '@/utils/BrainStackProvider';
 import { VoicePermissionAlert } from '@/components/ui/VoicePermissionAlert'; // Import the VoicePermissionAlert component
 
+
+  let window:any = global?.window ? global.window :  {};
+
 const AssistantInit = ({ children }: PropsWithChildren<any>) => {
   useAuthorization();
   const bstack = useBrainStack();
@@ -17,10 +20,10 @@ const AssistantInit = ({ children }: PropsWithChildren<any>) => {
   useDevTools(core);
 
   const [micPermissionGranted, setMicPermissionGranted] = useState(
-    Boolean(window.localStorage.getItem('micPermissionGranted'))
+    Boolean(window?.localStorage?.getItem('micPermissionGranted') ?? false)
   );
   const [showVoiceAlert, setShowVoiceAlert] = useState(
-    !Boolean(window.localStorage.getItem('micPermissionGranted'))
+    !Boolean(window?.localStorage?.getItem('micPermissionGranted') ?? false)
   ); // New state to control the visibility of the VoicePermissionAlert
 
   useEffect(() => {
@@ -62,7 +65,7 @@ const AssistantInit = ({ children }: PropsWithChildren<any>) => {
       core.store.emit('ibrain.introduce');
       setShowVoiceAlert(false);
       console.log('Mic permission granted');
-      window.localStorage.setItem('micPermissionGranted', 'true'); // Set the flag in localStorage
+      window?.localStorage.setItem('micPermissionGranted', 'true'); // Set the flag in localStorage
     } catch (error) {
       console.error('Microphone access denied.', error);
       setMicPermissionGranted(false);

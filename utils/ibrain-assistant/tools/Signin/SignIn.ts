@@ -26,11 +26,6 @@ export class SignInTool extends AbstractTool<SignInArguments> {
 
   // Method to execute the tool
   async execute(args?: SignInArguments) {
-    // Check if arguments are provided
-    // if (!args || !args.provider) {
-    //   console.error('Authentication provider not provided.');
-    //   return;
-    // }
 
     // Validate the provider
     const validProviders = ['google', 'github', 'email']; // Extend this list as needed
