@@ -12,7 +12,7 @@ import { useTaskManager } from '@/utils/task-manager/provider';
 import { AiIntegration } from '@/utils/ibrain-assistant/iBrainAssistant';
 
 function useIBrain() {
-  const bstack = useBrainStack()
+  const bstack = useBrainStack();
   const { addAiCommunication, onUserCommunication } = useCommunicationManager();
   const { addAsyncTask } = useTaskManager();
   const { push } = useRouter();
@@ -45,7 +45,7 @@ function useIBrain() {
         addAsyncTask
       );
 
-      iBrainRef.current = iBrain
+      iBrainRef.current = iBrain;
 
       // Create and add tools to the assistant
       const asyncTools = [
@@ -56,7 +56,7 @@ function useIBrain() {
       ];
       asyncTools.forEach((tool) => iBrainRef.current?.addAsyncTool(tool));
 
-      bstack.store.mutate(s=>({...s, iBrain}))
+      bstack.store.mutate((s) => ({ ...s, iBrain }));
     }
   }, [apiKey, addAsyncTask, aiIntegration]);
 
@@ -94,8 +94,9 @@ function useIBrain() {
   core.useOn('tool.database.connect.new', () => {
     push(`/protected/tools/database`);
   });
-  core.useOn('tool.pricing', () => {
-    push(`/#pricing`);
+  core.useOn('tool.pricing', (e: any) => {
+    console.log(`tool.pricing event: `, e);
+    push(`/pricing?plan=${e?.plan}`);
   });
 }
 
