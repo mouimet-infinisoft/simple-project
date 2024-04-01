@@ -1,10 +1,13 @@
 import { type NextRequest } from 'next/server';
 import { updateSession } from '@/utils/supabase/middleware';
+import { createClient } from './utils/supabase/server';
 
 export async function middleware(request: NextRequest) {
-  const currentUser = request.cookies.get('sb-127-auth-token')?.value;
+  const supabase = createClient()
 
-  if (!currentUser && request.nextUrl.pathname.startsWith('/protected')) {
+  const { data, error } = await supabase.auth.getUser()
+
+  if ((error || !data?.user) && request.nextUrl.pathname.startsWith('/protected')) {
     return Response.redirect(new URL('/signin/password_signin', request.url));
   }
 
