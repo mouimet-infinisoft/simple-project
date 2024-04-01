@@ -12,7 +12,7 @@ export class SignInTool extends AbstractTool<SignInArguments> {
   constructor() {
     super(
       'signIn', // Tool name
-      'Signs in a user using a specified authentication provider. Options are google, github, email. Do not ask for email address. Do not ask for username or password.', // Tool description
+      'Signs in a user using a specified authentication provider. Options are google, github, email. Do not ask for email address. Do not ask for username or password. The user might say: Getting Started or Signup, Signin, Subscribe', // Tool description
       {
         provider: {
           type: 'string',
@@ -27,14 +27,14 @@ export class SignInTool extends AbstractTool<SignInArguments> {
   // Method to execute the tool
   async execute(args?: SignInArguments) {
     // Check if arguments are provided
-    if (!args || !args.provider) {
-      console.error('Authentication provider not provided.');
-      return;
-    }
+    // if (!args || !args.provider) {
+    //   console.error('Authentication provider not provided.');
+    //   return;
+    // }
 
     // Validate the provider
     const validProviders = ['google', 'github', 'email']; // Extend this list as needed
-    const provider = args.provider.toLowerCase().replaceAll('-', '');
+    const provider = args?.provider?.toLowerCase?.()?.replaceAll?.('-', '') ?? "email";
     if (!validProviders.includes(provider)) {
       console.error('Invalid authentication provider.');
       return;

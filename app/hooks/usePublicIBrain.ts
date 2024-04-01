@@ -116,6 +116,15 @@ function usePublicIBrain() {
       addAiCommunication(answer);
     });
   });
+
+  core.useOn('ibrain.talk', (e: any) => {
+    addAsyncTask('Welcome back', async () => {
+      const answer =
+        (await iBrainRef?.current?.talk?.(e?.system, e?.instructions)) ??
+        `Hello there, welcome back!`;
+      addAiCommunication(answer);
+    });
+  });
 }
 
 export default usePublicIBrain;
