@@ -52,6 +52,15 @@ function usePublicIBrain() {
       asyncTools.forEach((tool) => iBrainRef.current?.addAsyncTool(tool));
 
       bstack.store.mutate((s) => ({ ...s, iBrain }));
+
+      // addAsyncTask('', async () => {
+      //   const answer =
+      //     (await iBrainRef?.current?.ask?.(
+      //       'Hi there, who are you?'
+      //     )) ??
+      //     `Hello there, I am iBrain and I welcome you on my page. I can guide you to make the experience better. Just ask me about the pricing, to get started, to talk in another language and I will help. What brings you here?`;
+      //   addAiCommunication(answer);
+      // });
     }
   }, [apiKey, addAsyncTask, aiIntegration]);
 
@@ -93,6 +102,15 @@ function usePublicIBrain() {
 
   core.useOn('tool.signin', (e: any) => {
     handleSignIn('google');
+  });
+
+  core.useOn('ibrain.introduce', () => {
+      addAsyncTask('Introduce yourself', async () => {
+        const answer =
+          (await iBrainRef?.current?.introduceYourself?.()) ??
+          `Hello there, I am iBrain and I welcome you on my page. I can guide you to make the experience better. Just ask me about the pricing, to get started, to talk in another language and I will help. What brings you here?`;
+        addAiCommunication(answer);
+      });
   });
 }
 

@@ -18,9 +18,9 @@ const generateOptions = (apiKey: string, aiIntegration: AiIntegration) => ({
 const getModelName = (aiIntegration: AiIntegration) =>
   aiIntegration?.toLowerCase() === 'openai'
     ? 'gpt-3.5-turbo'
-    // : 'mistralai/Mistral-7B-Instruct-v0.1';
-    // : 'togethercomputer/CodeLlama-34b-Instruct';
-    : 'mistralai/Mixtral-8x7B-Instruct-v0.1';
+    : // : 'mistralai/Mistral-7B-Instruct-v0.1';
+      // : 'togethercomputer/CodeLlama-34b-Instruct';
+      'mistralai/Mixtral-8x7B-Instruct-v0.1';
 
 export class IBrainAssistant {
   private assistant: OpenAIAssistant;
@@ -181,6 +181,39 @@ export class IBrainAssistant {
       }
     } catch (error) {
       console.error('Error asking the assistant:', error);
+    }
+  }
+
+  async introduceYourself(): Promise<string> {
+    // Updated prompt for the LLM to generate a more engaging and informative introduction
+    const prompt = `As iBrain, you are an advanced AI assistant designed to help users with a wide range of tasks. Thank the user for accepting to discuss by voice with you. You're friendly, engaging, and knowledgeable about the services offered, including pricing details and how users can subscribe or sign in. You also support multiple languages, allowing users to interact with you in English, French, Russian, Portuguese, and more. Please introduce yourself in a manner that feels natural and human-like, offering a warm greeting, and explain how you can assist users, including how to change the interaction language.`;
+
+    try {
+      // Use the LLM to generate a response based on the prompt
+      const completion = await this.assistant.openai.chat.completions.create({
+        model: getModelName(this.aiIntegration), // Ensure you're using the appropriate model
+        messages: [
+          {
+            role: 'system',
+            content: prompt
+          },
+          {
+            role: 'user',
+            content: 'Hello there'
+          }
+        ]
+      });
+
+      // Extract the generated introduction speech from the LLM's response
+      const introduction =
+        completion.choices[0].message.content ??
+        "Hello, I am iBrain and I'm here to assist you in any way I can!";
+
+      console.log('Generated introduction:', introduction);
+      return introduction;
+    } catch (error) {
+      console.error('Error generating introduction:', error);
+      return 'There was an error generating my introduction. Please try again later.';
     }
   }
 }
