@@ -6,6 +6,7 @@ import { updateKey } from '@/utils/auth-helpers/server';
 import { handleRequest } from '@/utils/auth-helpers/client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { core } from '@/utils/BrainStackProvider';
 
 interface UserSettings {
   apiKey: string;
@@ -23,6 +24,7 @@ export default function AIForm(userSettings: UserSettings) {
     setIsSubmitting(true);
     await handleRequest(e, updateKey, router);
     setIsSubmitting(false);
+    core.store.emit('userdata.refresh')
     router.push(`/protected/assistant`)
   };
 
