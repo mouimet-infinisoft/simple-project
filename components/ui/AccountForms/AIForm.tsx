@@ -24,6 +24,7 @@ export default function AIForm(userSettings: UserSettings) {
     await handleRequest(e, updateKey, router);
     setIsSubmitting(false);
     window.location.reload();
+    router.push(`/protected/assistant`)
   };
 
   return (
@@ -60,7 +61,7 @@ export default function AIForm(userSettings: UserSettings) {
             placeholder="Your OpenAI API Key"
           />
         </div>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label htmlFor="assistantId" className="block mb-2">
             Assistant ID
           </label>
@@ -71,7 +72,7 @@ export default function AIForm(userSettings: UserSettings) {
             defaultValue={userSettings.assistantId}
             placeholder="Your Assistant ID"
           />
-        </div>
+        </div> */}
         <div className="mb-4">
           <label htmlFor="togetherApiKey" className="block mb-2">
             Together API Key

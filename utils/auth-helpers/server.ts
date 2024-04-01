@@ -347,7 +347,7 @@ export async function updateName(formData: FormData) {
 export async function updateKey(formData: FormData) {
   // Get form data
   const apiKey = String(formData.get('apiKey')).trim();
-  const assistantId = String(formData.get('assistantId')).trim();
+  // const assistantId = String(formData.get('assistantId')).trim();
   const togetherApiKey = String(formData.get('togetherApiKey')).trim();
   const aiIntegration= String(formData.get('aiIntegration')).trim() as "openai" | "togetherai" | null | undefined
 
@@ -360,9 +360,10 @@ export async function updateKey(formData: FormData) {
     .from('users')
     .update({
       openai_apikey: apiKey,
-      assistant_id: assistantId,
+      // assistant_id: assistantId,
       togetherai_apikey: togetherApiKey,
-      ai_integration: aiIntegration
+      ai_integration: aiIntegration,
+      is_onboarding_complete: (Boolean(apiKey) || Boolean(togetherApiKey)) && Boolean(aiIntegration)
     })
     .eq('id', user?.id ?? '');
 
