@@ -271,7 +271,7 @@ export async function updateEmail(formData: FormData) {
   // Check that the email is valid
   if (!isValidEmail(newEmail)) {
     return getErrorRedirect(
-      '/account',
+      '/protected/account',
       'Your email could not be updated.',
       'Invalid email address.'
     );
@@ -280,7 +280,7 @@ export async function updateEmail(formData: FormData) {
   const supabase = createClient();
 
   const callbackUrl = getURL(
-    getStatusRedirect('/account', 'Success!', `Your email has been updated.`)
+    getStatusRedirect('/protected/account', 'Success!', `Your email has been updated.`)
   );
 
   const { error } = await supabase.auth.updateUser(
@@ -292,13 +292,13 @@ export async function updateEmail(formData: FormData) {
 
   if (error) {
     return getErrorRedirect(
-      '/account',
+      '/protected/account',
       'Your email could not be updated.',
       error.message
     );
   } else {
     return getStatusRedirect(
-      '/account',
+      '/protected/account',
       'Confirmation emails sent.',
       `You will need to confirm the update by clicking the links sent to both the old and new email addresses.`
     );
@@ -325,19 +325,19 @@ export async function updateName(formData: FormData) {
 
   if (error) {
     return getErrorRedirect(
-      '/account',
+      '/protected/account',
       'Your name could not be updated.',
       error.message
     );
   } else if (data.user) {
     return getStatusRedirect(
-      '/account',
+      '/protected/account',
       'Success!',
       'Your name has been updated.'
     );
   } else {
     return getErrorRedirect(
-      '/account',
+      '/protected/account',
       'Hmm... Something went wrong.',
       'Your name could not be updated.'
     );
@@ -368,14 +368,14 @@ export async function updateKey(formData: FormData) {
 
   if (error) {
     return getErrorRedirect(
-      '/account',
+      '/protected/account',
       'Your key could not be updated.',
       error.message
     );
   }
 
   return getStatusRedirect(
-    '/account',
+    '/protected/account',
     'Success!',
     'Your key has been updated.'
   );

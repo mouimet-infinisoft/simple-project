@@ -51,10 +51,14 @@ export default function Navlinks({ user }: NavlinksProps) {
               Sign out
             </button>
           </form>
-        ) : (
+        ) : (<>
           <Link href="/signin" className={s.link}>
             Sign In
           </Link>
+          <Link href="/signin/signup" className={s.link}>
+            Free Trial
+          </Link>
+          </>
         )}
       </div>
     </div>

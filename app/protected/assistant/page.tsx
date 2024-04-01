@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 // import useCommunicationManager from '../hooks/useCommunicationManager';
 import { TaskComponent } from '@/components/ui/TaskManager';
 import { useBrainStack } from '@/utils/BrainStackProvider';
+import useIBrain from '@/app/hooks/useIBrain';
 
 // If you're using TypeScript, define an interface
 export interface Message {
@@ -16,6 +17,7 @@ export interface Message {
 export default function AssistantPage() {
   // const [messages, setMessages] = useState<Message[]>([]); // Adjusted to hold an array of Message objects
   const bstack = useBrainStack();
+  useIBrain()
 
   const communications = bstack.store.getState((s) => s?.communications) ?? [];
 

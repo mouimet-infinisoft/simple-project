@@ -3,12 +3,29 @@ import { updateSession } from '@/utils/supabase/middleware';
 import { createClient } from './utils/supabase/server';
 
 export async function middleware(request: NextRequest) {
-  const supabase = createClient()
+  const supabase = createClient();
 
-  const { data, error } = await supabase.auth.getUser()
+  const { data, error } = await supabase.auth.getUser();
 
-  if ((error || !data?.user) && request.nextUrl.pathname.startsWith('/protected')) {
+  if (
+    (error || !data?.user) &&
+    request.nextUrl.pathname.startsWith('/protected')
+  ) {
     return Response.redirect(new URL('/signin/password_signin', request.url));
+  }
+
+  const { data: userDetails } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', data.user?.id ?? '')
+    .single();
+
+  if (
+    userDetails &&
+    userDetails?.is_onboarding_complete !== true &&
+    !request.nextUrl.pathname.startsWith('/protected/onboarding')
+  ) {
+    return Response.redirect(new URL('/protected/onboarding', request.url));
   }
 
   return await updateSession(request);

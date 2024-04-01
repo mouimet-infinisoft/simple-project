@@ -11,7 +11,7 @@ import React, { PropsWithChildren, useEffect, useState } from 'react';
 const AssistantInit = ({ children }: PropsWithChildren) => {
   useAuthorization();
   const bstack = useBrainStack();
-  useIBrain();
+  // useIBrain();
   const { onAiCommunication } = useCommunicationManager();
   const { isRecognizing, startListening, stopListening } = useSpeech2text();
   const { aiSpeak } = useTextToSpeech();

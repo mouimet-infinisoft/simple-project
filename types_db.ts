@@ -231,6 +231,7 @@ export interface Database {
           billing_address: Json | null
           full_name: string | null
           id: string
+          is_onboarding_complete: boolean
           openai_apikey: string | null
           payment_method: Json | null
           togetherai_apikey: string | null
@@ -242,6 +243,7 @@ export interface Database {
           billing_address?: Json | null
           full_name?: string | null
           id: string
+          is_onboarding_complete?: boolean
           openai_apikey?: string | null
           payment_method?: Json | null
           togetherai_apikey?: string | null
@@ -253,6 +255,7 @@ export interface Database {
           billing_address?: Json | null
           full_name?: string | null
           id?: string
+          is_onboarding_complete?: boolean
           openai_apikey?: string | null
           payment_method?: Json | null
           togetherai_apikey?: string | null
