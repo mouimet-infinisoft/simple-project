@@ -49,7 +49,7 @@ export class PricingTool extends AbstractTool<PricingArguments> {
 
     console.log('Pricing information:');
     console.log(pricingInfo);
-    core.store.emit(`tool.pricing`, {plan})
+    core.store.emit(`tool.pricing`)
 
     // Return the pricing information
     return pricingInfo;

@@ -1,8 +1,10 @@
 'use client';
 import { HomeComponent } from '@/components/ui/Home';
 import Subscriptions from '@/components/ui/Subscriptions/Subscriptions';
+import usePublicIBrain from './hooks/usePublicIBrain';
 
 export default function HomePage() {
+  usePublicIBrain()
   return (
     <>
       <HomeComponent />
