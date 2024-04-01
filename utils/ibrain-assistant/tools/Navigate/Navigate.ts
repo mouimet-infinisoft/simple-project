@@ -4,7 +4,7 @@ import { AbstractTool } from '../abstraction';
 
 // Define the arguments interface for navigation
 interface NavigateArguments {
-  destination: 'home' | 'account' | 'assistant' | string;
+  destination: 'home' | 'account' | 'assistant' | 'tools' | string;
 }
 
 // Implementation for NavigateTool
@@ -17,7 +17,7 @@ export class NavigateTool extends AbstractTool<NavigateArguments> {
         destination: {
           type: 'string',
           description:
-            'The destination page to navigate to (home, account, assistant).'
+            'The destination page to navigate to (home, account, assistant, tools).'
         }
       },
       ['destination'] // Required parameters
@@ -35,8 +35,9 @@ export class NavigateTool extends AbstractTool<NavigateArguments> {
     // Define routes based on destination
     const routes: { [key in NavigateArguments['destination']]: string } = {
       home: '/',
-      account: '/account',
-      assistant: '/assistant'
+      account: '/protected/account',
+      assistant: '/protected/assistant',
+      tools: '/protected/tools',
     };
 
     // Check if the destination is valid

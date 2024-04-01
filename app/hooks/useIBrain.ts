@@ -85,6 +85,10 @@ function useIBrain() {
 
   // Listen for navigation events
   core.useOn('navigatetool.go', (e: any) => push(e.destination), []);
+  // Assuming core.useOn is a method to listen to events
+  core.useOn('tool.database.connect.new', () => {
+    push(`/protected/tools/database`);
+  });
 }
 
 export default useIBrain;

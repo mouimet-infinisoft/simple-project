@@ -18,6 +18,8 @@ const generateOptions = (apiKey: string, aiIntegration: AiIntegration) => ({
 const getModelName = (aiIntegration: AiIntegration) =>
   aiIntegration?.toLowerCase() === 'openai'
     ? 'gpt-3.5-turbo'
+    // : 'mistralai/Mistral-7B-Instruct-v0.1';
+    // : 'togethercomputer/CodeLlama-34b-Instruct';
     : 'mistralai/Mixtral-8x7B-Instruct-v0.1';
 
 export class IBrainAssistant {
@@ -85,6 +87,22 @@ export class IBrainAssistant {
     this.tools[tool.name] = tool;
   }
 
+  listTools(): AbstractTool[] {
+    return Object.values(this.tools);
+  }
+
+  // Method to remove a tool by its name
+  removeTool(toolName: string): boolean {
+    if (this.tools[toolName]) {
+      delete this.tools[toolName];
+      console.log(`Tool ${toolName} removed successfully.`);
+      return true;
+    } else {
+      console.log(`Tool ${toolName} not found.`);
+      return false;
+    }
+  }
+
   // Method to handle tool calls
   private async handleToolCalls(toolCall: any) {
     try {
@@ -109,8 +127,13 @@ export class IBrainAssistant {
   async ask(message: string) {
     try {
       const context: any[] =
-        core.store.getState((s) => s?.communications) ?? [];
-      console.log('Asking the assistant:', message);
+        core.store.getState((s) => s?.communications)?.slice(-10) ?? [];
+      console.log(
+        'Asking the assistant:',
+        message,
+        ` with following context: `,
+        context
+      );
       const completion = await this.assistant.openai.chat.completions.create({
         tools: Object.values(this.tools).map((tool) =>
           tool.getToolDefinition()
@@ -121,7 +144,7 @@ export class IBrainAssistant {
           {
             role: 'system',
             content:
-              'You are a helpful assistant that can access external functions. The responses from these function calls will be appended to this dialogue. Please provide responses based on the information from these function calls.'
+              'You are a helpful assistant that can access external functions. The responses from these function calls will be appended to this dialogue. Please provide responses based on the information from these function calls. Your name is iBrain and you are a unique AI superstar to help.'
           },
           // {
           //   role: 'assistant',
@@ -143,6 +166,10 @@ export class IBrainAssistant {
           toolCall.function.arguments
         );
         const answer = await this.handleToolCalls(toolCall);
+        console.log(
+          `const answer = await this.handleToolCalls(toolCall) result is: `,
+          answer
+        );
         return answer;
       } else {
         console.log(

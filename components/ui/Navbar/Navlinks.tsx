@@ -27,17 +27,17 @@ export default function Navlinks({ user }: NavlinksProps) {
           </Link>
           {user && (
             <>
-              <Link href="/account" className={s.link}>
+              <Link href="/protected/account" className={s.link}>
                 Account
               </Link>
-              <Link href="/assistant" className={s.link}>
+              <Link href="/protected/assistant" className={s.link}>
                 Assistant
+              </Link>
+              <Link href="/protected/tools" className={s.link}>
+                Tools
               </Link>
               {/* <Link href="/chat" className={s.link}>
                 iBrain Chat
-              </Link> */}
-              {/* <Link href="/chat" className={s.link}>
-                iBrain Assistant
               </Link> */}
             </>
           )}

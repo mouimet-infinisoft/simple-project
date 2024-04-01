@@ -36,31 +36,53 @@ export class ConnectDatabaseTool extends AbstractTool<ConnectDatabaseArguments> 
   }
 
   async execute(args?: ConnectDatabaseArguments) {
-    // Check if arguments are provided
-    if (!args) {
-      console.error('Arguments are missing.');
-      return;
+    // Validate arguments
+    const validationMessage = validateArguments(args);
+    if (validationMessage !== true) {
+      console.log(validationMessage);
+      core.store.emit(`tool.database.connect.new`)
+      return `Let's connect your database. Please provide me the connexion string to continue.`;
+    } else {
+      // Destructure arguments
+      const { dbtype, url, username, password } = args!;
+
+      // Create a database login object
+      const login: DatabaseLogin = { url, username, password };
+
+      // Create a database client using the factory
+      const client: DatabaseClient = DatabaseClientFactory.createClient(
+        dbtype,
+        login
+      );
+
+      // Connect to the database
+      client.connect();
+      const answer = `Connected to ${dbtype} database successfully.`;
+      // Simulate successful connection
+      console.log(answer);
+
+      // Return some result or status
+      return `Connected to ${dbtype} database successfully.`;
     }
-
-    // Destructure arguments
-    const { dbtype, url, username, password } = args;
-
-    // Create a database login object
-    const login: DatabaseLogin = { url, username, password };
-
-    // Create a database client using the factory
-    const client: DatabaseClient = DatabaseClientFactory.createClient(
-      dbtype,
-      login
-    );
-
-    // Connect to the database
-    client.connect();
-    const answer = `Connected to ${dbtype} database successfully.`;
-    // Simulate successful connection
-    console.log(answer);
-
-    // Return some result or status
-    return `Connected to ${dbtype} database successfully.`;
   }
+}
+
+function validateArguments(args?: ConnectDatabaseArguments): true | string {
+  if (!args) {
+    return 'Arguments are missing.';
+  }
+
+  const { dbtype, url, username, password } = args;
+  if (!dbtype || !url || !username || !password) {
+    // Identify which specific arguments are missing for a more detailed error message
+    const missingFields = [];
+    if (!dbtype) missingFields.push('dbtype');
+    if (!url) missingFields.push('url');
+    if (!username) missingFields.push('username');
+    if (!password) missingFields.push('password');
+
+    return `Missing required information: ${missingFields.join(', ')}.`;
+  }
+
+  return true; // All validations passed
 }

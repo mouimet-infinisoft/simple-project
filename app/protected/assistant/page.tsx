@@ -15,9 +15,9 @@ export interface Message {
 
 export default function AssistantPage() {
   // const [messages, setMessages] = useState<Message[]>([]); // Adjusted to hold an array of Message objects
-  const bstack = useBrainStack()
+  const bstack = useBrainStack();
 
-  const communications = bstack.store.getState(s=>s?.communications) ?? []
+  const communications = bstack.store.getState((s) => s?.communications) ?? [];
 
   return (
     <>

@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Message } from '@/app/assistant/page';
+import { Message } from '@/app/protected/assistant/page';
 import MessageCard from '../Card/MessageCard';
 
 const AssistantComponent: React.FC<{

@@ -1,5 +1,5 @@
 // MessageCard.js or MessageCard.tsx if using TypeScript
-import { Message } from '@/app/assistant/page';
+import { Message } from '@/app/protected/assistant/page';
 import { motion } from 'framer-motion';
 import React from 'react';
 import Markdown from 'react-markdown';
