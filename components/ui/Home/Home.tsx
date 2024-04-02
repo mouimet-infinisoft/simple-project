@@ -1,53 +1,26 @@
 'use client';
-import React from 'react';
-import { FeatureList } from '../FeatureList';
+import React, { useEffect } from 'react';
 import { Hero } from '../Hero';
 import './home.css';
+import { core } from '@/utils/BrainStackProvider';
 
-const features = [
-  {
-    title: 'Intuitive Interaction',
-    description:
-      'Engage in natural, intention-driven discussions with the AI assistant without the need for specific voice commands or memorization.'
-  },
-  {
-    title: 'Contextual Understanding',
-    description:
-      'Understand the context of discussions and queries, allowing the assistant to provide relevant insights and take appropriate actions.'
-  },
-  {
-    title: 'Dynamic Language Adaptation',
-    description:
-      'Adapt to the language used in discussions seamlessly, enabling users to communicate in their preferred language without explicit configuration.'
-  },
-  {
-    title: 'Effortless Database Integration',
-    description:
-      'Integrate databases such as MySQL, SQL, and PostgreSQL effortlessly through natural language discussion, eliminating the need for manual setup.'
-  },
-  {
-    title: 'Schema-aware Data Analysis',
-    description:
-      'Leverage the database schema to generate insightful queries and extract meaningful information from data, guided by the context of the discussion.'
-  },
-  {
-    title: 'Real-time Insights Delivery',
-    description:
-      'Receive real-time data insights and analytics during discussions, empowering quick decision-making and problem-solving without delays.'
-  },
-  {
-    title: 'Intelligent Configuration Management',
-    description:
-      'Configure language preferences, database integrations, and other settings intuitively through discussion, without the need for explicit commands or training.'
-  },
-  {
-    title: 'User-centric Interface',
-    description:
-      'Enjoy a user-centric interface designed for seamless interaction and data exploration, enhancing the overall user experience.'
-  }
-];
 
 const HomeComponent: React.FC<{}> = () => {
+  useEffect(() => {
+    if (window && window?.localStorage?.getItem('micPermissionGranted') && !core.store.getState()?.userData) {
+
+      core.store.emit('ibrain.talk', {
+        system: `As iBrain, you welcome back the user! It's great to see user coming back. As always, you are here to assist with a wide range of tasks, from providing detailed insights to facilitating easy sign-ins. Remember, the first 14 days are free, allowing the user to fully experience what  you can offer without any commitment. 
+
+        Signing in is incredibly straightforward – just a simple voice command away, whether user prefer Google, GitHub, or email. And, of course, you multilingual support is here to ensure you can interact in the language user most comfortable with.
+        
+        Ask user if there anything specific he like to know more about today? Perhaps more details on your services or how to start your free trial?.
+      `,
+        instructions: 'Hi.'
+      });
+    }
+  }, []);
+
   return (
     <div>
       <Hero
@@ -57,7 +30,6 @@ const HomeComponent: React.FC<{}> = () => {
         buttonLink="/signin/signup"
       />
 
-      {/* <FeatureList features={features} /> */}
       <Features />
       <MobileFeatures />
       <Informations />

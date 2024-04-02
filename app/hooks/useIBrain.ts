@@ -4,7 +4,7 @@ import { IBrainAssistant } from '@/utils/ibrain-assistant';
 import { ConnectDatabaseTool } from '@/utils/ibrain-assistant/tools';
 import { ChangeLanguageTool } from '@/utils/ibrain-assistant/tools/ChangeLanguage';
 import useCommunicationManager from '@/app/hooks/useCommunicationManager';
-import { core, useBrainStack } from '@/utils/BrainStackProvider';
+import { useBrainStack } from '@/utils/BrainStackProvider';
 import { NavigateTool } from '@/utils/ibrain-assistant/tools/Navigate';
 import { useRouter } from 'next/navigation';
 import { PricingTool } from '@/utils/ibrain-assistant/tools/Pricing';
@@ -18,16 +18,16 @@ function useIBrain() {
   const { push } = useRouter();
 
   const openaiKey = useMemo(
-    () => core.store.getState((s) => s?.userData?.openai_apikey),
-    [core.store.getState()?.userData?.openai_apikey]
+    () => bstack.store.getState((s) => s?.userData?.openai_apikey),
+    [bstack.store.getState()?.userData?.openai_apikey]
   );
   const togetheraiKey = useMemo(
-    () => core.store.getState()?.userData?.togetherai_apikey,
-    [core.store.getState()?.userData?.togetherai_apikey]
+    () => bstack.store.getState()?.userData?.togetherai_apikey,
+    [bstack.store.getState()?.userData?.togetherai_apikey]
   );
   const aiIntegration: AiIntegration = useMemo(
-    () => core.store.getState()?.userData?.ai_integration,
-    [core.store.getState()?.userData?.ai_integration]
+    () => bstack.store.getState()?.userData?.ai_integration,
+    [bstack.store.getState()?.userData?.ai_integration]
   );
 
   const apiKey = aiIntegration === 'openai' ? openaiKey : togetheraiKey;
@@ -89,15 +89,36 @@ function useIBrain() {
   }, []);
 
   // Listen for navigation events
-  core.useOn('navigatetool.go', (e: any) => push(e.destination), []);
-  // Assuming core.useOn is a method to listen to events
-  core.useOn('tool.database.connect.new', () => {
-    push(`/protected/tools/database`);
-  });
-  core.useOn('tool.pricing', (e: any) => {
-    console.log(`tool.pricing event: `, e);
-    push(`/#pricing`);
-  });
+  bstack.useOn('navigatetool.go', (e: any) => push(e.destination), []);
+  // Assuming bstack.useOn is a method to listen to events
+  bstack.useOn(
+    'tool.database.connect.new',
+    () => {
+      push(`/protected/tools/database`);
+    },
+    []
+  );
+  bstack.useOn(
+    'tool.pricing',
+    (e: any) => {
+      console.log(`tool.pricing event: `, e);
+      push(`/protected/account#pricing`);
+    },
+    []
+  );
+
+  bstack.useOn(
+    'ibrain.talk',
+    (e: any) => {
+      addAsyncTask('Welcome back', async () => {
+        const answer =
+          (await iBrainRef?.current?.talk?.(e?.system, e?.instructions)) ??
+          `Hello there, welcome back!`;
+        addAiCommunication(answer);
+      });
+    },
+    []
+  );
 }
 
 export default useIBrain;

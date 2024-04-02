@@ -4,7 +4,7 @@ import { IBrainAssistant } from '@/utils/ibrain-assistant';
 import { ConnectDatabaseTool } from '@/utils/ibrain-assistant/tools';
 import { ChangeLanguageTool } from '@/utils/ibrain-assistant/tools/ChangeLanguage';
 import useCommunicationManager from '@/app/hooks/useCommunicationManager';
-import { core, useBrainStack } from '@/utils/BrainStackProvider';
+import { useBrainStack } from '@/utils/BrainStackProvider';
 import { NavigateTool } from '@/utils/ibrain-assistant/tools/Navigate';
 import { useRouter } from 'next/navigation';
 import { PricingTool } from '@/utils/ibrain-assistant/tools/Pricing';
@@ -52,15 +52,6 @@ function usePublicIBrain() {
       asyncTools.forEach((tool) => iBrainRef.current?.addAsyncTool(tool));
 
       bstack.store.mutate((s) => ({ ...s, iBrain }));
-
-      // addAsyncTask('', async () => {
-      //   const answer =
-      //     (await iBrainRef?.current?.ask?.(
-      //       'Hi there, who are you?'
-      //     )) ??
-      //     `Hello there, I am iBrain and I welcome you on my page. I can guide you to make the experience better. Just ask me about the pricing, to get started, to talk in another language and I will help. What brings you here?`;
-      //   addAiCommunication(answer);
-      // });
     }
   }, [apiKey, addAsyncTask, aiIntegration]);
 
@@ -93,38 +84,54 @@ function usePublicIBrain() {
   }, []);
 
   // Listen for navigation events
-  core.useOn('navigatetool.go', (e: any) => push(e.destination), []);
-  // Assuming core.useOn is a method to listen to events
+  bstack.useOn('navigatetool.go', (e: any) => push(e.destination), []);
+  // Assuming bstack.useOn is a method to listen to events
 
-  core.useOn('tool.pricing', () => {
-    push(`/#pricing`);
-  });
+  bstack.useOn(
+    'tool.pricing',
+    () => {
+      push(`/#pricing`);
+    },
+    []
+  );
 
-  core.useOn('tool.signin', (e: any) => {
-    if (!e?.provider || String(e?.provider).toLowerCase().includes('email')) {
-      push(`/signin`);
-    } else {
-      handleSignIn(e.provider);
-    }
-  });
+  bstack.useOn(
+    'tool.signin',
+    (e: any) => {
+      if (!e?.provider || String(e?.provider).toLowerCase().includes('email')) {
+        push(`/signin`);
+      } else {
+        handleSignIn(e.provider);
+      }
+    },
+    []
+  );
 
-  core.useOn('ibrain.introduce', () => {
-    addAsyncTask('Introduce yourself', async () => {
-      const answer =
-        (await iBrainRef?.current?.introduceYourself?.()) ??
-        `Hello there, I am iBrain and I welcome you on my page. I can guide you to make the experience better. Just ask me about the pricing, to get started, to talk in another language and I will help. What brings you here?`;
-      addAiCommunication(answer);
-    });
-  });
+  bstack.useOn(
+    'ibrain.introduce',
+    () => {
+      addAsyncTask('Introduce yourself', async () => {
+        const answer =
+          (await iBrainRef?.current?.introduceYourself?.()) ??
+          `Hello there, I am iBrain and I welcome you on my page. I can guide you to make the experience better. Just ask me about the pricing, to get started, to talk in another language and I will help. What brings you here?`;
+        addAiCommunication(answer);
+      });
+    },
+    []
+  );
 
-  core.useOn('ibrain.talk', (e: any) => {
-    addAsyncTask('Welcome back', async () => {
-      const answer =
-        (await iBrainRef?.current?.talk?.(e?.system, e?.instructions)) ??
-        `Hello there, welcome back!`;
-      addAiCommunication(answer);
-    });
-  });
+  bstack.useOn(
+    'ibrain.talk',
+    (e: any) => {
+      addAsyncTask('Welcome back', async () => {
+        const answer =
+          (await iBrainRef?.current?.talk?.(e?.system, e?.instructions)) ??
+          `Hello there, welcome back!`;
+        addAiCommunication(answer);
+      });
+    },
+    []
+  );
 }
 
 export default usePublicIBrain;

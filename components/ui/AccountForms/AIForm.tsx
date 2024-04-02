@@ -5,7 +5,7 @@ import Card from '@/components/ui/Card';
 import { updateKey } from '@/utils/auth-helpers/server';
 import { handleRequest } from '@/utils/auth-helpers/client';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { core } from '@/utils/BrainStackProvider';
 
 interface UserSettings {
@@ -26,6 +26,16 @@ export default function AIForm(userSettings: UserSettings) {
     setIsSubmitting(false);
     core.store.emit('userdata.refresh')
   };
+
+  useEffect(() => {
+    if (window && window?.localStorage?.getItem('micPermissionGranted') && !core.store.getState()?.userData?.is_onboarding_complete) {
+      core.store.emit('ibrain.talk', {
+        system:  `As iBrain, you welcome back the user! It's great to see user coming back. The user is already signed in for his 14 days trial and you should congrats. It is now at the stage to onboard with 1 simple step. The user must provide a AI API Key of his choice between OpenAI or Together AI and selected which one to use. Then its done!.
+        `,
+        instructions: 'Hi.'
+      });
+    }
+  }, []);
 
   return (
     <Card

@@ -30,6 +30,14 @@ export async function middleware(request: NextRequest) {
     return Response.redirect(new URL('/protected/onboarding', request.url));
   }
 
+  if (
+    userDetails &&
+    userDetails?.is_onboarding_complete === true &&
+    !request.nextUrl.pathname.startsWith('/protected')
+  ) {
+    return Response.redirect(new URL('/protected/assistant', request.url));
+  }
+
   return await updateSession(request);
 }
 
