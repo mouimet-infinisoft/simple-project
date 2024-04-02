@@ -61,14 +61,22 @@ const useTextToSpeech = () => {
               const utterance = new SpeechSynthesisUtterance(trimmedSentence);
 
               // Set language based on state
-              utterance.lang = bstack.store.getState()?.language || 'en-US';
+              utterance.lang = bstack.store.getState()?.language || 'en-CA';
 
               // Set voice based on language
               const voices = synthesisRef?.current?.getVoices();
               if (voices) {
-                const voiceForLanguage = voices.find(
-                  (voice) => voice.lang === utterance.lang
+                let voiceForLanguage = voices.find(
+                  (voice) =>
+                    voice.lang === utterance.lang &&
+                    voice.name.toLowerCase().includes('natural')
                 );
+
+                if (!voiceForLanguage) {
+                  voiceForLanguage = voices.find(
+                    (voice) => voice.lang === utterance.lang
+                  );
+                }
                 if (voiceForLanguage) {
                   utterance.voice = voiceForLanguage;
                 }
