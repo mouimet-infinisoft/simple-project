@@ -2,13 +2,16 @@
 import React, { useEffect } from 'react';
 import { Hero } from '../Hero';
 import './home.css';
-import { core } from '@/utils/BrainStackProvider';
-
+import { core, useBrainStack } from '@/utils/BrainStackProvider';
 
 const HomeComponent: React.FC<{}> = () => {
+  const bstack = useBrainStack();
   useEffect(() => {
-    if (window && window?.localStorage?.getItem('micPermissionGranted') && !core.store.getState()?.userData) {
-
+    if (
+      window &&
+      window?.localStorage?.getItem('micPermissionGranted') &&
+      !bstack.store.getState()?.userData
+    ) {
       core.store.emit('ibrain.talk', {
         system: `As iBrain, you welcome back the user! It's great to see user coming back. As always, you are here to assist with a wide range of tasks, from providing detailed insights to facilitating easy sign-ins. Remember, the first 14 days are free, allowing the user to fully experience what  you can offer without any commitment. 
 
