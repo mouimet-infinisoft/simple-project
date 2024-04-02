@@ -96,7 +96,7 @@ function useIBrain() {
   });
   core.useOn('tool.pricing', (e: any) => {
     console.log(`tool.pricing event: `, e);
-    push(`/pricing?plan=${e?.plan}`);
+    push(`/#pricing`);
   });
 }
 
