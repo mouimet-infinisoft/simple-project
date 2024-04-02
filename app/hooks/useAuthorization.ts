@@ -2,8 +2,10 @@
 import { useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { core } from '@/utils/BrainStackProvider';
+import { useRouter } from 'next/navigation';
 
 function useAuthorization() {
+  const {push} = useRouter()
   const fetchUserData = async () => {
     try {
       const supabase = createClient();
@@ -46,6 +48,9 @@ function useAuthorization() {
 
   core.useOn('userdata.refresh', ()=>{
     fetchUserData()
+    .then(()=>{
+      push(`/protected/assistant`)
+    })
   })
 }
 

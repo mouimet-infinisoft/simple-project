@@ -25,7 +25,6 @@ export default function AIForm(userSettings: UserSettings) {
     await handleRequest(e, updateKey, router);
     setIsSubmitting(false);
     core.store.emit('userdata.refresh')
-    router.push(`/protected/assistant`)
   };
 
   return (
