@@ -61,14 +61,14 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         <Navbar />
         <BrainStackProvider>
           <TaskManagerProvider>
-            <AssistantInit>
+            {/* <AssistantInit> */}
               <main
                 id="skip"
                 className="min-h-[calc(100dvh-4rem)] md:min-h[calc(100dvh-5rem)] mx-auto max-w-screen-lg px-4 md:px-0"
               >
                 {children}
               </main>
-            </AssistantInit>
+            {/* </AssistantInit> */}
           </TaskManagerProvider>
         </BrainStackProvider>
         <Footer />

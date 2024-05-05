@@ -37,7 +37,7 @@ export class NavigateTool extends AbstractTool<NavigateArguments> {
       home: '/',
       account: '/protected/account',
       assistant: '/protected/assistant',
-      tools: '/protected/tools',
+      tools: '/protected/tools'
     };
 
     // Check if the destination is valid
@@ -47,8 +47,8 @@ export class NavigateTool extends AbstractTool<NavigateArguments> {
     }
 
     // Navigate to the specified route imperatively
-    const destination = routes[args.destination.toLowerCase()]
-    core.store.emit('navigatetool.go', {destination})
+    const destination = routes[args.destination.toLowerCase()];
+    core.store.emit('navigatetool.go', { destination });
 
     // Return some result or status
     return `Navigating to ${args.destination.toLowerCase()}...`;

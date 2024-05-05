@@ -10,6 +10,9 @@ import { useRouter } from 'next/navigation';
 import { PricingTool } from '@/utils/ibrain-assistant/tools/Pricing';
 import { useTaskManager } from '@/utils/task-manager/provider';
 import { AiIntegration } from '@/utils/ibrain-assistant/iBrainAssistant';
+import { ExpectationTool } from '@/utils/ibrain-assistant/tools/Expectations';
+import { FeedbackExpectedTool } from '@/utils/ibrain-assistant/tools/FeedbackExpected';
+import { CategorizeMessageTool } from '@/utils/ibrain-assistant/tools/CategorizeMessage';
 
 function useIBrain() {
   const bstack = useBrainStack();
@@ -49,10 +52,13 @@ function useIBrain() {
 
       // Create and add tools to the assistant
       const asyncTools = [
-        new ConnectDatabaseTool(),
-        new ChangeLanguageTool(),
-        new NavigateTool(),
-        new PricingTool()
+        // new ConnectDatabaseTool(),
+        // new ChangeLanguageTool(),
+        // new NavigateTool(),
+        // new PricingTool(),
+        // new ExpectationTool(),
+        // new FeedbackExpectedTool()
+        new CategorizeMessageTool()
       ];
       asyncTools.forEach((tool) => iBrainRef.current?.addAsyncTool(tool));
 
@@ -115,6 +121,15 @@ function useIBrain() {
           (await iBrainRef?.current?.talk?.(e?.system, e?.instructions)) ??
           `Hello there, welcome back!`;
         addAiCommunication(answer);
+      });
+    },
+    []
+  );
+  bstack.useOn(
+    'ibrain.speak',
+    (e: any) => {
+      addAsyncTask('Speak', async () => {
+        addAiCommunication(e.message);
       });
     },
     []

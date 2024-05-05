@@ -82,7 +82,7 @@ const useSpeech2text = () => {
     };
 
     recognitionInstance.onerror = (event: any) => {
-      if (!event?.error?.includes('no-speech')) {
+      if (!event?.error?.includes('no-speech') && !event?.error?.includes('aborted')) {
         bstack.log.error('Speech recognition error', event);
       }
     };

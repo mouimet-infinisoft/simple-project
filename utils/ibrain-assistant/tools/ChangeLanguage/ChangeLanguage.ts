@@ -6,7 +6,6 @@ interface ChangeLanguageArguments {
   language: string;
   recognitionLanguageCode: string; // Language code for web speech recognition
   synthesisLanguageCode: string; // Language code for web speech synthesis
-  feedbackMessage: string;
 }
 
 // Implementation for ChangeLanguageTool
@@ -14,7 +13,7 @@ export class ChangeLanguageTool extends AbstractTool<ChangeLanguageArguments> {
   constructor() {
     super(
       'changeConversationLanguage', // Tool name
-      'Changes the language of the conversation. This tool is not related to programming', // Tool description
+      'Useful to change the spoken conversation language with the user. Example of user could  tell: Hey lets talk in French now.', // Tool description
       {
         language: {
           type: 'string',
@@ -27,35 +26,28 @@ export class ChangeLanguageTool extends AbstractTool<ChangeLanguageArguments> {
         synthesisLanguageCode: {
           type: 'string',
           description: 'The language code for web speech synthesis.'
-        },
-        feedbackMessage: {
-          type: 'string',
-          description:
-            'A message in language to let the user know it is changed.'
         }
       },
       [
         'language',
         'recognitionLanguageCode',
-        'synthesisLanguageCode',
-        'feedbackMessage'
+        'synthesisLanguageCode'
       ] // Required parameters
     );
   }
 
   // Method to execute the tool
   async execute(args?: ChangeLanguageArguments) {
-    // Check if arguments are provided
     if (
       !args ||
       !args.language ||
       !args.recognitionLanguageCode ||
-      !args.synthesisLanguageCode ||
-      !args.feedbackMessage
+      !args.synthesisLanguageCode
     ) {
-      console.error('Some language arguments are missing.');
-      return;
+      return 'You will need to ask user to what language he wants to discuss.'
     }
+
+    core.store.getState()?.language
 
     console.log(`Language changed to `, args);
     core.store.mutate((s) => ({
@@ -63,7 +55,6 @@ export class ChangeLanguageTool extends AbstractTool<ChangeLanguageArguments> {
       language: args.recognitionLanguageCode
     }));
 
-    // Return some result or status
-    return args.feedbackMessage;
+    return `You will respond back in ${args.language} to let the user know language is changed now.`
   }
 }

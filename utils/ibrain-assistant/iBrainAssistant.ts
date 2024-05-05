@@ -134,6 +134,7 @@ export class IBrainAssistant {
         ` with following context: `,
         context
       );
+
       const completion = await this.assistant.openai.chat.completions.create({
         tools: Object.values(this.tools).map((tool) =>
           tool.getToolDefinition()
@@ -143,19 +144,23 @@ export class IBrainAssistant {
           ...context,
           {
             role: 'system',
-            content:
-              'You are a helpful assistant that can access external functions. The responses from these function calls will be appended to this dialogue. Please provide responses based on the information from these function calls. Your name is iBrain and you are a unique AI superstar to help.'
+            content:  `You are a helpful assistant that can access external functions. The responses from these function calls will be appended to this dialogue. Please provide responses based on the information from these function calls. Your name is iBrain and you are a unique AI superstar to help.`
           },
-          // {
-          //   role: 'assistant',
-          //   content: 'My name is iBrain and I am an AI superstar to help you.'
-          // },
+          {
+            role: 'assistant',
+            content:  `Here are my current tasks and expectations:
+            - I'm waiting to get the hostname, port number, username and password, which is crucial for adding a new database. This task is identified by expectation ID 999.
+            - Please prioritize user queries related to this expectation and use the relevant function calls to gather or infer this information if not directly provided.
+            - If the user's message doesn't relate to any current expectations but is still relevant to our capabilities, consider how we might offer value or direct them towards fulfilling existing expectations.
+            - For unrelated or unclear messages, seek clarification or offer assistance within the scope of our functions.`
+          },
           { role: 'user', content: message }
         ],
         model: getModelName(this.aiIntegration)
       });
 
       const toolCall = completion.choices[0].message.tool_calls?.[0];
+
       if (toolCall) {
         console.log(
           'Assistant response:',
@@ -165,11 +170,44 @@ export class IBrainAssistant {
           ' arguments ',
           toolCall.function.arguments
         );
+
+        console.log(
+          `ALL TOOL CALLS: `,
+          completion.choices[0].message.tool_calls
+        );
+
         const answer = await this.handleToolCalls(toolCall);
         console.log(
           `const answer = await this.handleToolCalls(toolCall) result is: `,
           answer
         );
+
+        if (answer && toolCall?.id) {
+          const r = await this.assistant.openai.chat.completions.create({
+            messages: [
+              {
+                role: 'system',
+                content:  `You are a helpful assistant that can access external functions. The responses from these function calls will be appended to this dialogue. Please provide responses based on the information from these function calls. Your name is iBrain and you are a unique AI superstar to help.`
+              },
+              {
+                role: 'assistant',
+                content:  `Here are my current tasks and expectations:
+                - I'm waiting to get the hostname, port number, username and password, which is crucial for adding a new database. This task is identified by expectation ID 999.
+                - Please prioritize user queries related to this expectation and use the relevant function calls to gather or infer this information if not directly provided.
+                - If the user's message doesn't relate to any current expectations but is still relevant to our capabilities, consider how we might offer value or direct them towards fulfilling existing expectations.
+                - For unrelated or unclear messages, seek clarification or offer assistance within the scope of our functions.`
+              },
+              { role: 'user', content: message },
+              // completion.choices[0].message,
+              { role: 'tool', content: answer, tool_call_id: toolCall.id }
+            ],
+            model: getModelName(this.aiIntegration)
+          });
+
+          console.log(`TOOLCALL ANSWERS`, r);
+
+          return r.choices[0].message.content;
+        }
         return answer;
       } else {
         console.log(

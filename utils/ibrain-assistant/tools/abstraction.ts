@@ -19,7 +19,7 @@ export abstract class AbstractTool<T = any> {
   ) {}
 
   // Abstract method to define the execute behavior
-  abstract execute(args?: T): Promise<string | void>;
+  abstract execute(args?: T): Promise<string | void | any>;
 
   // Method to get the tool definition
   getToolDefinition(): Assistant.Function {
