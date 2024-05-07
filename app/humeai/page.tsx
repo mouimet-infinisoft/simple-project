@@ -1,5 +1,5 @@
 import ClientComponent from "@/components/ui/ClientComponent";
-import { fetchAccessToken } from "@humeai/voice";
+import { fetchAccessToken,createSocketConfig } from "@humeai/voice";
 
 export default async function Page() {
   const accessToken = await fetchAccessToken({
