@@ -32,7 +32,7 @@ const handleToolCall: ToolCallHandler = async (
 ): Promise<ToolResponse | ToolError> => {
   console.log("Tool call received", toolCall);
 
-  if (toolCall.name === 'weather_tool') {
+  if (toolCall.name === 'get_current_weather') {
     try {
       const args = JSON.parse(toolCall.parameters) as {
         location: string;
